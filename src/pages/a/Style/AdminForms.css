@@ -1,0 +1,141 @@
+/* ===================== General Form Layout ===================== */
+form {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 25px 30px;
+  background-color: var(--whityColor);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: "Jersey 10", sans-serif;
+}
+
+form h2 {
+  text-align: center;
+  color: var(--mainColor);
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+/* ===================== Inputs & Textarea ===================== */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  padding: 12px 15px;
+  border: 2px solid var(--warmyColor);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--mainColor);
+}
+
+/* ===================== File Inputs ===================== */
+input[type="file"] {
+  padding: 5px 0;
+  font-size: 1rem;
+}
+
+/* ===================== Buttons ===================== */
+button {
+  padding: 12px 20px;
+  font-size: 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  background-color: var(--maintGreen);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--secondaryColor);
+}
+
+/* ===================== Tags & Multi File ===================== */
+.tags-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tags-input span {
+  background-color: var(--mainColor);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* ===================== Responsive Layout ===================== */
+@media (max-width: 900px) {
+  form {
+    padding: 20px;
+    margin: 15px;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select,
+  button {
+    font-size: 1rem;
+  }
+
+  button {
+    padding: 10px 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  form {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select,
+  button {
+    font-size: 0.95rem;
+  }
+
+  button {
+    padding: 8px 15px;
+  }
+}
+
+
+.error {
+  background: #fdecea;
+  color: #b00020;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.error-box {
+  margin: 15px 0;
+  padding: 12px;
+  background: #ffe6e6;
+  color: #900;
+  border-left: 4px solid #ff4d4d;
+  border-radius: 6px;
+}

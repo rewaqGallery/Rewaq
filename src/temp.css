@@ -1,0 +1,309 @@
+/*! HOME */
+/* Home Page Section */
+.home-products {
+  padding: 60px 20px;
+  background-color: #fff;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--mainColor);
+  font-family: "Jersey 10", sans-serif;
+  margin: 0;
+}
+
+.view-all {
+  font-family: "Jersey 10", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--mainColor);
+  text-decoration: none;
+  padding: 10px 30px;
+  border-radius: 25px;
+  border: 2px solid transparent;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.view-all:hover {
+  color: var(--secondaryColor);
+  transform: translateY(-2px);
+}
+
+/* Products Grid - Already handled inside Products component, but padding adjustments here */
+.home-products .products-grid {
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .section-header {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .view-all {
+    font-size: 0.95rem;
+    padding: 8px 16px;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .view-all {
+    font-size: 0.9rem;
+    padding: 6px 14px;
+  }
+}
+
+
+
+
+
+/*Dashboard*/
+/* Dashboard Layout */
+.dashboard {
+  display: flex;
+  min-height: calc(100vh - 90px);
+  background-color: #fff;
+  font-family: "Jersey 10", sans-serif;
+}
+
+/* Sidebar */
+.dashboard-sidebar {
+  width: 240px;
+  background-color: var(--whityColor);
+  padding: 30px 20px;
+  border-right: 2px solid var(--warmyColor);
+}
+
+.dashboard-sidebar h3 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: var(--mainColor);
+  text-align: center;
+}
+
+.dashboard-sidebar button {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  background-color: transparent;
+  border: 2px solid var(--mainColor);
+  color: var(--mainColor);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dashboard-sidebar button:hover {
+  background-color: var(--maintGreen);
+}
+
+.dashboard-sidebar button.active {
+  background-color: var(--mainColor);
+  color: #fff;
+}
+
+/* Content */
+.dashboard-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #fff;
+}
+
+.dashboard-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: var(--mainColor);
+}
+
+/* Add Button */
+.add-btn {
+  padding: 10px 25px;
+  font-size: 1.2rem;
+  background-color: var(--maintGreen);
+  color: var(--mainColor);
+  border-radius: 25px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+  background-color: var(--secondaryColor);
+  color: #fff;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--whityColor);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: var(--warmyColor);
+}
+
+th {
+  text-align: left;
+  padding: 15px;
+  font-size: 1.3rem;
+  color: var(--mainColor);
+}
+
+td {
+  padding: 15px;
+  font-size: 1.1rem;
+  color: var(--secondaryColor);
+  border-bottom: 1px solid #ddd;
+}
+
+/* Actions */
+td button {
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-size: 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: var(--maintGreen);
+  color: var(--mainColor);
+  transition: all 0.3s ease;
+}
+
+td button:hover {
+  background-color: var(--secondaryColor);
+  color: #fff;
+}
+
+td button.danger {
+  background-color: #f3b5b5;
+  color: #7a0000;
+}
+
+td button.danger:hover {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+/* Categories List */
+.category-list {
+  list-style: none;
+  padding: 0;
+  max-width: 500px;
+}
+
+.category-list li {
+  background-color: var(--whityColor);
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  color: var(--mainColor);
+}
+
+.category-list li span button {
+  margin-left: 10px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .dashboard-sidebar button {
+    width: auto;
+  }
+}
+
+
+/* index */
+@import url("https://fonts.googleapis.com/css2?family=Jersey+10&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #fff;
+  color: var(--mainColor);
+}
+img{
+  width: 100%;
+}
+h1,h2,h3,h4,h5,h6{
+  color: var(--mainColor);
+  font-family: "Jersey 10", sans-serif;
+}
+span{
+    color: var(--mainColor);
+}
+p{
+  color: var(--secondaryColor);
+}
+input, button, select,textarea{
+  outline: none;
+  border: none;
+}
+a{
+  text-decoration: none;
+  color: var(--mainColor)
+}
+.container {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1350px;
+}
+
+.jersey-10-regular {
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --mainColor: #274760;
+  --secondaryColor: #39696d;
+  --whityColor: #ece5c8;
+  --warmyColor: #cdc2ae;
+  --maintGreen: #c2ded0;
+}

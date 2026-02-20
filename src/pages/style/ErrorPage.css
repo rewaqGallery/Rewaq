@@ -1,0 +1,98 @@
+.error-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: var(--whityColor);
+}
+
+.error-page-content {
+  text-align: center;
+  max-width: 500px;
+}
+
+.error-code {
+  font-size: 6rem;
+  font-weight: 700;
+  color: var(--mainColor);
+  font-family: "Jersey 10", sans-serif;
+  line-height: 1;
+  opacity: 0.9;
+  margin-bottom: 10px;
+}
+
+.error-title {
+  font-size: 1.75rem;
+  color: var(--mainColor);
+  margin-bottom: 16px;
+  font-family: "Jersey 10", sans-serif;
+}
+
+.error-message {
+  font-size: 1rem;
+  color: var(--secondaryColor);
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.error-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.error-btn-primary {
+  background-color: var(--mainColor);
+  color: var(--whityColor);
+  border-color: var(--mainColor);
+}
+
+.error-btn-primary:hover {
+  background-color: var(--secondaryColor);
+  border-color: var(--secondaryColor);
+  transform: translateY(-2px);
+}
+
+.error-btn-secondary {
+  background-color: transparent;
+  color: var(--mainColor);
+  border-color: var(--mainColor);
+}
+
+.error-btn-secondary:hover {
+  background-color: var(--mainColor);
+  color: var(--whityColor);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .error-code {
+    font-size: 4rem;
+  }
+
+  .error-title {
+    font-size: 1.4rem;
+  }
+
+  .error-actions {
+    flex-direction: column;
+  }
+
+  .error-btn {
+    width: 100%;
+  }
+}

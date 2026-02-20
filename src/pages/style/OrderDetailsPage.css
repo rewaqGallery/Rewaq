@@ -1,0 +1,153 @@
+/* ========================= */
+/* Order Details Modern */
+/* ========================= */
+
+.order-details-page {
+  padding: 70px 0;
+  background: #fff;
+}
+
+/* Page Title */
+.order-details-page h2 {
+  font-size: 2.4rem;
+  margin-bottom: 40px;
+  font-family: "Jersey 10", sans-serif;
+  color: var(--mainColor);
+}
+
+/* Layout Grid */
+.order-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+}
+
+/* Card Base */
+.order-card-box {
+  background: #fff;
+  border-radius: 18px;
+  padding: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+}
+
+/* Order Header */
+.order-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.order-number {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* Status Badge */
+.status-badge {
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.status-paid {
+  background: var(--maintGreen);
+  color: var(--mainColor);
+}
+
+.status-unpaid {
+  background: #ffe5e5;
+  color: #b10000;
+}
+
+.status-delivered {
+  background: var(--secondaryColor);
+  color: #fff;
+}
+
+/* Shipping Box */
+.shipping-box p {
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+  color: var(--secondaryColor);
+}
+
+/* Items */
+.order-items {
+  margin-top: 20px;
+}
+
+.order-item-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.order-item-row:last-child {
+  border-bottom: none;
+}
+
+.order-item-row img {
+  width: 85px;
+  height: 85px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info p {
+  margin-bottom: 5px;
+  font-size: 1.05rem;
+}
+
+.item-price {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--mainColor);
+}
+
+/* Summary Card */
+.order-summary-card {
+  background: var(--whityColor);
+  border-radius: 18px;
+  padding: 30px;
+  height: fit-content;
+}
+
+.summary-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.summary-total {
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-top: 2px solid var(--warmyColor);
+  padding-top: 15px;
+  margin-top: 15px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .order-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .order-summary-card {
+    margin-top: 20px;
+  }
+}

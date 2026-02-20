@@ -1,0 +1,139 @@
+/* ===== My Orders Mobile First ===== */
+
+.my-orders {
+    padding: 20px 15px;
+}
+
+/* Title */
+.my-orders h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+/* Orders List */
+.orders-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Order Card */
+.order-card {
+    background: var(--whityColor);
+    border-radius: 15px;
+    padding: 15px;
+    border: 2px solid var(--warmyColor);
+}
+
+/* Header */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+}
+
+/* Status Badge */
+.order-status {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.paid {
+    background: var(--maintGreen);
+}
+
+.unpaid {
+    background: #f3b5b5;
+    color: #7a0000;
+}
+
+/* Info */
+.order-info {
+    margin-bottom: 12px;
+}
+
+.order-info p {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+/* Items Section */
+.order-items {
+    border-top: 1px dashed var(--warmyColor);
+    padding-top: 12px;
+}
+
+/* Single Item */
+.order-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+/* Product Image */
+.order-item img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid var(--warmyColor);
+}
+
+/* Item Details */
+.order-item-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.order-item-details p {
+    font-size: 0.85rem;
+    margin-bottom: 3px;
+}
+
+/* Empty State */
+.no-orders {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.2rem;
+}
+
+/*  Desktop */
+@media (min-width: 1024px) {
+
+    .orders-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .order-card:hover {
+        transform: translateY(-4px);
+        transition: 0.3s;
+    }
+
+}
+
+
+
+
+/* Tab */
+@media (min-width: 600px) {
+
+    .orders-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .order-card {
+        padding: 18px;
+    }
+
+    .order-item img {
+        width: 70px;
+        height: 70px;
+    }
+}

@@ -1,0 +1,266 @@
+/* Dashboard Layout */
+.dashboard {
+  display: flex;
+  min-height: calc(100vh - 90px);
+  background-color: #fff;
+  font-family: "Jersey 10", sans-serif;
+}
+
+/* Sidebar */
+.dashboard-sidebar {
+  width: 240px;
+  background-color: var(--whityColor);
+  padding: 30px 20px;
+  border-right: 2px solid var(--warmyColor);
+}
+
+.dashboard-sidebar h3 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: var(--mainColor);
+  text-align: center;
+}
+
+.dashboard-sidebar button {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  background-color: transparent;
+  border: 2px solid var(--mainColor);
+  color: var(--mainColor);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dashboard-sidebar button:hover {
+  background-color: var(--maintGreen);
+}
+
+.dashboard-sidebar button.active {
+  background-color: var(--mainColor);
+  color: #fff;
+}
+
+/* Content */
+.dashboard-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #fff;
+}
+
+.dashboard-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: var(--mainColor);
+}
+
+/* Add Button */
+.add-btn {
+  padding: 10px 25px;
+  font-size: 1.2rem;
+  background-color: var(--maintGreen);
+  color: var(--mainColor);
+  border-radius: 25px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+  background-color: var(--secondaryColor);
+  color: #fff;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--whityColor);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: var(--warmyColor);
+}
+
+th {
+  text-align: left;
+  padding: 15px;
+  font-size: 1.3rem;
+  color: var(--mainColor);
+}
+
+td {
+  padding: 15px;
+  font-size: 1.1rem;
+  color: var(--secondaryColor);
+  border-bottom: 1px solid #ddd;
+}
+
+/* Actions */
+td button {
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-size: 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: var(--maintGreen);
+  color: var(--mainColor);
+  transition: all 0.3s ease;
+}
+
+td button:hover {
+  background-color: var(--secondaryColor);
+  color: #fff;
+}
+
+td button.danger {
+  background-color: #f3b5b5;
+  color: #7a0000;
+}
+
+td button.danger:hover {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+/* Categories List */
+.category-list {
+  list-style: none;
+  padding: 0;
+  max-width: 500px;
+}
+
+.category-list li {
+  background-color: var(--whityColor);
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  color: var(--mainColor);
+}
+
+.category-list li span button {
+  margin-left: 10px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .dashboard-sidebar button {
+    width: auto;
+  }
+}
+
+/* Filter + Sort container */
+.filter-sort {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.filter-sort input[type="text"] {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--warmyColor);
+  flex: 1 1 200px;
+}
+
+.filter-sort select {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--warmyColor);
+  cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.pagination button {
+  padding: 8px 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--mainColor);
+  background-color: var(--whityColor);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: var(--maintGreen);
+  color: #fff;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .dashboard-content {
+    padding: 20px;
+  }
+
+  .filter-sort {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    display: none;
+  }
+
+  tbody tr {
+    margin-bottom: 15px;
+    border: 2px solid var(--warmyColor);
+    border-radius: 10px;
+    padding: 15px;
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: none;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: var(--mainColor);
+  }
+}

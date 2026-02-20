@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Jersey+10&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+  color: var(--mainColor);
+}
+
+img {
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--mainColor);
+  font-family: "Jersey 10", sans-serif;
+  letter-spacing: 2px;
+}
+
+span {
+  color: var(--mainColor);
+}
+
+p {
+  color: var(--secondaryColor);
+}
+
+input, button, select, textarea {
+  outline: none;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--mainColor)
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1350px;
+}
+
+.jersey-10-regular {
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 2px;
+}
+
+:root {
+  --mainColor: #274760;
+  --secondaryColor: #39696d;
+  --whityColor: #ece5c8;
+  --warmyColor: #cdc2ae;
+  --maintGreen: #c2ded0;
+}

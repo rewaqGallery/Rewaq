@@ -1,0 +1,320 @@
+/* ===== Header ===== */
+.Header {
+  background-color: var(--whityColor);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+}
+
+.Header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px 20px;
+  margin: 0 auto;
+  max-width: 1400px;
+  flex-wrap: nowrap;
+}
+
+
+
+.Header .logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.Header .logo {
+  width: 130px;
+  height: auto;
+  object-fit: contain;
+}
+
+.Header .search_box {
+  display: flex;
+  flex: 1;
+  max-width: 500px;
+  margin: 0 10px;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 0;
+  padding: 10px;
+}
+
+.Header .search_box input {
+  width: 100%;
+  height: 42px;
+  padding: 0 20px;
+  border: 2px solid var(--warmyColor);
+  border-radius: 25px 0 0 25px;
+  font-size: 18px;
+  outline: none;
+  background-color: var(--whityColor);
+  transition: all 0.3s ease;
+}
+
+.Header .search_box input:focus {
+  border-color: var(--mainColor);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.Header .search_box button {
+  width: 50px;
+  padding: 0px;
+  background: var(--mainColor);
+  border: none;
+  border-radius: 0 25px 25px 0;
+  color: var(--whityColor);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.Header .search_box button:hover {
+  background-color: #39696d;
+}
+
+.Header .search_box button svg {
+  padding: 0px;
+  font-size: 18px;
+}
+
+/* ===== Icons ===== */
+.Header .header_icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.Header .icon {
+  position: relative;
+  padding: 8px;
+  border-radius: 50%;
+  text-decoration: none;
+  color: var(--text-color, #333);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+}
+
+.Header .icon:hover {
+  background-color: var(--warmyColor);
+  transform: translateY(-2px);
+}
+
+.Header .icon svg {
+  font-size: 22px;
+  color: var(--mainColor);
+  padding: 0px;
+}
+
+.Header .count {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--mainColor);
+  color: var(--whityColor);
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--whityColor);
+}
+
+/* ===== Buttons ===== */
+.nav-btn {
+  padding: 8px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.login-btn {
+  background: var(--mainColor);
+  color: var(--whityColor);
+  border: 2px solid var(--mainColor);
+}
+
+.login-btn:hover {
+  background-color: var(--whityColor);
+  color: var(--mainColor);
+  transform: translateY(-2px);
+}
+
+.logout-btn {
+  background: transparent;
+  color: var(--mainColor);
+  border: 2px solid var(--mainColor);
+}
+
+.logout-btn:hover {
+  background-color: var(--mainColor);
+  color: var(--whityColor);
+}
+
+/* ===== Mobile Menu Button ===== */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: var(--mainColor);
+  cursor: pointer;
+  padding: 5px;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+  background-color: var(--warmyColor);
+}
+
+.mobile-menu-btn svg {
+  width: 24px;
+  height: 24px;
+;
+}
+
+
+@media (max-width: 1000px) {
+  .Header .container {
+    padding: 10px 15px;
+    gap: 10px;
+  }
+
+  .Header .logo {
+    width: 100px;
+  }
+
+  .Header .search_box {
+    max-width: 300px;
+    margin: 0 5px;
+  }
+
+  .Header .search_box input {
+    height: 38px;
+    padding: 0 15px;
+    font-size: 13px;
+  }
+
+  .Header .search_box button {
+    width: 45px;
+  }
+
+  .Header .header_icons:not(.mobile) {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .Header .container {
+    flex-wrap: nowrap;
+    padding: 8px 10px;
+    position: relative;
+  }
+
+  .Header .count {
+    font-size: 15px;
+    width: 23px;
+    height: 23px;
+  }
+
+  .Header .logo {
+    width: 80px;
+  }
+
+  .Header .search_box {
+    max-width: calc(100% - 120px);
+    margin: 0;
+  }
+
+  .Header .search_box input {
+    border-radius: 20px;
+    height: 36px;
+    padding: 0 12px;
+  }
+
+  .Header .search_box button {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+
+  .Header .header_icons.mobile {
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    background: var(--whityColor);
+    flex-direction: column;
+    width: 180px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+  }
+
+  .Header .header_icons.mobile.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .Header .header_icons.mobile .icon {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+  }
+
+  .Header .header_icons.mobile .icon svg {
+    margin-right: 10px;
+    font-size: 20px;
+  }
+
+  .Header .header_icons.mobile .nav-btn {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .Header .header_icons.mobile .count {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-left: auto;
+  }
+}
