@@ -83,7 +83,6 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// important: compound index
 orderSchema.index({ user: 1, idempotencyKey: 1 }, { unique: true });
 
 orderSchema.index({ user: 1, createdAt: -1 });

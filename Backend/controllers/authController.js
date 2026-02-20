@@ -11,7 +11,6 @@ const sendEmail = require("../utils/nodemailer");
 const createToken = require("../utils/tokens");
 const apiError = require("../utils/apiError");
 
-
 exports.signup = asyncHandler(async (req, res, next) => {
   //in validator check if email exists in userModel, pendingUser
   //in validator check for passConfirm
@@ -236,7 +235,7 @@ exports.googleCallBack = [
   }),
   async (req, res) => {
     const user = req.user;
-    const token = createToken(user._id);
+    const token = createToken({ _id: user._id, role: user.role });
     // const { password, ...safeUser } = user.toObject();
 
     res.redirect(`http://localhost:5173/google-success?token=${token}`);

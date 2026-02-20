@@ -32,8 +32,8 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
   let cart = await cartModel.findOne({ user: req.user.id });
 
   if (!cart) {
-    if (qty > product.quantity) {
-      msg = `Only ${product.quantity} items left in stock, the rest will be pre-ordered`;
+    if (quantity > product.quantity) {
+      msg = `Only ${product.quantity >= 0 ? product.quantity : 0} left in stock for "${product.description}". Extra quantity will be pre-ordered.`;
     }
 
     cart = await cartModel.create({
@@ -55,13 +55,13 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
       const newQty = cart.cartItems[productIndex].quantity + qty;
 
       if (newQty > product.quantity) {
-        msg = `Only ${product.quantity} items left in stock, the rest will be pre-ordered`;
+        msg = `Only ${product.quantity >= 0 ? product.quantity : 0} left in stock for "${product.description}". Extra quantity will be pre-ordered.`;
       }
 
       cart.cartItems[productIndex].quantity = newQty;
     } else {
       if (qty > product.quantity) {
-        msg = `Only ${product.quantity} items left in stock, the rest will be pre-ordered`;
+        msg = `Only ${product.quantity >= 0 ? product.quantity : 0} left in stock for "${product.description}". Extra quantity will be pre-ordered.`;
       }
 
       cart.cartItems.push({
@@ -152,7 +152,7 @@ exports.updateCartItemQuantity = asyncHandler(async (req, res, next) => {
   }
 
   if (quantity > product.quantity) {
-    msg = `Only ${product.quantity >= 0 ? product.quantity : 0} of product '${product.description}' items left in stock, extra quantity will be pre-ordered`;
+    msg = `Only ${product.quantity >= 0 ? product.quantity : 0} left in stock for "${product.description}". Extra quantity will be pre-ordered.`;
   }
 
   cart.cartItems[itemIndex].quantity = quantity;

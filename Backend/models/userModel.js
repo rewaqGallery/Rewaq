@@ -46,5 +46,5 @@ const mongoose = require("mongoose");
   },
   { timestamps: true },
 );
-
+userSchema.index({ name: "text", email: "text" });
 module.exports = mongoose.model("User", userSchema);
