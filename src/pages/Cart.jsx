@@ -22,7 +22,7 @@ function Cart() {
 
   const totalPrice = items.reduce(
     (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
-    0
+    0,
   );
 
   if (!token) {
@@ -66,7 +66,11 @@ function Cart() {
           <>
             <div className="cart-items">
               {items.map((item, index) => {
-                const stock = item.availableStock ?? item.stock ?? item.quantityInStock ?? 0;
+                const stock =
+                  item.availableStock ??
+                  item.stock ??
+                  item.quantityInStock ??
+                  0;
                 const isPreOrder = item.quantity > stock;
 
                 return (
@@ -75,11 +79,11 @@ function Cart() {
                     className="cart-item"
                   >
                     <div className="item-image">
-                      <img src={item.image} alt={item.code} />
+                      <img src={item.image} alt={item.description} />
                     </div>
 
                     <div className="item-details">
-                      <h3>{item.code}</h3>
+                      <h3>{item.description}</h3>
 
                       <p className="item-price">
                         ${Number(item.price || 0).toFixed(2)} each
@@ -93,7 +97,7 @@ function Cart() {
                               updateQuantityAsync({
                                 productId: item.productId,
                                 quantity: Math.max(0, item.quantity - 1),
-                              })
+                              }),
                             )
                           }
                         >
@@ -109,7 +113,7 @@ function Cart() {
                               updateQuantityAsync({
                                 productId: item.productId,
                                 quantity: item.quantity + 1,
-                              })
+                              }),
                             )
                           }
                         >
@@ -118,8 +122,9 @@ function Cart() {
                       </div>
 
                       {isPreOrder && (
-<div className="item-preorder-warning">
-                          Only {stock} left in stock for "{item.code}". Any additional quantity will be pre-ordered.
+                        <div className="item-preorder-warning">
+                          Only {stock} left in stock for "{item.description}". Any
+                          additional quantity will be pre-ordered.
                         </div>
                       )}
                     </div>

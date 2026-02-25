@@ -32,6 +32,10 @@ export const getProducts = async (filters = {}) => {
     queryParams.append("category", filters.categories[0]);
   }
 
+    // sort
+  if (filters.sort) {
+    queryParams.append("sort", filters.sort);
+  }
   // maxPrice
   if (filters.maxPrice > 0) {
     queryParams.append("price[lte]", filters.maxPrice);

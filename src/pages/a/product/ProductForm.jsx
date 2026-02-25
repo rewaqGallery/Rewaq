@@ -15,7 +15,7 @@ export default function ProductForm() {
   const isEdit = Boolean(id);
 
   const [formData, setFormData] = useState({
-    code: "",
+    code: "s",
     description: "",
     price: "",
     priceAfterDiscount: "",
@@ -36,7 +36,7 @@ export default function ProductForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  /* ================= Fetch Categories ================= */
+  /*  Fetch Categories  */
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -49,29 +49,29 @@ export default function ProductForm() {
     fetchCategories();
   }, []);
 
-  /* ================= Fetch Product (Edit) ================= */
+  /*  Fetch Product (Edit)  */
   useEffect(() => {
     if (!isEdit) return;
 
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await getProductById(id);
+        const product = await getProductById(id);
 
         setFormData({
-          code: res.data.code || "",
-          description: res.data.description || "",
-          price: res.data.price || "",
-          priceAfterDiscount: res.data.priceAfterDiscount || "",
-          quantity: res.data.quantity || "",
-          sold: res.data.sold || "",
-          category: res.data.category?._id || "",
-          tags: res.data.tags || [],
-          featured: res.data.featured || false,
+          code: product.code || "",
+          description: product.description || "",
+          price: product.price || "",
+          priceAfterDiscount: product.priceAfterDiscount || "",
+          quantity: product.quantity || "",
+          sold: product.sold || "",
+          category: product.category?._id || "",
+          tags: product.tags || [],
+          featured: product.featured || false,
         });
 
-        setExistingCover(res.data.imageCover || null);
-        setExistingImages(res.data.images || []);
+        setExistingCover(product.imageCover || null);
+        setExistingImages(product.images || []);
       } catch (err) {
         setError(err.message || "Failed to load product");
       } finally {
@@ -82,7 +82,7 @@ export default function ProductForm() {
     fetchProduct();
   }, [id, isEdit]);
 
-  /* ================= Submit ================= */
+  /*  Submit  */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -113,7 +113,7 @@ export default function ProductForm() {
         await createProduct(data);
       }
 
-      navigate("/dashboard/products");
+      navigate("/dashboard/");
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     } finally {
@@ -121,7 +121,6 @@ export default function ProductForm() {
     }
   };
 
-  /* ================= JSX ================= */
   return (
     <form className="form" onSubmit={handleSubmit}>
       <h2>{isEdit ? "Update Product" : "Create Product"}</h2>

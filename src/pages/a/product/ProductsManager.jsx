@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
-
 import {
   deleteProduct,
   getProductById,
   getProducts,
   updateProduct,
-} from "./../../../services/productService";
+} from "../../../services/productService";
 import ProductsTable from "./ProductsTable";
 import Pagination from "../Pagination";
 // import "./categoryManger.css"
@@ -25,27 +23,29 @@ export default function ProductsManager() {
     limit: 5,
     keyword: "",
   });
-  
-  //! Fetch
-  const fetchProducts = async () => {
+
+  //! Load products
+  useEffect(() => {
     setLoading(true);
     setError(null);
-    try {
-      const params = new URLSearchParams(filters);
-      const res = await getProducts(`?${params.toString()}`);
 
-      setProducts(res.data);
-      setTotalResults(res.totalResults);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchProducts();
+    getProducts(filters)
+      .then((res) => {
+        setProducts(res.data);
+        setTotalResults(res.totalResults);
+      })
+      .catch((err) => {
+        setError(err.message || "Failed to load products");
+      })
+      .finally(() => setLoading(false));
   }, [filters]);
 
+  // const handlePageChange = (newPage) => {
+  //   setFilters((prev) => ({
+  //     ...prev,
+  //     page: newPage,
+  //   }));
+  // };
   //! Delete
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure?")) return;

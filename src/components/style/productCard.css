@@ -122,6 +122,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-bottom: 10px;
 }
 
 .product-btn.add-to-cart:hover {

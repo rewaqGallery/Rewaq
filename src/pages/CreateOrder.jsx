@@ -169,6 +169,7 @@ function CreateOrder() {
         </div>
 
         {showPopup && (
+           <div className="popup-overlay">
           <div className="popup">
             <p>Order Created Successfully</p>
             <button
@@ -177,6 +178,7 @@ function CreateOrder() {
             >
               Close
             </button>
+          </div>
           </div>
         )}
       </div>

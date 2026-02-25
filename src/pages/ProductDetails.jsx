@@ -132,16 +132,17 @@ function ProductDetails() {
 
         {/* Info */}
         <div className="product-info">
-          <div className="tags">
+          {/* <div className="tags">
             {product.tags?.map((tag, index) => (
               <span key={index} className="tag">
                 {tag}
               </span>
             ))}
-          </div>{" "}
+          </div>{" "} */}
 
           <h2>{product.description}</h2>
           <p className="category">{product.category?.name}</p>
+          <p className="category-desc">{product.category?.description}</p>
           <p className="price">{product.price} LE</p>
           <div className="product-actions">
             <button

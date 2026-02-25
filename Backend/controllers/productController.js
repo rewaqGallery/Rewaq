@@ -12,11 +12,11 @@ const { image } = require("../config/cloudinary");
 exports.deleteProduct = deleteOne(productModel);
 exports.getProductById = getOne(productModel, {
   path: "category",
-  select: "name price -_id",
+  select: "name price description -_id",
 });
 exports.getAllProducts = getAll(productModel, {
   path: "category",
-  select: "name price -_id",
+  select: "name price description -_id",
 });
 
 exports.setPriceFromCategory = async (req, res, next) => {
