@@ -1,4 +1,3 @@
-// Dashboard/Dashboard.jsx
 import React, { useState } from "react";
 import ProductsManager from "./product/ProductsManager";
 import CategoriesManager from "./category/CategoriesManager";
@@ -9,42 +8,57 @@ import "./style/Dashboard.css";
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("products");
 
+  const tabs = {
+    products: <ProductsManager />,
+    categories: <CategoriesManager />,
+    orders: <OrdersManager />,
+    users: <UsersManager />,
+  };
+
   return (
     <div className="dashboard">
       <aside className="dashboard-sidebar">
-        <h3>Admin Panel</h3>
-        <button
-          className={activeTab === "products" ? "active" : ""}
-          onClick={() => setActiveTab("products")}
-        >
-          Products
-        </button>
-        <button
-          className={activeTab === "categories" ? "active" : ""}
-          onClick={() => setActiveTab("categories")}
-        >
-          Categories
-        </button>
-        <button
-          className={activeTab === "orders" ? "active" : ""}
-          onClick={() => setActiveTab("orders")}
-        >
-          Orders
-        </button>
-        <button
-          className={activeTab === "users" ? "active" : ""}
-          onClick={() => setActiveTab("users")}
-        >
-          Users
-        </button>
+        <h1>Admin Panel</h1>
+
+        <nav>
+          <ul>
+            <li>
+              <button
+                className={activeTab === "products" ? "active" : ""}
+                onClick={() => setActiveTab("products")}
+              >
+                Products
+              </button>
+            </li>
+            <li>
+              <button
+                className={activeTab === "categories" ? "active" : ""}
+                onClick={() => setActiveTab("categories")}
+              >
+                Categories
+              </button>
+            </li>
+            <li>
+              <button
+                className={activeTab === "orders" ? "active" : ""}
+                onClick={() => setActiveTab("orders")}
+              >
+                Orders
+              </button>
+            </li>
+            <li>
+              <button
+                className={activeTab === "users" ? "active" : ""}
+                onClick={() => setActiveTab("users")}
+              >
+                Users
+              </button>
+            </li>
+          </ul>
+        </nav>
       </aside>
 
-      <main className="dashboard-content">
-        {activeTab === "products" && <ProductsManager />}
-        {activeTab === "categories" && <CategoriesManager />}
-        {activeTab === "orders" && <OrdersManager />}
-        {activeTab === "users" && <UsersManager />}
-      </main>
+      <main className="dashboard-content">{tabs[activeTab]}</main>
     </div>
   );
 }
