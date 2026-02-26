@@ -1,5 +1,3 @@
-// Backend: BACKEND/index.js uses process.env.PORT (e.g. 9001 in .env)
-
 const BASE_URL = "http://localhost:9001";
 
 export const getToken = () => localStorage.getItem("token");

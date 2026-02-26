@@ -90,6 +90,7 @@ export async function addToCart(productId, quantity = 1) {
   });
   return normalizeCart(res);
 }
+
 /*
 {
     "status": "Success",
@@ -127,6 +128,7 @@ export async function updateCartItem(productId, quantity) {
   });
   return normalizeCart(res);
 }
+
 /*
 {
     "status": "Success",

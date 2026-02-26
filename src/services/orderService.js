@@ -12,10 +12,22 @@ export async function getMyOrders() {
   return await apiRequest("/order");
 }
 
-
 export async function getOrders(filters = {}) {
-  const params = new URLSearchParams(filters);
-  return await apiRequest(`/order?${params.toString()}`);
+  const queryParams = new URLSearchParams();
+  console.log(filters)
+  if (filters.sort) {
+    queryParams.append("sort", filters.sort);
+  }
+  if (filters.keyword) {
+    queryParams.append("keyword", filters.keyword);
+  }
+  if (filters.page) {
+    queryParams.append("page", filters.page);
+  }
+  if (filters.limit) {
+    queryParams.append("limit", filters.limit);
+  }
+  return await apiRequest(`/order?${queryParams.toString()}`);
 }
 
 export async function getOrderById(id) {

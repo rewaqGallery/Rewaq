@@ -1,12 +1,26 @@
 import { apiRequest } from "./api";
 
-export const getCategories = async (query = "") => {
-  return await apiRequest(`/category${query}`);
-};
+export async function getCategories(filters = {}) {
+  const queryParams = new URLSearchParams();
+  if (filters.keyword) {
+    queryParams.append("keyword", filters.keyword);
+  }
+  if (filters.sort) {
+    queryParams.append("sort", filters.sort);
+  }
+  if (filters.page) {
+    queryParams.append("page", filters.page);
+  }
+  if (filters.limit) {
+    queryParams.append("limit", filters.limit);
+  }
+  return await apiRequest(`/category?${queryParams.toString()}`);
+}
 
 export async function deleteCategory(id) {
   return await apiRequest(`/category/${id}`, { method: "DELETE" });
 }
+
 export async function getCategoryById(id) {
   return await apiRequest(`/category/${id}`, { method: "GET" });
 }

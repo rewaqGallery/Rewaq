@@ -18,8 +18,7 @@ export default function OrdersManager() {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams(filters);
-      const res = await getOrders(`?${params.toString()}`);
+      const res = await getOrders(filters);
       setOrders(res.data);
       setTotalResults(res.totalResults);
     } catch (err) {
@@ -56,6 +55,8 @@ export default function OrdersManager() {
         >
           <option value="-createdAt">Newest</option>
           <option value="createdAt">Oldest</option>
+          <option value="orderStatus">Status ASC</option>
+          <option value="-orderStatus">Status DSC</option>
         </select>
       </div>
 
