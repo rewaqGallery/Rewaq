@@ -1,28 +1,39 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import AdminRoute from "./PrivateRoute";
 
-import Home from "../pages/HomePage";
-import ProductsPage from "../pages/ProductPage";
-import ProductDetails from "../pages/ProductDetails";
-import Favourites from "../pages/Favourites";
-import Cart from "../pages/Cart";
-import CreateOrder from "../pages/CreateOrder";
-import MyProfile from "../pages/ProfilePage";
-import MyOrders from "../pages/MyOrders";
-import OrderDetailsPage from "../pages/OrderDetailsPage";
-import GoogleSuccess from "../pages/GoogleSuccess";
-import ErrorPage from "../pages/ErrorPage";
+const Home = lazy(() => import("../pages/HomePage"));
+const ProductsPage = lazy(() => import("../pages/ProductPage"));
+const ProductDetails = lazy(() => import("../pages/ProductDetails"));
+const Favourites = lazy(() => import("../pages/Favourites"));
+const Cart = lazy(() => import("../pages/Cart"));
+const CreateOrder = lazy(() => import("../pages/CreateOrder"));
+const MyProfile = lazy(() => import("../pages/ProfilePage"));
+const MyOrders = lazy(() => import("../pages/MyOrders"));
+const OrderDetailsPage = lazy(() => import("../pages/OrderDetailsPage"));
+const GoogleSuccess = lazy(() => import("../pages/GoogleSuccess"));
+const ErrorPage = lazy(() => import("../pages/ErrorPage"));
 
-import Dashboard from "../pages/dashboard/Dashboard";
+const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
+const CategoryForm = lazy(() => import("../pages/dashboard/category/CategoryForm"));
+const CategoriesManager = lazy(() => import("../pages/dashboard/category/CategoriesManager"));
+const ProductForm = lazy(() => import("../pages/dashboard/product/ProductForm"));
+const ProductsManager = lazy(() => import("../pages/dashboard/product/ProductsManager"));
 
-import CategoryForm from "../pages/dashboard/category/CategoryForm";
-import CategoriesManager from "../pages/dashboard/category/CategoriesManager";
-import ProductForm from "../pages/dashboard/product/ProductForm";
-import ProductsManager from "../pages/dashboard/product/ProductsManager";
+function RouteFallback() {
+  return (
+    <div className="d-flex justify-content-center align-items-center min-vh-50 py-5">
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
+}
 
 export default function AppRoutes() {
   return (
-    <Routes>
+    <Suspense fallback={<RouteFallback />}>
+      <Routes>
       {/* Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/cart" element={<Cart />} /> 
@@ -47,6 +58,7 @@ export default function AppRoutes() {
 
       <Route path="*" element={<ErrorPage code={404} />} />
     </Routes>
+    </Suspense>
   );
 }
 

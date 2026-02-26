@@ -59,6 +59,7 @@ function ProductCard({ product }) {
             src={product.imageCover?.url}
             alt={product.code}
             className="product-image"
+            loading="lazy"
           />
 
           <button
