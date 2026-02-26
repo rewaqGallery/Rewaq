@@ -12,21 +12,20 @@ import MyOrders from "../pages/MyOrders";
 import OrderDetailsPage from "../pages/OrderDetailsPage";
 import GoogleSuccess from "../pages/GoogleSuccess";
 import ErrorPage from "../pages/ErrorPage";
-import Dashboard from "../pages/a/Dashboard";
 
-import UpdateCategory from "../pages/a/UpdateCategory";
+import Dashboard from "../pages/dashboard/Dashboard";
 
-import CategoryForm from "../pages/a/category/CategoryForm";
-import CategoriesManager from "../pages/a/category/CategoriesManager";
-import ProductForm from "../pages/a/product/ProductForm";
-import ProductsManager from "../pages/a/product/ProductsManager";
+import CategoryForm from "../pages/dashboard/category/CategoryForm";
+import CategoriesManager from "../pages/dashboard/category/CategoriesManager";
+import ProductForm from "../pages/dashboard/product/ProductForm";
+import ProductsManager from "../pages/dashboard/product/ProductsManager";
 
 export default function AppRoutes() {
   return (
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<Home />} />
-      <Route path="/cart" element={<Cart />} />
+      <Route path="/cart" element={<Cart />} /> 
       <Route path="/product" element={<ProductsPage />} />
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/favourites" element={<Favourites />} />
@@ -34,7 +33,6 @@ export default function AppRoutes() {
       <Route path="/profile" element={<MyProfile />} />
       <Route path="/my-orders" element={<MyOrders />} />
       <Route path="/google-success" element={<GoogleSuccess />} />
-      <Route path="/category/:id" element={<UpdateCategory />} />
       <Route path="/order/:id" element={<OrderDetailsPage />} />
 
       {/* Admin Routes */}
