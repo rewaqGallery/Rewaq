@@ -49,6 +49,13 @@ function ProductCard({ product }) {
 
   return (
     <div className="product-card">
+      <button
+        className={`favorite-btn ${isFavourite ? "active" : ""}`}
+        onClick={handleFavourite}
+      >
+        {isFavourite ? <FaHeart /> : <FaRegHeart />}
+      </button>
+
       <Link to={`/product/${productId}`} className="product-link">
         <div className="product-image-wrapper">
           {product.quantity <= 0 && (
@@ -61,13 +68,6 @@ function ProductCard({ product }) {
             className="product-image"
             loading="lazy"
           />
-
-          <button
-            className={`favorite-btn ${isFavourite ? "active" : ""}`}
-            onClick={handleFavourite}
-          >
-            {isFavourite ? <FaHeart /> : <FaRegHeart />}
-          </button>
         </div>
 
         <div className="product-info">
