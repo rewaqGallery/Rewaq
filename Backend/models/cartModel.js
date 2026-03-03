@@ -6,6 +6,8 @@ const cartSchema = new mongoose.Schema(
         product: { type: mongoose.Schema.ObjectId, ref: "Product" },
         quantity: { type: Number, default: 1, min: 1 },
         price: { type: Number, required: true },
+        msg: { type: String, default: "" },
+        currentStock: { type: Number, default: 0 },
       },
     ],
     totalCartPrice: {

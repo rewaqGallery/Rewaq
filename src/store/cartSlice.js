@@ -5,23 +5,21 @@ const initialState = {
   items: [],
   loading: false,
   error: null,
-  msg: null,
 };
 
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
-  async (_, { rejectWithValue }) => {
-    try {
-      return await cartService.getCart();
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
-  },
+  cartService.getCart,
+);
+
+export const clearCartAsync = createAsyncThunk(
+  "cart/clearCartAsync",
+  cartService.clearCart,
 );
 
 export const addToCartAsync = createAsyncThunk(
   "cart/addToCartAsync",
-  async ({ productId, quantity = 1 }, { rejectWithValue }) => {
+  async ({ productId, quantity }, { rejectWithValue }) => {
     try {
       return await cartService.addToCart(productId, quantity);
     } catch (err) {
@@ -32,13 +30,7 @@ export const addToCartAsync = createAsyncThunk(
 
 export const removeFromCartAsync = createAsyncThunk(
   "cart/removeFromCartAsync",
-  async (productId, { rejectWithValue }) => {
-    try {
-      return await cartService.removeFromCart(productId);
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
-  },
+  cartService.removeFromCart,
 );
 
 export const updateQuantityAsync = createAsyncThunk(
@@ -62,13 +54,9 @@ const cartSlice = createSlice({
     clearCart(state) {
       state.items = [];
       state.error = null;
-      state.msg = null;
     },
     clearCartError(state) {
       state.error = null;
-    },
-    clearCartMsg: (state) => {
-      state.msg = null;
     },
   },
   extraReducers: (builder) => {
@@ -78,34 +66,44 @@ const cartSlice = createSlice({
         ? action.payload.items
         : [];
       state.error = null;
-      state.msg = action.payload.msg || null;
+    };
+    const pending = (state) => {
+      state.loading = true;
+      state.error = null;
+    };
+    const rejected = (state, action) => {
+      state.loading = false;
+      state.error = action.payload || "An error occurred";
     };
 
     builder
-      .addCase(fetchCart.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-        state.msg = null;
-      })
+      .addCase(fetchCart.pending, pending)
       .addCase(fetchCart.fulfilled, fulfilled)
-      .addCase(fetchCart.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || "Failed to load cart";
-      })
+      .addCase(fetchCart.rejected, rejected);
 
+    builder
+      .addCase(addToCartAsync.pending, pending)
       .addCase(addToCartAsync.fulfilled, fulfilled)
-      .addCase(removeFromCartAsync.fulfilled, fulfilled)
-      .addCase(updateQuantityAsync.fulfilled, fulfilled)
+      .addCase(addToCartAsync.rejected, rejected);
 
-      .addCase(addToCartAsync.rejected, (state, action) => {
-        state.error = action.payload;
+    builder
+      .addCase(removeFromCartAsync.pending, pending)
+      .addCase(removeFromCartAsync.fulfilled, fulfilled)
+      .addCase(removeFromCartAsync.rejected, rejected);
+
+    builder
+      .addCase(updateQuantityAsync.pending, pending)
+      .addCase(updateQuantityAsync.fulfilled, fulfilled)
+      .addCase(updateQuantityAsync.rejected, rejected);
+
+    builder
+      .addCase(clearCartAsync.pending, pending)
+      .addCase(clearCartAsync.fulfilled, (state) => {
+        state.loading = false;
+        state.items = [];
+        state.error = null;
       })
-      .addCase(removeFromCartAsync.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      .addCase(updateQuantityAsync.rejected, (state, action) => {
-        state.error = action.payload;
-      });
+      .addCase(clearCartAsync.rejected, rejected);
   },
 });
 

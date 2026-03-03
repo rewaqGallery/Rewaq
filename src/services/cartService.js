@@ -3,17 +3,22 @@ import { apiRequest } from "./api";
 const normalizeItem = (item) => ({
   _id: item._id ?? "",
   quantity: item.quantity ?? 0,
-  price: item.product?.price ?? item.price ?? 0,
 
+  price: item.product?.price ?? item.price ?? 0,
   productId: item.product?._id ?? item.product ?? "",
   code: item.product?.code ?? "",
+  description: item.product?.description ?? "",
   image: item.product?.imageCover?.url ?? "",
+  currentStock: item.currentStock ?? item.product?.quantity ?? 0,
 });
 
 const normalizeCart = (res) => {
   const cart = res?.data ?? res;
   const items = cart?.cartItems ?? [];
-  return { msg: res?.msg ?? null, items: items.map(normalizeItem) };
+  return {
+    numberOfItems: res?.numberOfItems ?? 0,
+    items: items.map(normalizeItem),
+  };
 };
 
 /*
@@ -32,11 +37,14 @@ const normalizeCart = (res) => {
                     },
                     "_id": "69700fcde145ddee89df7afc",
                     "code": "11",
-                    "price": 25
+                    "price": 25,
+                    "quantity": 7
                 },
                 "quantity": 7,
                 "price": 25,
                 "_id": "697c142bf14bc8c10cc7e646"
+                currentStock: 7
+                msg:"",
             },
         ],
         "totalCartPrice": 435,
@@ -68,11 +76,14 @@ export async function getCart() {
                     },
                     "_id": "69700fcde145ddee89df7afc",
                     "code": "11",
-                    "price": 25
+                    "price": 25,
+                    "quantity": 7
+                    
                 },
                 "quantity": 6,
                 "price": 25,
-                "_id": "698465d566fcf7a7064b67b6"
+                "currentStock": 7,
+                msg: "",
             }
         ],
         "totalCartPrice": 150,
@@ -107,10 +118,13 @@ export async function addToCart(productId, quantity = 1) {
                     },
                     "_id": "69700fcde145ddee89df7afc",
                     "code": "11",
-                    "price": 25
+                    "price": 25,
+                    "quantity": 7
                 },
                 "quantity": 2,
                 "price": 25,
+                "currentStock": 7,
+                msg: "",
                 "_id": "698465d566fcf7a7064b67b6"
             }
         ],
@@ -145,10 +159,14 @@ export async function updateCartItem(productId, quantity) {
                     },
                     "_id": "6970133018890973478bc656",
                     "code": "2",
-                    "price": 20
+                    "price": 20,
+                    "quantity": 7
+
                 },
                 "quantity": 1,
                 "price": 20,
+                "currentStock": 7,
+                msg: "",
                 "_id": "69846e22dcd8cb4250ee13ca"
             }
         ], //! or "cartItems" : []
@@ -165,4 +183,9 @@ export async function removeFromCart(productId) {
     method: "DELETE",
   });
   return normalizeCart(res);
+}
+
+export async function clearCart() {
+  await apiRequest("/cart", { method: "DELETE" });
+  return { numberOfItems: 0, items: [] };
 }

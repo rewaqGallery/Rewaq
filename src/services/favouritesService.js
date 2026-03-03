@@ -15,7 +15,6 @@ import { apiRequest } from "./api";
         },
     ]
 } */
-
 export async function getFavourites() {
   const res = await apiRequest("/favourites", { method: "GET" });
 
@@ -38,7 +37,7 @@ export async function getFavourites() {
   }
 */
 export async function addFavourite(productId) {
-  const res = await apiRequest("/favourites", {
+  await apiRequest("/favourites", {
     method: "POST",
     body: JSON.stringify({ productId }),
   });
@@ -56,7 +55,7 @@ export async function addFavourite(productId) {
 } 
 */
 export async function removeFavourite(productId) {
-  let res = await apiRequest("/favourites", {
+  await apiRequest("/favourites", {
     method: "DELETE",
     body: JSON.stringify({ productId }),
   });

@@ -5,6 +5,7 @@ import {
   removeFromCartAsync,
   updateQuantityAsync,
   clearCartError,
+  clearCartAsync
 } from "../store/cartSlice";
 import { Link } from "react-router-dom";
 import { getToken } from "../services/api";
@@ -14,7 +15,7 @@ import "./style/Cart.css";
 function Cart() {
   const dispatch = useDispatch();
   const token = getToken();
-  const { items, loading, error, msg } = useSelector((state) => state.cart);
+  const { items, loading, error } = useSelector((state) => state.cart);
 
   useEffect(() => {
     if (token) dispatch(fetchCart());
@@ -58,8 +59,6 @@ function Cart() {
           onDismiss={() => dispatch(clearCartError())}
         />
 
-        {msg && <div className="cart-warning">{msg}</div>}
-
         {items.length === 0 ? (
           <p className="empty-cart">Your cart is empty</p>
         ) : (
@@ -67,10 +66,7 @@ function Cart() {
             <div className="cart-items">
               {items.map((item, index) => {
                 const stock =
-                  item.availableStock ??
-                  item.stock ??
-                  item.quantityInStock ??
-                  0;
+                  (item.currentStock <= 0 ? 0 : item.currentStock) ?? 0;
                 const isPreOrder = item.quantity > stock;
 
                 return (
@@ -123,7 +119,7 @@ function Cart() {
 
                       {isPreOrder && (
                         <div className="item-preorder-warning">
-                          Only {stock} left in stock for "{item.description}". Any
+                          Only <span>{stock}</span> left in stock for <span>"{item.description}"</span>. Any
                           additional quantity will be pre-ordered.
                         </div>
                       )}
@@ -151,6 +147,14 @@ function Cart() {
                 <Link to="/product" className="checkout-btn secondary">
                   Continue Shopping
                 </Link>
+
+                <button
+                  type="button"
+                  className="clear-btn"
+                  onClick={() => dispatch(clearCartAsync())}
+                >
+                  Clear Cart
+                </button>
 
                 <Link to="/create-order" className="checkout-btn primary">
                   Make Order

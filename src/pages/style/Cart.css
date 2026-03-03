@@ -186,6 +186,21 @@
   text-align: center;
 }
 
+.clear-btn {
+  padding: 12px 22px;
+  background-color: #765656;
+  color: var(--whityColor);
+  border: 2px solid var(--mainColor);
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.clear-btn:hover {
+  background-color: #583535;
+  color: #fff;
+}
+
 .checkout-btn.secondary {
   background-color: transparent;
   color: var(--mainColor);

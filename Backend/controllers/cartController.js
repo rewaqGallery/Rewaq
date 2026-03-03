@@ -16,7 +16,7 @@ const calcTotalCartPrice = (cart) => {
 const populateCart = (cartQuery) =>
   cartQuery.populate({
     path: "cartItems.product",
-    select: "imageCover code price _id",
+    select: "imageCover code price quantity description _id",
   });
 
 exports.addProductToCart = asyncHandler(async (req, res, next) => {
@@ -42,7 +42,10 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
         {
           product: productId,
           quantity: qty,
+          description: product.description,
           price: product.price,
+          currentStock: product.quantity,
+          msg,
         },
       ],
     });
@@ -68,6 +71,9 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
         product: productId,
         quantity: qty,
         price: product.price,
+        description: product.description,
+        currentStock: product.quantity,
+        msg,
       });
     }
   }
@@ -80,7 +86,6 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     status: "Success",
     message: "Product Added To Cart Successfully",
-    msg,
     numberOfItems: populatedCart.cartItems.length,
     data: populatedCart,
   });
@@ -127,7 +132,7 @@ exports.clearCart = asyncHandler(async (req, res, next) => {
 
 exports.updateCartItemQuantity = asyncHandler(async (req, res, next) => {
   const { quantity } = req.body;
-  let msg;
+  let msg = "";
 
   if (!quantity || quantity < 1) {
     return next(new apiError("Quantity must be at least 1", 400));
@@ -156,6 +161,8 @@ exports.updateCartItemQuantity = asyncHandler(async (req, res, next) => {
   }
 
   cart.cartItems[itemIndex].quantity = quantity;
+  cart.cartItems[itemIndex].currentStock = product.quantity;
+  cart.cartItems[itemIndex].msg = msg;
 
   calcTotalCartPrice(cart);
   await cart.save();
@@ -165,7 +172,6 @@ exports.updateCartItemQuantity = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     status: "Success",
     message: "Update Cart Successfully",
-    msg,
     numberOfItems: populatedCart.cartItems.length,
     data: populatedCart,
   });
