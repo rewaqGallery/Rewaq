@@ -22,12 +22,12 @@ function ProductDetails() {
   const token = localStorage.getItem("token");
 
   //Redux
-  const favouritesItems = useSelector((state) => state.favourites?.items ?? []);
+  const favouritesItems = useSelector((state) => state.favourites?.ids ?? []);
   const isFavourite =
     Array.isArray(favouritesItems) &&
     favouritesItems.some(
       (item) =>
-        String(item._id ?? item.product?._id ?? item.productId) ===
+        String(item ?? item._id ?? item.product?._id ?? item.productId) ===
         String(product?._id),
     );
 
@@ -104,7 +104,7 @@ function ProductDetails() {
       <div className="product-details-container">
         {/* Images */}
         <div className="product-images">
-          <img src={mainImage} alt={product.code} className="main-image" />
+          <img src={mainImage} alt={product.description} className="main-image" />
 
           <div className="gallery">
             {/* cover */}
@@ -157,9 +157,7 @@ function ProductDetails() {
               onClick={toggleCart}
               disabled={product.quantity <= 0}
             >
-              {inCart
-                  ? "Remove from Cart"
-                  : "Add to Cart"}
+              {inCart ? "Remove from Cart" : "Add to Cart"}
             </button>
           </div>
         </div>

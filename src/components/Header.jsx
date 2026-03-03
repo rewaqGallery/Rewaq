@@ -37,7 +37,7 @@ function Header() {
   const user = getUserFromToken();
 
   const favouritesCount = useSelector(
-    (state) => state.favourites?.items?.length ?? 0,
+    (state) => state.favourites?.ids?.length ?? 0,
   );
 
   const cartCount = useSelector((state) => state.cart?.items?.length ?? 0);

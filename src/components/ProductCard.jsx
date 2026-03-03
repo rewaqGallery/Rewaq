@@ -11,13 +11,13 @@ import "./style/productCard.css";
 
 function ProductCard({ product }) {
   const dispatch = useDispatch();
-  const favourites = useSelector((state) => state.favourites.items) || [];
+  const favourites = useSelector((state) => state.favourites.ids) || [];
   const cartItems = useSelector((state) => state.cart.items) || [];
   const token = localStorage.getItem("token");
 
   const productId = product?._id ?? product?.id;
 
-  const isFavourite = favourites.some((f) => f._id === productId);
+  const isFavourite = favourites.some((f) => f === productId);
 
   const inCart = cartItems.some(
     (item) => String(item.product?._id ?? item.productId) === String(productId),
@@ -64,7 +64,7 @@ function ProductCard({ product }) {
 
           <img
             src={product.imageCover?.url}
-            alt={product.code}
+            alt={product.description}
             className="product-image"
             loading="lazy"
           />

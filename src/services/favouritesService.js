@@ -1,18 +1,5 @@
 import { apiRequest } from "./api";
 
-const normalizeFavourite = (item) => ({
-  _id: item._id ?? item,
-  code: item.code ?? "",
-  price: Number(item.price) || 0,
-  image: item.imageCover?.url ?? item.image ?? "",
-  // productId: item.product?._id ?? item.productId ?? item._id,
-});
-
-const normalizeList = (res) => {
-  const list = res?.data ?? res;
-  return Array.isArray(list) ? list.map(normalizeFavourite) : [];
-};
-
 /*
 {
     "itemsCount": 3,
@@ -28,9 +15,17 @@ const normalizeList = (res) => {
         },
     ]
 } */
+
 export async function getFavourites() {
   const res = await apiRequest("/favourites", { method: "GET" });
-  return normalizeList(res);
+
+  const items = res?.data ?? [];
+  const ids = items.map((item) => item._id);
+
+  return {
+    ids,
+    products: items,
+  };
 }
 
 /*
@@ -47,7 +42,7 @@ export async function addFavourite(productId) {
     method: "POST",
     body: JSON.stringify({ productId }),
   });
-  return normalizeList(res);
+  return productId;
 }
 
 /*
