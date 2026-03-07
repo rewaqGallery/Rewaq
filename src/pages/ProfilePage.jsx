@@ -102,7 +102,7 @@ function MyProfile() {
       <h2>My Profile</h2>
 
       <img
-        src={user?.profileImage?.url || "/default-avatar.png"}
+        src={user?.profileImage?.url || "../img/default-avatar.jpg"}
         alt="profile"
         style={{ width: "150px", borderRadius: "50%" }}
       />
