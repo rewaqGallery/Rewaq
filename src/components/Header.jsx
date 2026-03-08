@@ -59,18 +59,24 @@ function Header() {
   return (
     <div className="Header">
       <div className="container">
-        <Link to="/" className="logo-link">
-          <img src={Logo} alt="logo" className="logo" />
+        <Link to="/" className="logo-link" aria-label="Go to homepage">
+          <img src={Logo} alt="Rewaq store logo" className="logo" />
         </Link>
 
-        <form className="search_box" onSubmit={handleSearch}>
+        <form
+          className="search_box"
+          role="search"
+          onSubmit={handleSearch}
+          aria-label="Product search"
+        >
           <input
             type="text"
             placeholder="Search"
+            aria-label="Search products"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button type="submit">
+          <button type="submit" aria-label="Search">
             <IoSearch />
           </button>
         </form>
@@ -78,18 +84,24 @@ function Header() {
         {/* Mobile Menu Button */}
         <button
           className="mobile-menu-btn"
+          aria-label="Toggle menu"
+          aria-expanded={showMobileMenu}
+          aria-controls="mobile-navigation"
+          type="button"
           onClick={() => setShowMobileMenu((prev) => !prev)}
         >
           <HiMenu />
         </button>
 
         {/* Icons / Mobile Dropdown */}
-        <div
+        <nav
+          id="mobile-navigation"
           className={`header_icons mobile ${showMobileMenu ? "active" : ""}`}
         >
           <Link
             to="/favourites"
             className="icon"
+            aria-label="Favourites"
             onClick={() => setShowMobileMenu(false)}
           >
             <FaRegHeart />
@@ -99,6 +111,7 @@ function Header() {
           <Link
             to="/cart"
             className="icon"
+            aria-label="Cart"
             onClick={() => setShowMobileMenu(false)}
           >
             <IoCart />
@@ -108,6 +121,7 @@ function Header() {
           <Link
             to="/profile"
             className="icon"
+            aria-label="Profile"
             onClick={() => setShowMobileMenu(false)}
           >
             <CgProfile />
@@ -138,7 +152,7 @@ function Header() {
               Logout
             </button>
           )}
-        </div>
+        </nav>
       </div>
 
       {showAuth && <LoginRegister onClose={() => setShowAuth(false)} />}
