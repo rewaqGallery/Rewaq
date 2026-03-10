@@ -13,7 +13,7 @@ function Navbar() {
       try {
         setLoading(true);
         const res = await getCategories();
-        setCategories(res.data);
+        setCategories(res.data || []);
       } catch (err) {
         setError("Failed to load categories");
       } finally {
@@ -25,23 +25,32 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="categories-nav">
-      {loading && <span>Loading...</span>}
-      {error && <span>{error}</span>}
-
+    <nav className="categories-nav" aria-label="Product Categories">
       <div className="container">
-        <ul className="categories-list">
-          {categories.map((cat) => (
-            <li key={cat._id}>
-              <Link
-                to={`/product?category=${cat._id}`}
-                className="category-link"
-              >
-                {cat.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {loading && (
+          <span className="nav-status" aria-live="polite">
+            Loading...
+          </span>
+        )}
+        {error && (
+          <span className="nav-error" role="alert">
+            {error}
+          </span>
+        )}
+        {!loading && !error && categories.length > 0 && (
+          <ul className="categories-list">
+            {categories.map((cat) => (
+              <li key={cat._id} className="category-item">
+                <Link
+                  to={`/product?category=${cat._id}`}
+                  className="category-link"
+                >
+                  {cat.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </nav>
   );
