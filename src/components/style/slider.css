@@ -1,128 +1,16 @@
 .main-slider {
   width: 100%;
-  margin: 0 auto;
   overflow: hidden;
   position: relative;
+  margin-inline: auto;
 }
 
-.main-slider .carousel-container {
-  position: relative;
-  width: 100%;
-  max-height: 600px;
-  overflow: hidden;
-}
-
-.main-slider .carousel-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  transition: opacity 0.6s ease-in-out;
-  z-index: 1;
-}
-
-.main-slider .carousel-slide.active {
-  opacity: 1;
-  z-index: 2;
-  position: relative;
-}
-
-.main-slider .carousel-slide img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  display: block;
-  max-height: 600px;
-}
-
-.main-slider .carousel-control-prev,
-.main-slider .carousel-control-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  background-color: rgba(39, 71, 96, 0.7);
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  z-index: 10;
-  opacity: 0.8;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.main-slider .carousel-control-prev {
-  left: 20px;
-}
-
-.main-slider .carousel-control-next {
-  right: 20px;
-}
-
-.main-slider .carousel-control-prev:hover,
-.main-slider .carousel-control-next:hover {
-  background-color: rgba(39, 71, 96, 0.9);
-  opacity: 1;
-  transform: translateY(-50%) scale(1.1);
-}
-
-.main-slider .carousel-control-prev-icon,
-.main-slider .carousel-control-next-icon {
-  width: 20px;
-  height: 20px;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.main-slider .carousel-control-prev-icon {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E");
-}
-
-.main-slider .carousel-control-next-icon {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-}
-
-.main-slider .carousel-indicators {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 10;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.main-slider .carousel-indicators button {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 2px solid var(--mainColor);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-  margin: 0;
-}
-
-.main-slider .carousel-indicators button.active {
-  background-color: var(--mainColor);
-  transform: scale(1.2);
-}
-
-/* Auto Moving Slider */
 .slider-track {
   display: flex;
   width: max-content;
   animation: sliderMove 200s linear infinite;
   will-change: transform;
+  transform: translate3d(0,0,0);
 }
 
 .slide-group {
@@ -130,20 +18,21 @@
 }
 
 .slide-group img {
-  height: clamp(180px, 28vw, 380px);
-  width: auto;
   display: block;
+  width: auto;
+  height: clamp(260px, 32vw, 440px);
   object-fit: cover;
+  user-select: none;
+  pointer-events: none;
 }
 
-/* Smooth Edges */
+/* Smooth edges */
 .main-slider::before,
 .main-slider::after {
   content: "";
   position: absolute;
-  top: 0;
+  inset-block: 0;
   width: 80px;
-  height: 100%;
   z-index: 2;
   pointer-events: none;
 }
@@ -151,83 +40,23 @@
 .main-slider::before {
   left: 0;
 }
-
 .main-slider::after {
   right: 0;
 }
 
-@media (max-width: 768px) {
-  .main-slider .carousel-container {
-    max-height: 400px;
-  }
-
-  .main-slider .carousel-slide img {
-    max-height: 400px;
-  }
-
-  .main-slider .carousel-control-prev,
-  .main-slider .carousel-control-next {
-    width: 40px;
-    height: 40px;
-  }
-
-  .main-slider .carousel-control-prev {
-    left: 10px;
-  }
-
-  .main-slider .carousel-control-next {
-    right: 10px;
-  }
-
-  .slide-group img {
-    height: 240px;
-  }
-}
-
 @media (max-width: 480px) {
-  .main-slider .carousel-container {
-    max-height: 300px;
-  }
-
-  .main-slider .carousel-slide img {
-    max-height: 300px;
-  }
-
-  .main-slider .carousel-control-prev,
-  .main-slider .carousel-control-next {
-    width: 35px;
-    height: 35px;
-  }
-
-  .main-slider .carousel-indicators {
-    bottom: 10px;
-  }
-
-  .main-slider .carousel-indicators button {
-    width: 10px;
-    height: 10px;
+  .slide-group img {
+    height: clamp(180px, calc(320px - 25vw), 260px);
   }
 }
 
 @media (max-width: 320px) {
   .slide-group img {
-    height: 160px;
+    height: clamp(170px, calc(340px - 20vw), 240px);
   }
 
   .slider-track {
-    animation: sliderMove 120s linear infinite;
-  }
-}
-
-@media (max-width: 992px) {
-  .slide-group img {
-    height: 300px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .slide-group img {
-    height: 420px;
+    animation-duration: 120s;
   }
 }
 

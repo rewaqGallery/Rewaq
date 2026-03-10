@@ -1,4 +1,3 @@
-// import "bootstrap/dist/css/bootstrap.min.css";
 import "./style/slider.css";
 
 import MugssBanner from "../img/Mugss Banner.png";
@@ -13,7 +12,7 @@ function Slider() {
   ];
 
   return (
-    <div className="main-slider">
+    <section className="main-slider" aria-label="Featured collections">
       <div className="slider-track">
         <div className="slide-group">
           {slides.map((slide) => (
@@ -21,13 +20,13 @@ function Slider() {
           ))}
         </div>
 
-        <div className="slide-group">
+        <div className="slide-group" aria-hidden="true">
           {slides.map((slide) => (
             <img key={`repeat-${slide.id}`} src={slide.src} alt={slide.alt} />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
