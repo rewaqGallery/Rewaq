@@ -1,6 +1,5 @@
-/* ===== Home Page Section ===== */
 .home-products {
-  padding: 30px 20px;
+  padding: 10px 20px;
   background-color: #fff;
 }
 
@@ -8,18 +7,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
-  flex-wrap: nowrap;
-  gap: 10px;
   padding-left: 20px;
-  margin-bottom: 0px;
+  gap: 10px;
 }
 
-.section-header h2 {
+.featured-title {
+  font-family: "Jersey 10", sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
+  letter-spacing: 2px;
   color: var(--mainColor);
-  font-family: "Jersey 10", sans-serif;
   margin: 0;
   white-space: nowrap;
 }
@@ -28,16 +25,19 @@
   font-family: "Jersey 10", sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
+  letter-spacing: 2px;
   color: var(--mainColor);
   text-decoration: none;
+
   padding: 10px 30px;
   border-radius: 25px;
   border: 2px solid transparent;
+
   background-color: transparent;
-  transition: all 0.3s ease;
   cursor: pointer;
+
+  transition: all 0.3s ease;
   white-space: nowrap;
-  letter-spacing: 2px;
 }
 
 .view-all:hover {
@@ -45,38 +45,37 @@
   transform: translateY(-2px);
 }
 
-/* Products Grid inside Home */
-.home-products .products-grid {
-  margin-top: 20px;
-}
-
-/* Responsive Home Page */
 @media (max-width: 1024px) {
-  .section-header {
-    margin-bottom: 0px;
-  }
-}
-
-@media (max-width: 768px) {
-  .section-header {
-    gap: 10px;
+  .home-products {
+    padding: 5px 10px;
   }
 }
 
 @media (max-width: 480px) {
-  .home-products {
-    padding: 20px 15px;
-  }
   .section-header {
     gap: 8px;
-    margin-bottom: 0;
-  }
-
-  .products-content {
-    gap: 0px;
   }
 
   .home-products .products-grid {
     gap: 15px;
+  }
+
+  .featured-title,
+  .view-all {
+    font-size: 1.2rem;
+    letter-spacing: 1.8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .section-header {
+    padding-left: 15px;
+    gap: 20px;
+  }
+
+  .featured-title,
+  .view-all {
+    font-size: 1rem;
+    letter-spacing: 1.5px;
   }
 }
