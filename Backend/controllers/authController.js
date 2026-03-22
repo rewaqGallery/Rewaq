@@ -238,6 +238,9 @@ exports.googleCallBack = [
     const token = createToken({ _id: user._id, role: user.role });
     // const { password, ...safeUser } = user.toObject();
 
-    res.redirect(`http://localhost:5173/google-success?token=${token}`);
+    // res.redirect(`http://localhost:5173/google-success?token=${token}`);
+    res.redirect(
+      `https://rewaq-gallery.vercel.app/google-success?token=${token}`,
+    );
   },
 ];

@@ -6,10 +6,9 @@ const bcryptjs = require("bcryptjs");
 require("dotenv").config();
 
 const callbackURL =
-  // process.env.NODE_ENV === "production"
-  //   ? "https://graduationproject-production-ebf4.up.railway.app/auth/google/callback"
-  // :
-  "http://localhost:9001/auth/google/callback";
+  process.env.NODE_ENV === "production"
+    ? "https://rewaq-server-production.up.railway.app/auth/google/callback"
+    : "http://localhost:9001/auth/google/callback";
 
 passport.use(
   new GoogleStrategy(
@@ -38,5 +37,3 @@ passport.use(
     },
   ),
 );
-
-

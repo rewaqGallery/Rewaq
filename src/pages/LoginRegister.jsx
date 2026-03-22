@@ -242,7 +242,8 @@ function LoginRegister({ onClose }) {
 
               <a
                 className="google-btn"
-                href="http://localhost:9001/auth/google"
+                href="https://rewaq-server-production.up.railway.app/auth/google"
+                // href="http://localhost:9001/auth/google"
               >
                 <img
                   src="https://developers.google.com/identity/images/g-logo.png"
