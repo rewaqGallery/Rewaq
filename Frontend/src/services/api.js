@@ -1,5 +1,5 @@
 // const BASE_URL = "http://localhost:9001";
-const BASE_URL = "rewaq-server-production.up.railway.app";
+const BASE_URL = "https://rewaq-server-production.up.railway.app";
 
 export const getToken = () => localStorage.getItem("token");
 
