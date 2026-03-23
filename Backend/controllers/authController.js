@@ -7,7 +7,7 @@ const passport = require("passport");
 
 const pendingUserModel = require("../models/pendingUserModel");
 const userModel = require("../models/userModel");
-const sendEmail = require("../utils/nodemailer");
+const sendEmail = require("../utils/sendEmail");
 const createToken = require("../utils/tokens");
 const apiError = require("../utils/apiError");
 
