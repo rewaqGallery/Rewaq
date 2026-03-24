@@ -28,9 +28,12 @@ export const getProducts = async (filters = {}) => {
     queryParams.append("quantity[gt]", 0);
   }
 
+  if (filters.featured) {
+    queryParams.append("featured", true);
+  }
   queryParams.append("page", filters.page || 1);
   queryParams.append("limit", filters.limit || 10);
-
+ 
   const queryString = queryParams.toString();
 
   return await apiRequest(`/product?${queryString}`);

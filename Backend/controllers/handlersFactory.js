@@ -63,7 +63,7 @@ exports.updateOne = (Model, arrOfFields, folderName, imagesMode = "replace") =>
         }
       });
     }
-    
+
     //* update image (req.file)
     if (req?.file) {
       // upload new image first
@@ -248,7 +248,9 @@ exports.getAll = (Model, populationOption) =>
     );
 
     const mongoFilter = JSON.parse(queryStr);
-
+    if (mongoFilter.featured !== undefined) {
+      mongoFilter.featured = mongoFilter.featured === "true";
+    }
     //! 2- Searching
     const keyword = req.query.keyword?.trim();
     let searchFilter = {};

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-
 import FilterSidebar from "./FilterSideBar";
 import ProductCard from "./ProductCard";
+import Pagination from "./Pagination";
 import { getProducts } from "../services/productService";
 
 import "./style/product.css";
 
-function Products({ limit = 20, featured = false, showFilters = true }) {
+function Products({ featured = false, showFilters = true }) {
   const [searchParams] = useSearchParams();
 
   const keywordFromURL = searchParams.get("keyword") || "";
@@ -19,7 +19,7 @@ function Products({ limit = 20, featured = false, showFilters = true }) {
     availableOnly: false,
     keyword: keywordFromURL,
     page: 1,
-    limit: limit || 10,
+    limit: 10,
   });
 
   const [products, setProducts] = useState([]);
@@ -41,8 +41,10 @@ function Products({ limit = 20, featured = false, showFilters = true }) {
   useEffect(() => {
     setLoading(true);
     setError(null);
-
-    getProducts(filters)
+    const requestFilters = featured
+      ? { ...filters, featured: true, page: 1, limit: 100000 }
+      : filters;
+    getProducts(requestFilters)
       .then((res) => {
         setProducts(res.data);
         setTotalResults(res.totalResults);
@@ -51,65 +53,54 @@ function Products({ limit = 20, featured = false, showFilters = true }) {
         setError(err.message || "Failed to load products");
       })
       .finally(() => setLoading(false));
-  }, [filters]);
-
-  const handlePageChange = (newPage) => {
-    setFilters((prev) => ({
-      ...prev,
-      page: newPage,
-    }));
-  };
+  }, [filters, featured]);
 
   if (loading && products.length === 0) return <p>Loading products...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="products-page">
+    <main className="products-page">
       {showFilters && !featured && (
-        <FilterSidebar filters={filters} onFilterChange={setFilters} />
+        <section className="filter-horizontal">
+          <FilterSidebar filters={filters} onFilterChange={setFilters} />
+        </section>
       )}
 
-      <div className="products-content">
+      <section className="products-content">
         {!featured && (
-          <p className="results-count">
-            Showing {products.length} of {totalResults} products
-          </p>
+          <header className="results-count">
+            <p>
+              Showing {products.length} of {totalResults} products
+            </p>
+          </header>
         )}
 
-        <div className="products-grid">
+        <ul className="products-grid" aria-live="polite">
           {products.length ? (
             products.map((product) => {
-              if (featured && !product.featured) return null;
-              return <ProductCard key={product._id} product={product} />;
+              <li key={product._id}>
+                <ProductCard product={product} />
+              </li>;
             })
           ) : (
-            <div className="no-products">
+            <li className="no-products">
               <p>No products match your filters</p>
-            </div>
+            </li>
           )}
-        </div>
+        </ul>
 
         {!featured && (
-          <div className="pagination">
-            <button
-              disabled={filters.page === 1}
-              onClick={() => handlePageChange(filters.page - 1)}
-            >
-              Prev
-            </button>
-
-            <span>Page {filters.page}</span>
-
-            <button
-              disabled={products.length < filters.limit}
-              onClick={() => handlePageChange(filters.page + 1)}
-            >
-              Next
-            </button>
-          </div>
+          <Pagination
+            page={filters.page}
+            setPage={(newPage) =>
+              setFilters((prev) => ({ ...prev, page: newPage }))
+            }
+            totalResults={totalResults}
+            limit={filters.limit}
+          />
         )}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
 
