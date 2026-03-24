@@ -14,7 +14,6 @@ export async function getMyOrders() {
 
 export async function getOrders(filters = {}) {
   const queryParams = new URLSearchParams();
-  console.log(filters)
   if (filters.sort) {
     queryParams.append("sort", filters.sort);
   }

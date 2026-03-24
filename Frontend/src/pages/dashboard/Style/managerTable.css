@@ -1,0 +1,111 @@
+.manager-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--whityColor);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  font-family: "Jersey 10", sans-serif;
+}
+
+.manager-table thead {
+  background-color: var(--warmyColor);
+}
+
+.manager-table th {
+  padding: 15px;
+  text-align: left;
+  font-size: 1.3rem;
+  color: var(--mainColor);
+  letter-spacing: 2px;
+}
+
+.manager-table td {
+  padding: 15px;
+  color: var(--secondaryColor);
+  border-bottom: 1px solid #ddd;
+  font-size: 1.1rem;
+}
+
+.manager-table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.manager-table img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.manager-table td input {
+  border-radius: 20px;
+  padding: 0px 10px;
+  max-width: 100px;
+}
+.manager-table td button {
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-size: 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+  background-color: var(--maintGreen);
+  color: var(--mainColor);
+  transition: all 0.3s ease;
+}
+
+.manager-table td td button:hover {
+  background-color: var(--secondaryColor);
+  color: #fff;
+}
+
+
+.manager-table td .danger {
+  background-color: #f3b5b5;
+  color: #7a0000;
+}
+
+.manager-table td .danger:hover {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+.manager-empty {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+
+@media (max-width: 768px) {
+  .manager-table thead {
+    display: none;
+  }
+
+  .manager-table,
+  .manager-table tbody,
+  .manager-table tr,
+  .manager-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .manager-table tr {
+    margin-bottom: 15px;
+    background: var(--whityColor);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .manager-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border: none;
+  }
+
+  .manager-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: var(--mainColor);
+  }
+}

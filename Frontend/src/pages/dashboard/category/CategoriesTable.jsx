@@ -1,3 +1,4 @@
+import "../Style/managerTable.css"
 export default function CategoriesTable({ categories, onEdit, onDelete }) {
   if (categories.length === 0) {
     return <p>No categories found</p>;
@@ -7,13 +8,16 @@ export default function CategoriesTable({ categories, onEdit, onDelete }) {
     <table className="manager-table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th>Image</th>
-          <th style={{ width: "180px" }}>Actions</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Price</th>
+          <th scope="col">Image</th>
+          <th scope="col">
+            Actions
+          </th>
         </tr>
       </thead>
+
       <tbody>
         {categories.map((c) => (
           <tr key={c._id}>
@@ -21,11 +25,24 @@ export default function CategoriesTable({ categories, onEdit, onDelete }) {
             <td>{c.description}</td>
             <td>{c.price}</td>
             <td>
-              <img src={c.image?.url} />
+              <img
+                src={c.image?.url}
+                alt={c.name ? `${c.name} category image` : "Category image"}
+                loading="lazy"
+              />
             </td>
             <td>
-              <button onClick={() => onEdit(c)}>Edit</button>
-              <button className="danger" onClick={() => onDelete(c._id)}>
+              <button
+                onClick={() => onEdit(c)}
+                aria-label={`Edit category ${c.name}`}
+              >
+                Edit
+              </button>
+              <button
+                className="danger"
+                onClick={() => onDelete(c._id)}
+                aria-label={`Delete category ${c.name}`}
+              >
                 Delete
               </button>
             </td>

@@ -5,8 +5,9 @@ import {
   deleteCategory,
 } from "../../../services/categoryService";
 import CategoriesTable from "./CategoriesTable";
-import Pagination from "../Pagination";
-import "./categoryManger.css"
+import Pagination from "../../../components/Pagination";
+import "../Style/Managers.css";
+
 export default function CategoriesManager() {
   const navigate = useNavigate();
 
@@ -21,18 +22,14 @@ export default function CategoriesManager() {
     limit: 5,
   });
 
-  //! Fetch
   const fetchCategories = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      setError(null);
-
-      const params = new URLSearchParams(filters);
-      const res = await getCategories(`?${params.toString()}`);
-
+      const res = await getCategories(filters);
       setCategories(res.data);
       setTotalResults(res.totalResults);
     } catch (err) {
+      console.log(err);
       setError("Failed to load categories");
     } finally {
       setLoading(false);
@@ -43,7 +40,6 @@ export default function CategoriesManager() {
     fetchCategories();
   }, [filters]);
 
-  //! Delete
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure?")) return;
     await deleteCategory(id);
@@ -51,19 +47,22 @@ export default function CategoriesManager() {
   };
 
   return (
-    <div className="manager">
+    <section className="manager">
       <div className="manager-header">
-        <h2>Categories</h2>
-        <button onClick={() => navigate("/dashboard/categories/create")}>
+        <h2>Manage Categories</h2>
+        <button
+          onClick={() => navigate("/dashboard/categories/create")}
+          aria-label="Add new category"
+        >
           + Add Category
         </button>
       </div>
 
-      {/* Filters */}
       <div className="filter-sort">
         <select
           value={filters.sort}
           onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
+          aria-label="sort categories"
         >
           <option value="-createdAt">Newest</option>
           <option value="createdAt">Oldest</option>
@@ -74,18 +73,28 @@ export default function CategoriesManager() {
         </select>
       </div>
 
-      {error && <p className="error">{error}</p>}
+      {error && (
+        <p className="error" role="alert">
+          {error}
+        </p>
+      )}
       {loading ? (
-        <p>Loading...</p>
+        <p role="status" aria-live="polite">
+          Loading...
+        </p>
       ) : (
         <>
-          <CategoriesTable
-            categories={categories}
-            onEdit={(cat) =>
-              navigate(`/dashboard/categories/update/${cat._id}`)
-            }
-            onDelete={handleDelete}
-          />
+          {categories.length === 0 ? (
+            <p>No categories found</p>
+          ) : (
+            <CategoriesTable
+              categories={categories}
+              onEdit={(cat) =>
+                navigate(`/dashboard/categories/update/${cat._id}`)
+              }
+              onDelete={handleDelete}
+            />
+          )}
 
           <Pagination
             page={filters.page}
@@ -95,6 +104,6 @@ export default function CategoriesManager() {
           />
         </>
       )}
-    </div>
+    </section>
   );
 }

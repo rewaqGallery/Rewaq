@@ -39,11 +39,11 @@ a {
   color: var(--mainColor)
 }
 
-.container {
-  width: 90%;
-  margin: 0 auto;
-  max-width: 1350px;
-}
+/* .container { */
+  /* width: 90%; */
+  /* margin: 0 auto; */
+  /* max-width: 1350px; */
+/* } */
 
 .jersey-10-regular {
   font-family: "Jersey 10", sans-serif;

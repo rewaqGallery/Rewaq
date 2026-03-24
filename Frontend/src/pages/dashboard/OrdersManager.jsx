@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   getOrders,
@@ -7,13 +6,22 @@ import {
   cancelOrder,
   deleteOrder,
 } from "../../services/orderService";
-import Pagination from "./Pagination";
+import Pagination from "../../components/Pagination";
+import "./Style/Managers.css";
+import "./Style/managerTable.css"
 
 export default function OrdersManager() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [totalResults, setTotalResults] = useState(0);
-  const [filters, setFilters] = useState({ keyword: "", page: 1, limit: 5, sort: "-createdAt" });
+
+  const [filters, setFilters] = useState({
+    keyword: "",
+    page: 1,
+    limit: 5,
+    sort: "-createdAt",
+  });
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -23,8 +31,10 @@ export default function OrdersManager() {
       setTotalResults(res.totalResults);
     } catch (err) {
       console.log(err);
+      setError("Failed to load orders");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -40,18 +50,24 @@ export default function OrdersManager() {
   };
 
   return (
-    <div>
-      <h2>Manage Orders</h2>
+    <section className="manager">
+      <div className="manager-header">
+        <h2>Manage Orders</h2>
+      </div>
       <div className="filter-sort">
         <input
           type="text"
           placeholder="Search by ID or User..."
           value={filters.keyword}
-          onChange={(e) => setFilters({ ...filters, keyword: e.target.value, page: 1 })}
+          onChange={(e) =>
+            setFilters({ ...filters, keyword: e.target.value, page: 1 })
+          }
+          aria-label="Search orders by ID or user"
         />
         <select
           value={filters.sort}
           onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
+          aria-label="Sort orders"
         >
           <option value="-createdAt">Newest</option>
           <option value="createdAt">Oldest</option>
@@ -59,36 +75,80 @@ export default function OrdersManager() {
           <option value="-orderStatus">Status DSC</option>
         </select>
       </div>
-
-      {loading ? <p>Loading...</p> : (
+      {error && (
+        <p className="error" role="alert">
+          {error}
+        </p>
+      )}
+      {loading ? (
+        <p role="status" aria-live="polite">
+          Loading...
+        </p>
+      ) : (
         <>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>User</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((o) => (
-                <tr key={o._id}>
-                  <td>{o._id}</td>
-                  <td>{o.user}</td>
-                  <td>${o.totalOrderPrice}</td>
-                  <td>{o.orderStatus}</td>
-                  <td>
-                    {!o.isPaid && <button onClick={() => handleAction(o._id, "paid")}>Mark Paid</button>}
-                    {!o.isDelivered && <button onClick={() => handleAction(o._id, "delivered")}>Mark Delivered</button>}
-                    {!o.isCanceled && <button className="danger" onClick={() => handleAction(o._id, "cancel")}>Cancel</button>}
-                    <button className="danger" onClick={() => handleAction(o._id, "delete")}>Delete</button>
-                  </td>
+          {orders.length === 0 ? (
+            <p>No Orders found</p>
+          ) : (
+            <table className="manager-table">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">User</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Status</th>
+                  <th scope="col" >
+                    Actions
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {orders.map((o) => (
+                  <tr key={o._id}>
+                    <td>{o._id}</td>
+                    <td>{o.user}</td>
+                    <td>${o.totalOrderPrice}</td>
+                    <td>{o.orderStatus}</td>
+                    <td>
+                      {!o.isPaid && (
+                        <button
+                          onClick={() => handleAction(o._id, "paid")}
+                          aria-label={`Mark order ${o._id} as paid`}
+                        >
+                          Mark Paid
+                        </button>
+                      )}
+                      {!o.isDelivered && (
+                        <button
+                          onClick={() => handleAction(o._id, "delivered")}
+                          aria-label={`Mark order ${o._id} as delivered`}
+                        >
+                          Mark Delivered
+                        </button>
+                      )}
+                      {!o.isCanceled && (
+                        <button
+                          className="danger"
+                          onClick={() => handleAction(o._id, "cancel")}
+                          aria-label={`Cancel order ${o._id}`}
+                        >
+                          Cancel
+                        </button>
+                      )}
+                      <button
+                        className="danger"
+                        onClick={() => handleAction(o._id, "delete")}
+                        aria-label={`Delete order ${o._id}`}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
           <Pagination
             page={filters.page}
             setPage={(p) => setFilters({ ...filters, page: p })}
@@ -97,6 +157,6 @@ export default function OrdersManager() {
           />
         </>
       )}
-    </div>
+    </section>
   );
 }
