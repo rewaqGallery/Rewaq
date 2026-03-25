@@ -252,6 +252,7 @@ export default function ProductForm() {
           ))}
         </div>
       </div>
+      {/* featured checkbox */}
       <div className="form-item">
         <label className="checkbox">
           <input
@@ -271,7 +272,6 @@ export default function ProductForm() {
         <label>Image Cover</label>
         {isEdit && existingCover && (
           <div className="image-preview">
-            <p>Current Cover</p>
             <img src={existingCover.url} alt="cover" />
           </div>
         )}
@@ -281,6 +281,7 @@ export default function ProductForm() {
           onChange={(e) => setImageCover(e.target.files[0])}
         />
       </div>
+      
       <div className="form-item">
         <label>Images</label>
         {isEdit && existingImages.length > 0 && (
