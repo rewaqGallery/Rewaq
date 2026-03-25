@@ -34,7 +34,7 @@ export default function ProductForm() {
   const [imagesMode, setImagesMode] = useState("replace");
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -72,7 +72,7 @@ export default function ProductForm() {
         setExistingCover(product.imageCover || null);
         setExistingImages(product.images || []);
       } catch (err) {
-        setError(err.message || "Failed to load product");
+        setErrors(err.message || "Failed to load product");
       } finally {
         setLoading(false);
       }
@@ -83,7 +83,7 @@ export default function ProductForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors("");
     setLoading(true);
 
     try {
@@ -113,7 +113,24 @@ export default function ProductForm() {
 
       navigate("/dashboard/");
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      // 1- express-validator errors
+      console.log(err.data.errors[0].msg)
+      if (err?.data?.errors) {
+        const messages = err.data.errors.map((e) => e.msg);
+        console.log(messages)
+        setErrors(messages);
+      }
+
+      // 2- mongoose validation errors
+      else if (err.response?.data?.error?.errors) {
+        const messages = Object.values(err.response.data.error.errors).map(
+          (e) => e.message,
+        );
+
+        setErrors(messages);
+      } else {
+        setErrors([err.response?.data?.message || "Something went wrong"]);
+      }
     } finally {
       setLoading(false);
     }
@@ -122,10 +139,12 @@ export default function ProductForm() {
   return (
     <form className="admin-form" onSubmit={handleSubmit}>
       <h2>{isEdit ? "Update Product" : "Create Product"}</h2>
-      {error && (
-        <p className="error" role="alert">
-          {error}
-        </p>
+      {errors.length > 0 && (
+        <ul className="error" role="alert">
+          {errors.map((err, i) => (
+            <li key={i}>{err}</li>
+          ))}
+        </ul>
       )}
       <div className="form-item">
         <label htmlFor="code">Product Code</label>
@@ -255,6 +274,7 @@ export default function ProductForm() {
       {/* featured checkbox */}
       <div className="form-item">
         <label className="checkbox">
+          Featured
           <input
             type="checkbox"
             checked={formData.featured}
@@ -265,9 +285,9 @@ export default function ProductForm() {
               })
             }
           />
-          Featured
         </label>
       </div>
+
       <div className="form-item">
         <label>Image Cover</label>
         {isEdit && existingCover && (
@@ -281,7 +301,7 @@ export default function ProductForm() {
           onChange={(e) => setImageCover(e.target.files[0])}
         />
       </div>
-      
+
       <div className="form-item">
         <label>Images</label>
         {isEdit && existingImages.length > 0 && (
@@ -292,10 +312,11 @@ export default function ProductForm() {
                 <button
                   type="button"
                   onClick={async () => {
-                    await updateProduct(id, {
-                      imagesMode: "remove",
-                      removeImageId: img.public_id,
-                    });
+                    const data = new FormData();
+                    data.append("imagesMode", "remove");
+                    data.append("removeImageId", img.public_id);
+                    await updateProduct(id, data);
+
                     setExistingImages(
                       existingImages.filter(
                         (i) => i.public_id !== img.public_id,
