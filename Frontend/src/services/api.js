@@ -24,13 +24,17 @@ export async function apiRequest(path, options = {}) {
   } catch (err) {
     data = null;
   }
+if (!res.ok) {
+  console.log("Response Status:", res.status);
+  console.log("Response Body:", data);
 
-  if (!res.ok) {
-    console.log("Response Status:", res.status);
-    console.log("Response Body:", data);
-    throw new Error(
-      (data && (data.message || data.error)) || `Request failed: ${res.status}`,
-    );
-  }
-  return data;
+  throw {
+    status: res.status,
+    data: data,
+    message:
+      data?.message ||
+      (typeof data?.error === "string" ? data.error : null) ||
+      `Request failed: ${res.status}`,
+  };
+}  return data;
 }
