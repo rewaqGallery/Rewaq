@@ -129,27 +129,6 @@ function CreateOrder() {
 
         <form className="shipping-form">
           <h3 className="form-title">Shipping Address</h3>
-          <div className="form-group">
-            <label>Detailed Address</label>
-            <textarea
-              name="detailedAddress"
-              value={shippingAddress.detailedAddress}
-              onChange={handleChange}
-              placeholder="Street, building, apartment..."
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone</label>
-            <input
-              type="tel"
-              name="phone"
-              value={shippingAddress.phone}
-              onChange={handleChange}
-              placeholder="01xxxxxxxxx"
-              required
-            />
-          </div>
           <div className="form-row">
             <div className="form-group">
               <label>Governorate</label>
@@ -190,11 +169,34 @@ function CreateOrder() {
               />
             </div>
           </div>
+
+          <div className="form-group">
+            <label>Detailed Address</label>
+            <textarea
+              name="detailedAddress"
+              value={shippingAddress.detailedAddress}
+              onChange={handleChange}
+              placeholder="Street, building, apartment..."
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              value={shippingAddress.phone}
+              onChange={handleChange}
+              placeholder="01xxxxxxxxx"
+              required
+            />
+          </div>
         </form>
 
         <div className="order-summary">
+          
           <h3 className="order-total">
-            Total: {totalPrice.toFixed(2)} + {shippingPrice} LE
+            Total: {(totalPrice + shippingPrice).toFixed(2)} LE
           </h3>
           <div className="order-actions">
             <button className="back-btn" onClick={() => navigate("/cart")}>
