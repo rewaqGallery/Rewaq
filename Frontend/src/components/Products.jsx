@@ -19,7 +19,7 @@ function Products({ featured = false, showFilters = true }) {
     availableOnly: false,
     keyword: keywordFromURL,
     page: 1,
-    limit: 10,
+    limit: 50,
   });
 
   const [products, setProducts] = useState([]);

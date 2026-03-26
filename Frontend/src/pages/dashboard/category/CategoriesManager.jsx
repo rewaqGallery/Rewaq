@@ -19,7 +19,7 @@ export default function CategoriesManager() {
   const [filters, setFilters] = useState({
     sort: "-createdAt",
     page: 1,
-    limit: 5,
+    limit: 10,
   });
 
   const fetchCategories = async () => {
