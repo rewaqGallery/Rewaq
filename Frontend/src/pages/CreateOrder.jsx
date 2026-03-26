@@ -6,6 +6,7 @@ import { fetchCart, clearCart } from "../store/cartSlice";
 import { getToken } from "../services/api";
 import { createOrder } from "../services/orderService";
 import "./style/CreateOrder.css";
+import { governorates } from "../utils/governorates";
 
 function CreateOrder() {
   const dispatch = useDispatch();
@@ -20,8 +21,10 @@ function CreateOrder() {
     detailedAddress: "",
     phone: "",
     city: "",
+    governorate: "",
     postalCode: "",
   });
+  const [shippingPrice, setShippingPrice] = useState(0);
 
   const generateIdempotencyKey = () =>
     crypto.randomUUID?.() || Date.now().toString();
@@ -34,15 +37,34 @@ function CreateOrder() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setShippingAddress((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "governorate") {
+      setShippingAddress((prev) => ({
+        ...prev,
+        governorate: value,
+        city: "",
+      }));
+
+      setShippingPrice(governorates[value] || 0);
+    } else {
+      setShippingAddress((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleConfirmOrder = async () => {
     setError(null);
+    if (shippingPrice === 0) {
+      setError("Please select a valid governorate");
+      return;
+    }
     if (
       !shippingAddress.detailedAddress ||
       !shippingAddress.phone ||
-      !shippingAddress.city
+      !shippingAddress.city ||
+      !shippingAddress.governorate
     ) {
       setError("Please fill all required fields");
       return;
@@ -54,9 +76,10 @@ function CreateOrder() {
       const orderData = {
         detailedAddress: shippingAddress.detailedAddress,
         phone: shippingAddress.phone,
+        governorate: shippingAddress.governorate,
         city: shippingAddress.city,
         postalCode: shippingAddress.postalCode,
-        shippingPrice: 0,
+        shippingPrice,
         paymentMethod: "cash",
         idempotencyKey: generateIdempotencyKey(),
       };
@@ -73,7 +96,7 @@ function CreateOrder() {
 
   const totalPrice = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
 
   // Show popup then navigate home after 3s
@@ -116,18 +139,35 @@ function CreateOrder() {
               required
             />
           </div>
+          <div className="form-group">
+            <label>Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              value={shippingAddress.phone}
+              onChange={handleChange}
+              placeholder="01xxxxxxxxx"
+              required
+            />
+          </div>
           <div className="form-row">
             <div className="form-group">
-              <label>Phone</label>
-              <input
-                type="tel"
-                name="phone"
-                value={shippingAddress.phone}
+              <label>Governorate</label>
+              <select
+                name="governorate"
+                value={shippingAddress.governorate}
                 onChange={handleChange}
-                placeholder="01xxxxxxxxx"
                 required
-              />
+              >
+                <option value="">Select Governorate</option>
+                {Object.entries(governorates).map(([name, price]) => (
+                  <option key={name} value={name}>
+                    {name} ({price} EGP)
+                  </option>
+                ))}
+              </select>
             </div>
+
             <div className="form-group">
               <label>City</label>
               <input
@@ -139,21 +179,23 @@ function CreateOrder() {
                 required
               />
             </div>
-          </div>
-          <div className="form-group">
-            <label>Postal Code (optional)</label>
-            <input
-              type="text"
-              name="postalCode"
-              value={shippingAddress.postalCode}
-              onChange={handleChange}
-              placeholder="12345"
-            />
+            <div className="form-group">
+              <label>Postal Code (optional)</label>
+              <input
+                type="text"
+                name="postalCode"
+                value={shippingAddress.postalCode}
+                onChange={handleChange}
+                placeholder="12345"
+              />
+            </div>
           </div>
         </form>
 
         <div className="order-summary">
-          <h3 className="order-total">Total: {totalPrice.toFixed(2)} LE</h3>
+          <h3 className="order-total">
+            Total: {totalPrice.toFixed(2)} + {shippingPrice} LE
+          </h3>
           <div className="order-actions">
             <button className="back-btn" onClick={() => navigate("/cart")}>
               Back to Cart
@@ -169,16 +211,13 @@ function CreateOrder() {
         </div>
 
         {showPopup && (
-           <div className="popup-overlay">
-          <div className="popup">
-            <p>Order Created Successfully</p>
-            <button
-              className="popup-close"
-              onClick={() => navigate("/")}
-            >
-              Close
-            </button>
-          </div>
+          <div className="popup-overlay">
+            <div className="popup">
+              <p>Order Created Successfully</p>
+              <button className="popup-close" onClick={() => navigate("/")}>
+                Close
+              </button>
+            </div>
           </div>
         )}
       </div>

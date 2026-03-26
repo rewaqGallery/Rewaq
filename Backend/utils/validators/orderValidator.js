@@ -14,6 +14,12 @@ exports.createOrderValidator = [
     .isString()
     .withMessage("Invalid City Format"),
 
+  check("governorate")
+    .notEmpty()
+    .withMessage("Governorate Required")
+    .isString()
+    .withMessage("Invalid City Format"),
+
   check("phone")
     .notEmpty()
     .withMessage("Phone Required")
