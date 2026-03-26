@@ -20,7 +20,10 @@ exports.getAllProducts = getAll(productModel, {
 });
 
 exports.setPriceFromCategory = async (req, res, next) => {
-  if (req.body.price === undefined && req.body.category) {
+  if (
+    req.body.price === undefined ||
+    (req.body.price === "" && req.body.category)
+  ) {
     const category = await categoryModel.findById(req.body.category);
 
     if (!category) {
@@ -28,6 +31,18 @@ exports.setPriceFromCategory = async (req, res, next) => {
     }
 
     req.body.price = category.price;
+  }
+  if (
+    req.body.priceAfterDiscount === undefined ||
+    (req.body.priceAfterDiscount === "" && req.body.category)
+  ) {
+    const category = await categoryModel.findById(req.body.category);
+
+    if (!category) {
+      return next(new apiError("Category not found", 404));
+    }
+
+    req.body.priceAfterDiscount = category.priceAfterDiscount;
   }
   next();
 };

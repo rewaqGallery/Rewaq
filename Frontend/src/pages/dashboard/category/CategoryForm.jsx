@@ -31,6 +31,7 @@ export default function CategoryForm() {
         setFormData({
           name: res.data.name || "",
           price: res.data.price || 0,
+          priceAfterDiscount: res.data.priceAfterDiscount || 0,
           description: res.data.description || "",
         });
       } catch (err) {
@@ -51,6 +52,7 @@ export default function CategoryForm() {
     data.append("name", formData.name);
     data.append("price", formData.price);
     data.append("description", formData.description);
+    data.append("priceAfterDiscount", formData.priceAfterDiscount);
     if (image) data.append("image", image);
 
     try {
@@ -91,11 +93,26 @@ export default function CategoryForm() {
       <div className="form-item">
         <label htmlFor="price">Category Price</label>
         <input
+          id="price"
           type="number"
           min="0"
           value={formData.price}
           onChange={(e) => setFormData({ ...formData, price: e.target.value })}
           required={!isEdit}
+        />
+      </div>
+      <div className="form-item">
+        <label htmlFor="priceAfterDiscount">
+          Category Price After Discount
+        </label>
+        <input
+          id="priceAfterDiscount"
+          type="number"
+          min="0"
+          value={formData.priceAfterDiscount}
+          onChange={(e) =>
+            setFormData({ ...formData, priceAfterDiscount: e.target.value })
+          }
         />
       </div>
       <div className="form-item">
