@@ -114,10 +114,10 @@ export default function ProductForm() {
       navigate("/dashboard/");
     } catch (err) {
       // 1- express-validator errors
-      console.log(err.data.errors[0].msg)
+      console.log(err.data.errors[0].msg);
       if (err?.data?.errors) {
         const messages = err.data.errors.map((e) => e.msg);
-        console.log(messages)
+        console.log(messages);
         setErrors(messages);
       }
 
@@ -162,10 +162,13 @@ export default function ProductForm() {
         <input
           id="price"
           type="number"
-          placeholder="Price"
+          placeholde="Price"
           value={formData.price}
-          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-          required
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              price: e.target.value })
+          }
         />
       </div>
       <div className="form-item">

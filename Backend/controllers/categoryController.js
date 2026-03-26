@@ -11,7 +11,7 @@ const apiError = require("../utils/apiError");
 
 exports.createCategory = createOne(
   categoryModel,
-  ["name", "image", "price", "description"],
+  ["name", "image", "price", "priceAfterDiscount", "description"],
   "Category",
 );
 
@@ -20,6 +20,6 @@ exports.deleteCategory = deleteOne(categoryModel);
 exports.getCategoryById = getOne(categoryModel);
 exports.updateCategory = updateOne(
   categoryModel,
-  ["name", "image", "price", "description"],
+  ["name", "image", "price", "priceAfterDiscount", "description"],
   "Category",
 );

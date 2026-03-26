@@ -11,6 +11,7 @@ export default function CategoriesTable({ categories, onEdit, onDelete }) {
           <th scope="col">Name</th>
           <th scope="col">Description</th>
           <th scope="col">Price</th>
+          <th scope="col">PriceAfterDiscount</th>
           <th scope="col">Image</th>
           <th scope="col">
             Actions
@@ -24,6 +25,7 @@ export default function CategoriesTable({ categories, onEdit, onDelete }) {
             <td>{c.name}</td>
             <td>{c.description}</td>
             <td>{c.price}</td>
+            <td>{c.priceAfterDiscount}</td>
             <td>
               <img
                 src={c.image?.url}

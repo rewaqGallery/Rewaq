@@ -55,6 +55,7 @@ function OrderDetailsPage() {
           {/* Shipping */}
           <div className="shipping-box">
             <p><strong>Address:</strong> {order.shippingAddress?.detailedAddress}</p>
+            <p><strong>Governorate:</strong> {order.shippingAddress?.governorate}</p>
             <p><strong>City:</strong> {order.shippingAddress?.city}</p>
             <p><strong>Phone:</strong> {order.shippingAddress?.phone}</p>
           </div>
