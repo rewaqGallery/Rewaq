@@ -16,6 +16,7 @@ function ProductCard({ product }) {
   const token = localStorage.getItem("token");
 
   const productId = product?._id ?? product?.id;
+  const productName = product?.description || "Product";
 
   const isFavourite = favourites.some((f) => f === productId);
 
@@ -48,15 +49,23 @@ function ProductCard({ product }) {
   };
 
   return (
-    <div className="product-card">
+    <article className="product-card">
       <button
         className={`favorite-btn ${isFavourite ? "active" : ""}`}
         onClick={handleFavourite}
+        aria-label={
+          isFavourite ? "Remove from favourites" : "Add to favourites"
+        }
+        aria-pressed={isFavourite}
       >
         {isFavourite ? <FaHeart /> : <FaRegHeart />}
       </button>
 
-      <Link to={`/product/${productId}`} className="product-link">
+      <Link
+        to={`/product/${productId}`}
+        className="product-link"
+        aria-label={`View details for ${productName}`}
+      >
         <div className="product-image-wrapper">
           {product.quantity <= 0 && (
             <div className="out-of-stock-badge">Out of Stock</div>
@@ -72,8 +81,23 @@ function ProductCard({ product }) {
 
         <div className="product-info">
           <span className="product-category">{product.category?.name}</span>
-          <h3 className="product-name">{product.description}</h3>
-          <div className="product-price">{product.price.toFixed(2)} LE</div>
+          <div className="product-name">{product.description}</div>
+      <div className="product-prices">
+  {isNaN(product.priceAfterDiscount) ? (
+    <span className="product-priceAfterDiscount">
+      {Number(product.price).toFixed(2)} LE
+    </span>
+  ) : (
+    <>
+      <span className="product-priceAfterDiscount">
+        {Number(product.priceAfterDiscount).toFixed(2)} LE
+      </span>
+      <span className="product-price">
+        {Number(product.price).toFixed(2)} LE
+      </span>
+    </>
+  )}
+</div>
         </div>
       </Link>
 
@@ -82,11 +106,12 @@ function ProductCard({ product }) {
           type="button"
           className={`product-btn add-to-cart ${inCart ? "in-cart" : ""}`}
           onClick={handleCart}
+          aria-label={inCart ? "Remove from cart" : "Add to cart"}
         >
           {inCart ? "In Cart" : "Add to Cart"}
         </button>
       </div>
-    </div>
+    </article>
   );
 }
 
