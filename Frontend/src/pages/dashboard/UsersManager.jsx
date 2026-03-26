@@ -13,7 +13,7 @@ export default function UsersManager() {
   const [filters, setFilters] = useState({
     keyword: "",
     page: 1,
-    limit: 5,
+    limit: 25,
     sort: "-createdAt",
   });
 

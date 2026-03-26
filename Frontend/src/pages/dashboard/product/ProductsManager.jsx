@@ -21,7 +21,7 @@ export default function ProductsManager() {
   const [filters, setFilters] = useState({
     sort: "-createdAt",
     page: 1,
-    limit: 5,
+    limit: 25,
     keyword: "",
   });
 
