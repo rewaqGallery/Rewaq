@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   getOrders,
   updateOrderToPaid,
   updateOrderToDelivered,
   cancelOrder,
   deleteOrder,
+  getOrderById,
 } from "../../services/orderService";
 import Pagination from "../../components/Pagination";
 import "./Style/Managers.css";
-import "./Style/managerTable.css"
+import "./Style/managerTable.css";
 
 export default function OrdersManager() {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalResults, setTotalResults] = useState(0);
@@ -19,7 +23,7 @@ export default function OrdersManager() {
   const [filters, setFilters] = useState({
     keyword: "",
     page: 1,
-    limit: 5,
+    limit: 25,
     sort: "-createdAt",
   });
 
@@ -96,9 +100,7 @@ export default function OrdersManager() {
                   <th scope="col">User</th>
                   <th scope="col">Total</th>
                   <th scope="col">Status</th>
-                  <th scope="col" >
-                    Actions
-                  </th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
 
@@ -107,11 +109,19 @@ export default function OrdersManager() {
                   <tr key={o._id}>
                     <td>{o._id}</td>
                     <td>{o.user}</td>
-                    <td>${o.totalOrderPrice}</td>
+                    <td>{o.totalOrderPrice} LE</td>
                     <td>{o.orderStatus}</td>
                     <td>
+                      <button
+                        onClick={() => navigate(`/order/${o._id}`)}
+                        aria-label="View Order"
+                      >
+                        View
+                      </button>
+
                       {!o.isPaid && (
                         <button
+                          className="paidBtn"
                           onClick={() => handleAction(o._id, "paid")}
                           aria-label={`Mark order ${o._id} as paid`}
                         >
@@ -120,6 +130,7 @@ export default function OrdersManager() {
                       )}
                       {!o.isDelivered && (
                         <button
+                          className="deliveredBtn"
                           onClick={() => handleAction(o._id, "delivered")}
                           aria-label={`Mark order ${o._id} as delivered`}
                         >

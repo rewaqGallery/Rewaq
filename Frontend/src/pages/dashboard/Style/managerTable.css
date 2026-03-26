@@ -60,6 +60,14 @@
 }
 
 
+/* .manager-table td .deliveredBtn {
+  background-color: #8f833f;
+  color: white;
+}
+.manager-table td .paidBtn {
+  background-color:  #493f8f;
+  color: white;
+} */
 .manager-table td .danger {
   background-color: #f3b5b5;
   color: #7a0000;
