@@ -88,10 +88,16 @@ export default function UsersManager() {
             <table className="manager-table">
               <thead>
                 <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Role</th>
-                  <th scope="col" >
+                  <th className="user-name-th" scope="col">
+                    Name
+                  </th>
+                  <th className="user-email-th" scope="col">
+                    Email
+                  </th>
+                  <th className="user-role-th" scope="col">
+                    Role
+                  </th>
+                  <th className="user-actions-th" scope="col">
                     Actions
                   </th>
                 </tr>
@@ -99,17 +105,19 @@ export default function UsersManager() {
               <tbody>
                 {users.map((u) => (
                   <tr key={u._id}>
-                    <td>{u.name}</td>
-                    <td>{u.email}</td>
-                    <td>{u.role}</td>
-                    <td>
-                      <button
-                        className="danger"
-                        onClick={() => handleDelete(u._id, u.name)}
-                        aria-label={`Delete user ${u.name}`}
-                      >
-                        Delete
-                      </button>
+                    <td className="user-name-td">{u.name}</td>
+                    <td className="user-email-td">{u.email}</td>
+                    <td className="user-role-td">{u.role}</td>
+                    <td className="user-actions-td">
+                      <div className="buttons user-buttons">
+                        <button
+                          className="danger"
+                          onClick={() => handleDelete(u._id, u.name)}
+                          aria-label={`Delete user ${u.name}`}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

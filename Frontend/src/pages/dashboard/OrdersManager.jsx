@@ -11,11 +11,12 @@ import {
 import Pagination from "../../components/Pagination";
 import "./Style/Managers.css";
 import "./Style/managerTable.css";
+import { governorates } from "./../../utils/governorates";
 
 export default function OrdersManager() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalResults, setTotalResults] = useState(0);
@@ -96,63 +97,89 @@ export default function OrdersManager() {
             <table className="manager-table">
               <thead>
                 <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">User</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
+                  <th className="order-id-th" scope="col">
+                    ID
+                  </th>
+                  <th className="order-user-th" scope="col">
+                    User
+                  </th>
+                  <th className="order-governorate-th" scope="col">
+                    Governorate
+                  </th>
+                  <th className="order-ship-th" scope="col">
+                    ship
+                  </th>
+                  <th className="order-total-th" scope="col">
+                    Total
+                  </th>
+                  <th className="order-status-th" scope="col">
+                    Status
+                  </th>
+                  <th className="order-actions-th" scope="col">
+                    Actions
+                  </th>
                 </tr>
               </thead>
 
               <tbody>
                 {orders.map((o) => (
                   <tr key={o._id}>
-                    <td>{o._id}</td>
-                    <td>{o.user}</td>
-                    <td>{o.totalOrderPrice} LE</td>
-                    <td>{o.orderStatus}</td>
-                    <td>
-                      <button
-                        onClick={() => navigate(`/order/${o._id}`)}
-                        aria-label="View Order"
-                      >
-                        View
-                      </button>
+                    <td className="order-id-td">
+                      {o._id.toString().slice(0, 7)}..
+                    </td>
+                    <td className="order-user-td">
+                      {o._id.toString().slice(0, 7)}..
+                    </td>
+                    <td className="order-governorate-td">
+                      {o?.shippingAddress?.governorate}
+                    </td>
+                    <td className="order-ship-td">{o.shippingPrice}</td>
+                    <td className="order-total-td">{o.totalOrderPrice}</td>
+                    <td className="order-status-td">{o.orderStatus}</td>
+                    <td className="order-actions-td">
+                      <div className="buttons orders-buttons">
+                        <button
+                          onClick={() => navigate(`/order/${o._id}`)}
+                          aria-label="View Order"
+                        >
+                          View
+                        </button>
 
-                      {!o.isPaid && (
-                        <button
-                          className="paidBtn"
-                          onClick={() => handleAction(o._id, "paid")}
-                          aria-label={`Mark order ${o._id} as paid`}
-                        >
-                          Mark Paid
-                        </button>
-                      )}
-                      {!o.isDelivered && (
-                        <button
-                          className="deliveredBtn"
-                          onClick={() => handleAction(o._id, "delivered")}
-                          aria-label={`Mark order ${o._id} as delivered`}
-                        >
-                          Mark Delivered
-                        </button>
-                      )}
-                      {!o.isCanceled && (
+                        {!o.isPaid && (
+                          <button
+                            className="paidBtn"
+                            onClick={() => handleAction(o._id, "paid")}
+                            aria-label={`Mark order ${o._id} as paid`}
+                          >
+                            Mark Paid
+                          </button>
+                        )}
+                        {!o.isDelivered && (
+                          <button
+                            className="deliveredBtn"
+                            onClick={() => handleAction(o._id, "delivered")}
+                            aria-label={`Mark order ${o._id} as delivered`}
+                          >
+                            Mark Delivered
+                          </button>
+                        )}
+                        {!o.isCanceled && (
+                          <button
+                            className="danger"
+                            onClick={() => handleAction(o._id, "cancel")}
+                            aria-label={`Cancel order ${o._id}`}
+                          >
+                            Cancel
+                          </button>
+                        )}
                         <button
                           className="danger"
-                          onClick={() => handleAction(o._id, "cancel")}
-                          aria-label={`Cancel order ${o._id}`}
+                          onClick={() => handleAction(o._id, "delete")}
+                          aria-label={`Delete order ${o._id}`}
                         >
-                          Cancel
+                          Delete
                         </button>
-                      )}
-                      <button
-                        className="danger"
-                        onClick={() => handleAction(o._id, "delete")}
-                        aria-label={`Delete order ${o._id}`}
-                      >
-                        Delete
-                      </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
