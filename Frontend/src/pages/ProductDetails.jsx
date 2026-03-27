@@ -104,7 +104,13 @@ function ProductDetails() {
       <div className="product-details-container">
         {/* Images */}
         <div className="product-images">
-          <img src={mainImage} alt={product.description} className="main-image" />
+          <div className="main-image-wrapper">
+            <img
+              src={mainImage}
+              alt={product.description}
+              className="main-image"
+            />
+          </div>
 
           <div className="gallery">
             {/* cover */}
