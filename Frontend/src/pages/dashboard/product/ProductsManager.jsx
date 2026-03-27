@@ -8,7 +8,6 @@ import {
 } from "../../../services/productService";
 import ProductsTable from "./ProductsTable";
 import Pagination from "../../../components/Pagination";
-import "../Style/Managers.css";
 
 export default function ProductsManager() {
   const navigate = useNavigate();

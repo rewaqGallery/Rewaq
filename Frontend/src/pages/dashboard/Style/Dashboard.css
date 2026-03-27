@@ -4,8 +4,9 @@
   background-color: #fff;
   font-family: "Jersey 10", sans-serif;
 }
+
 .dashboard-content {
-  flex: 1;            
+  flex: 1;
   padding: 20px;
   overflow: auto;
 }
@@ -16,6 +17,7 @@
   padding: 30px 20px;
   border-right: 2px solid var(--warmyColor);
 }
+
 .dashboard-sidebar h1 {
   font-size: 2rem;
   margin-bottom: 30px;
@@ -27,11 +29,14 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.dashboard-sidebar nav li {
+/* .dashboard-sidebar nav li {
   margin-bottom: 15px;
-}
+} */
 
 .dashboard-sidebar button {
   width: 100%;
@@ -52,4 +57,113 @@
 .dashboard-sidebar button.active {
   background-color: var(--mainColor);
   color: #fff;
+}
+
+
+
+@media (max-width:1200px) {
+
+  .dashboard-content {
+    padding: 10px;
+  }
+
+
+  .dashboard-sidebar {
+    width: 200px;
+    padding: 30px 20px;
+  }
+
+  .dashboard-sidebar h1 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  .dashboard-sidebar nav ul {
+    gap: 12px;
+  }
+
+  .dashboard-sidebar button {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: transparent;
+    border: 2px solid var(--mainColor);
+    color: var(--mainColor);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 15px;
+  }
+
+}
+
+@media (max-width:775px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-content {
+    order: 2;
+    width: 100%;
+    padding: 0px;
+  }
+
+  .dashboard-sidebar h1 {
+    margin-bottom: 15px;
+    font-size: 2rem;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+    height: 130px;
+    padding: 10px;
+    order: 1;
+  }
+
+  .dashboard-sidebar nav ul {
+    display: flex;
+    flex-direction: row;
+    /* gap: 15px; */
+    justify-content: space-around;
+  }
+
+  .dashboard-sidebar button {
+    padding: 7px 15px;
+    font-size: 1.4rem;
+  }
+
+}
+
+
+@media (max-width:550px) {
+  .dashboard-sidebar h1 {
+    margin-bottom: 12px;
+    font-size: 2rem;
+  }
+
+  .dashboard-sidebar {
+    height: 110px;
+    padding: 10px;
+  }
+
+  .dashboard-sidebar button {
+    padding: 4px 15px;
+    font-size: 1.2rem;
+  }
+
+}
+
+@media (max-width:450px) {
+  .dashboard-sidebar {
+    padding: 3px;
+    height: 100px;
+  }
+
+  .dashboard-sidebar nav ul {
+    gap: 2px;
+  }
+
+  .dashboard-sidebar button {
+    padding: 2px 8px;
+    font-size: 1rem;
+  }
 }

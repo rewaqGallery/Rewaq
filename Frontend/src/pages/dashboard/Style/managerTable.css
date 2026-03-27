@@ -14,17 +14,29 @@
 
 .manager-table th {
   padding: 15px;
-  text-align: left;
   font-size: 1.3rem;
   color: var(--mainColor);
   letter-spacing: 2px;
+  text-align: center;
 }
 
 .manager-table td {
-  padding: 15px;
+  padding: 10px;
+  text-align: center;
   color: var(--secondaryColor);
   border-bottom: 1px solid #ddd;
   font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.manager-table td .tag-content,
+.manager-table td .description-content {
+  max-height: 100px;
+  overflow: hidden;
+  white-space: wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .manager-table tbody tr:hover {
@@ -37,14 +49,27 @@
   object-fit: cover;
   border-radius: 8px;
 }
+
 .manager-table td input {
   border-radius: 20px;
   padding: 0px 10px;
   max-width: 100px;
 }
-.manager-table td button {
-  padding: 6px 15px;
-  margin-right: 10px;
+
+.manager-table .buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+
+}
+
+.manager-table .orders-buttons {
+  justify-content: start;
+}
+
+.manager-table .buttons button {
+  padding: 7px 15px;
   font-size: 1rem;
   border-radius: 20px;
   cursor: pointer;
@@ -54,11 +79,15 @@
   transition: all 0.3s ease;
 }
 
-.manager-table td td button:hover {
+.manager-table .buttons .large-btn {
+  padding: 1px 15px;
+  line-height: 18px;
+}
+
+.manager-table td button:hover {
   background-color: var(--secondaryColor);
   color: #fff;
 }
-
 
 /* .manager-table td .deliveredBtn {
   background-color: #8f833f;
@@ -84,36 +113,135 @@
   color: #777;
 }
 
-@media (max-width: 768px) {
-  .manager-table thead {
+@media (max-width: 1300px) {
+
+  .order-user-th,
+  .order-user-td,
+  .order-ship-th,
+  .order-ship-td {
     display: none;
   }
+}
 
-  .manager-table,
-  .manager-table tbody,
-  .manager-table tr,
-  .manager-table td {
-    display: block;
-    width: 100%;
-  }
-
-  .manager-table tr {
-    margin-bottom: 15px;
-    background: var(--whityColor);
-    border-radius: 10px;
+@media (max-width: 1200px) {
+  .manager-table th {
     padding: 10px;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
   }
 
   .manager-table td {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
-    border: none;
+    padding: 10px;
+    font-size: 1.1rem;
   }
 
-  .manager-table td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    color: var(--mainColor);
+  .tag-th,
+  .tag-td {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .manager-table .buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+.manager-table .user-buttons {
+  display: flex;
+}
+  .manager-table .buttons button {
+    height: 38px;
+  }
+}
+
+@media (max-width: 875px) {
+  .manager-table .buttons {
+    gap: 5px;
+  }
+
+  .manager-table .buttons button {
+    padding: 7px 14px;
+    font-size: 0.9rem;
+  }
+
+  .manager-table .buttons .large-btn {
+    padding: 1px 10px;
+  }
+
+  .manager-table td {
+    padding: 5px;
+    font-size: 1rem;
+  }
+
+  .manager-table td input {
+    max-width: 70px;
+    padding: 0px 8px;
+  }
+}
+
+
+
+@media (max-width: 550px) {
+
+  /* .manager-table th:nth-child(4),
+  .manager-table td:nth-child(4),
+  .manager-table th:nth-child(5),
+  .manager-table td:nth-child(5) {
+    display: none;
+  } */
+  .price-th,
+  .price-td,
+  .category-th,
+  .category-td,
+  .category-description-td,
+  .category-description-th,
+  .order-governorate-td,
+  .order-governorate-th,
+  .user-role-td,
+  .user-role-th,
+  .user-name-td,
+  .user-name-th
+
+   {
+    display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .manager-table .orders-buttons {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2px;
+  }
+
+  .manager-table .orders-buttons button {
+    padding: 0px;
+    height: 25px;
+    font-size: 0.9rem;
+  }
+
+}
+
+@media (max-width: 350px) {
+  .manager-table th {
+    padding: 7px;
+    font-size: 1.1rem;
+    letter-spacing: 1.8px;
+  }
+
+  .manager-table td {
+    font-size: 0.9rem;
+  }
+
+  .sold-th,
+  .sold-td {
+    display: none;
+  }
+}
+
+@media (max-width: 310px) {
+  .manager-table .buttons {
+    gap: 2px;
   }
 }

@@ -61,6 +61,7 @@ export default function CategoriesManager() {
       <div className="filter-sort">
         <select
           value={filters.sort}
+          className="category-select"
           onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
           aria-label="sort categories"
         >
