@@ -63,7 +63,6 @@
 }
 
 @media (max-width: 1000px) {
-
   .categories-list {
     gap: 22px;
     padding: 0px;
@@ -90,7 +89,6 @@
 }
 
 @media (max-width: 480px) {
-
   .categories-list {
     flex-wrap: wrap;
     gap: 0px;
