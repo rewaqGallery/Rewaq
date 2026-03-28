@@ -1,0 +1,16 @@
+.products-section {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  padding: 15px;
+  margin: 0;
+}
+
+@media (max-width:365px) {
+  .section-title {
+    padding: 5px 5px 10px 5px;
+  }
+}
