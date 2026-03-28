@@ -315,6 +315,9 @@
 }
 
 @media (max-width: 575px) {
+.horizontal-filters{
+  padding: 5px;
+}
   .mobile-filters {
     gap: 6px;
     padding: 10px 5px;
@@ -323,16 +326,19 @@
   .mobile-item summary {
     padding: 7px;
   }
+
   .mobile-item select {
     padding: 8px 10px;
     font-size: 0.7rem;
   }
-    .mobile-item .price-wrapper {
+
+  .mobile-item .price-wrapper {
     height: 35px;
   }
-    .mobile-item span {
+
+  .mobile-item span {
     font-size: 0.7rem;
-    }
+  }
 
   .mobile-toggle {
     padding: 7px;
@@ -357,16 +363,19 @@
     padding: 6px;
     font-size: 0.7rem;
   }
+
   .mobile-item select {
     padding: 7px 9px;
     font-size: 0.6rem;
   }
-    .mobile-item .price-wrapper {
+
+  .mobile-item .price-wrapper {
     height: 32px;
   }
-    .mobile-item span {
+
+  .mobile-item span {
     font-size: 0.6rem;
-    }
+  }
 
   .mobile-toggle {
     padding: 6px;
