@@ -27,7 +27,6 @@ function Products({ featured = false, showFilters = true }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  //! Sync URL params with filters
   useEffect(() => {
     setFilters((prev) => ({
       ...prev,
@@ -37,7 +36,6 @@ function Products({ featured = false, showFilters = true }) {
     }));
   }, [keywordFromURL, categoryFromURL]);
 
-  //! Load products
   useEffect(() => {
     setLoading(true);
     setError(null);
@@ -76,17 +74,18 @@ function Products({ featured = false, showFilters = true }) {
         )}
 
         <ul className="products-grid" aria-live="polite">
-{products.length ? (
-  products.map((product) => (
-    <li key={product._id}>
-      <ProductCard product={product} />
-    </li>
-  ))
-) : (
-  <li className="no-products">
-    <p>No products match your filters</p>
-  </li>
-)}        </ul>
+          {products.length ? (
+            products.map((product) => (
+              <li key={product._id}>
+                <ProductCard product={product} />
+              </li>
+            ))
+          ) : (
+            <li className="no-products">
+              <p>No products match your filters</p>
+            </li>
+          )}
+        </ul>
 
         {!featured && (
           <Pagination
