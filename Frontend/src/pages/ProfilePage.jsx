@@ -3,17 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { getMyProfile, updateMyProfile } from "../services/userService";
 import { getToken } from "../services/api";
 
-import { governorates } from "./../utils/governorates";
+import { governorates } from "../utils/governorates";
 import defaultAvatar from "../img/default-avatar.jpg";
+
+import Alert from "../components/Alert";
+import Loading from "../components/Loading";
 import "./style/ProfilePage.css";
 
-function MyProfile() {
+function ProfilePage() {
   const navigate = useNavigate();
+  const token = getToken();
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState("Choose Image");
+  const [message, setMessage] = useState(null);
+  const [updating, setUpdating] = useState(false);
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -23,8 +29,6 @@ function MyProfile() {
       detailedAddress: "",
     },
   });
-
-  const token = getToken();
 
   if (!token) {
     return (
@@ -55,22 +59,14 @@ function MyProfile() {
         setLoading(false);
       }
     };
-
     fetchProfile();
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     if (name.startsWith("address.")) {
       const field = name.split(".")[1];
-      setForm({
-        ...form,
-        address: {
-          ...form.address,
-          [field]: value,
-        },
-      });
+      setForm({ ...form, address: { ...form.address, [field]: value } });
     } else {
       setForm({ ...form, [name]: value });
     }
@@ -78,32 +74,33 @@ function MyProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUpdating(true);
 
     const formData = new FormData();
     formData.append("name", form.name);
     formData.append("phone", form.phone);
     formData.append("address", JSON.stringify(form.address));
 
-    // formData.append("address[city]", form.address.city);
-    // formData.append("address[detailedAddress]", form.address.detailedAddress);
-
-    if (image) {
-      formData.append("profileImage", image);
-    }
+    if (image) formData.append("profileImage", image);
 
     try {
       const res = await updateMyProfile(formData);
       setUser(res.data);
-      alert("Profile updated successfully");
+      setMessage({ type: "success", text: "Profile updated successfully" });
     } catch (err) {
       console.log(err);
-      alert("Error updating profile");
+      setMessage({ type: "error", text: "Error updating profile" });
+    } finally {
+      setUpdating(false);
+      setTimeout(() => setMessage(null), 3000);
     }
   };
 
-  if (loading) return <p role="status">Loading...</p>;
+  if (loading) return <Loading />;
+
   return (
     <main className="profile-page">
+      <Alert message={message} />
       <h1>My Profile</h1>
 
       <section aria-labelledby="profile-info" className="profile-info">
@@ -122,6 +119,7 @@ function MyProfile() {
                 name="name"
                 value={form.name}
                 onChange={handleChange}
+                disabled={updating}
               />
             </div>
 
@@ -133,6 +131,7 @@ function MyProfile() {
                 name="phone"
                 value={form.phone}
                 onChange={handleChange}
+                disabled={updating}
               />
             </div>
 
@@ -143,6 +142,7 @@ function MyProfile() {
                 name="address.governorate"
                 value={form.address.governorate}
                 onChange={handleChange}
+                disabled={updating}
               >
                 <option value="">Select Governorate</option>
                 {Object.entries(governorates).map(([name]) => (
@@ -161,6 +161,7 @@ function MyProfile() {
                 name="address.city"
                 value={form.address.city}
                 onChange={handleChange}
+                disabled={updating}
               />
             </div>
 
@@ -172,19 +173,20 @@ function MyProfile() {
                 name="address.detailedAddress"
                 value={form.address.detailedAddress}
                 onChange={handleChange}
+                disabled={updating}
               />
             </div>
 
             <div className="form-item full-width">
               <label htmlFor="profileImage">Profile Image</label>
-
               <div
                 className="file-upload"
-                onClick={() => document.getElementById("profileImage").click()}
+                onClick={() =>
+                  document.getElementById("profileImage").click()
+                }
               >
                 <span>{imageName}</span>
               </div>
-
               <input
                 id="profileImage"
                 type="file"
@@ -194,11 +196,12 @@ function MyProfile() {
                   setImage(file);
                   setImageName(file ? file.name : "Choose Image");
                 }}
+                disabled={updating}
               />
             </div>
 
-            <button type="submit" className="full-width">
-              Update Profile
+            <button type="submit" className="full-width" disabled={updating}>
+              {updating ? "Saving..." : "Update Profile"}
             </button>
           </div>
         </form>
@@ -206,10 +209,12 @@ function MyProfile() {
 
       <hr />
       <nav aria-label="Profile navigation">
-        <button onClick={() => navigate("/my-orders")}>View My Orders</button>
+        <button onClick={() => navigate("/my-orders")}>
+          View My Orders
+        </button>
       </nav>
     </main>
   );
 }
 
-export default MyProfile;
+export default ProfilePage;
