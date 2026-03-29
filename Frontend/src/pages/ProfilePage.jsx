@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyProfile, updateMyProfile } from "../services/userService";
-import "./style/ProfilePage.css";
 import { getToken } from "../services/api";
+
+import { governorates } from "./../utils/governorates";
+import defaultAvatar from "../img/default-avatar.jpg";
+import "./style/ProfilePage.css";
+
 function MyProfile() {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState(null);
+  const [imageName, setImageName] = useState("Choose Image");
   const [form, setForm] = useState({
     name: "",
     phone: "",
     address: {
       city: "",
+      governorate: "",
       detailedAddress: "",
     },
   });
@@ -22,13 +28,12 @@ function MyProfile() {
 
   if (!token) {
     return (
-      <div className="profile-page">
+      <main className="profile-page">
         <h2>You must login to see your profile</h2>
-      </div>
+      </main>
     );
   }
 
-  // fetch user data
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -41,6 +46,7 @@ function MyProfile() {
           address: {
             city: res.data.address?.city || "",
             detailedAddress: res.data.address?.detailedAddress || "",
+            governorate: res.data.address?.governorate || "",
           },
         });
       } catch (err) {
@@ -95,60 +101,114 @@ function MyProfile() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-
+  if (loading) return <p role="status">Loading...</p>;
   return (
-    <div className="profile-page">
-      <h2>My Profile</h2>
+    <main className="profile-page">
+      <h1>My Profile</h1>
 
-      <img
-        src={user?.profileImage?.url || "../img/default-avatar.jpg"}
-        alt="profile"
-        style={{ width: "150px", borderRadius: "50%" }}
-      />
-
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
+      <section aria-labelledby="profile-info" className="profile-info">
+        <img
+          src={user?.profileImage?.url || defaultAvatar}
+          alt={user?.name ? `${user.name} profile picture` : "Default profile"}
         />
 
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          value={form.phone}
-          onChange={handleChange}
-        />
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="form-grid">
+            <div className="form-item">
+              <label htmlFor="name">Name</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+              />
+            </div>
 
-        <input
-          type="text"
-          name="address.city"
-          placeholder="City"
-          value={form.address.city}
-          onChange={handleChange}
-        />
+            <div className="form-item">
+              <label htmlFor="phone">Phone</label>
+              <input
+                id="phone"
+                type="text"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+              />
+            </div>
 
-        <input
-          type="text"
-          name="address.detailedAddress"
-          placeholder="Detailed-Address"
-          value={form.address.detailedAddress}
-          onChange={handleChange}
-        />
+            <div className="form-item">
+              <label htmlFor="governorate">Governorate</label>
+              <select
+                id="governorate"
+                name="address.governorate"
+                value={form.address.governorate}
+                onChange={handleChange}
+              >
+                <option value="">Select Governorate</option>
+                {Object.entries(governorates).map(([name]) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+            <div className="form-item">
+              <label htmlFor="city">City</label>
+              <input
+                id="city"
+                type="text"
+                name="address.city"
+                value={form.address.city}
+                onChange={handleChange}
+              />
+            </div>
 
-        <button type="submit">Update Profile</button>
-      </form>
+            <div className="form-item full-width">
+              <label htmlFor="detailedAddress">Detailed Address</label>
+              <input
+                id="detailedAddress"
+                type="text"
+                name="address.detailedAddress"
+                value={form.address.detailedAddress}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-item full-width">
+              <label htmlFor="profileImage">Profile Image</label>
+
+              <div
+                className="file-upload"
+                onClick={() => document.getElementById("profileImage").click()}
+              >
+                <span>{imageName}</span>
+              </div>
+
+              <input
+                id="profileImage"
+                type="file"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  setImage(file);
+                  setImageName(file ? file.name : "Choose Image");
+                }}
+              />
+            </div>
+
+            <button type="submit" className="full-width">
+              Update Profile
+            </button>
+          </div>
+        </form>
+      </section>
 
       <hr />
-
-      <button onClick={() => navigate("/my-orders")}>My Orders</button>
-    </div>
+      <nav aria-label="Profile navigation">
+        <button onClick={() => navigate("/my-orders")}>View My Orders</button>
+      </nav>
+    </main>
   );
 }
 
