@@ -134,11 +134,11 @@ exports.createFilterObject = asyncHandler(async (req, res, next) => {
 
 exports.getAllOrders = getAll(orderModel, {
   path: "orderItems.product",
-  select: "code imageCover price",
+  select: "code imageCover price description",
 });
 exports.getOrderById = getOne(orderModel, {
   path: "orderItems.product",
-  select: "code imageCover price",
+  select: "code imageCover price description",
 });
 exports.deleteOrder = deleteOne(orderModel);
 
