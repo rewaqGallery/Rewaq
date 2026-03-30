@@ -29,63 +29,73 @@ function OrderDetailsPage() {
   if (!order) return <p>No order found</p>;
 
   return (
-    <div className="order-details-page container">
-      <h2>Order Details</h2>
+    <section
+      className="order-details-page container"
+      aria-labelledby="orderTitle"
+    >
+      <h2 id="orderTitle">Order Details</h2>
 
       <div className="order-layout">
-        
         {/* LEFT SIDE */}
-        <div className="order-card-box">
-          
+        <section className="order-card-box" aria-label="Order information">
           {/* Header */}
-          <div className="order-header-top">
-            <span className="order-number">
-              Order #{order._id.slice(-6)}
-            </span>
+          <header className="order-header-top">
+            <span className="order-number">Order #{order._id.slice(-6)}</span>
 
             <span
               className={`status-badge ${
                 order.isPaid ? "status-paid" : "status-unpaid"
               }`}
+              role="status"
             >
               {order.isPaid ? "Paid" : "Not Paid"}
             </span>
-          </div>
+          </header>
 
           {/* Shipping */}
-          <div className="shipping-box">
-            <p><strong>Address:</strong> {order.shippingAddress?.detailedAddress}</p>
-            <p><strong>Governorate:</strong> {order.shippingAddress?.governorate}</p>
-            <p><strong>City:</strong> {order.shippingAddress?.city}</p>
-            <p><strong>Phone:</strong> {order.shippingAddress?.phone}</p>
-          </div>
+          <section className="shipping-box" aria-label="Shipping details">
+            <p>
+              <strong>Address:</strong>{" "}
+              {order.shippingAddress?.detailedAddress || "N/A"}
+            </p>
+            <p>
+              <strong>Governorate:</strong>{" "}
+              {order.shippingAddress?.governorate || "N/A"}
+            </p>
+            <p>
+              <strong>City:</strong> {order.shippingAddress?.city || "N/A"}
+            </p>
+            <p>
+              <strong>Phone:</strong> {order.shippingAddress?.phone || "N/A"}
+            </p>
+          </section>
 
           {/* Items */}
-          <div className="order-items">
+          <ul className="order-items" aria-label="Order items">
             {order.orderItems.map((item) => (
-              <div key={item._id} className="order-item-row">
+              <li key={item._id} className="order-item-row">
                 <img
                   src={item.product?.imageCover?.url}
-                  alt={item.product?.name}
+                  alt={item.product?.description || "Product image"}
+                  loading="lazy"
                 />
 
                 <div className="item-info">
-                  <p>{item.product?.name}</p>
+                  <p>{item.product?.description}</p>
                   <p>Qty: {item.quantity}</p>
                 </div>
 
                 <div className="item-price">
                   {(item.price * item.quantity).toLocaleString()} LE
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
+        </section>
 
-        </div>
-
-        {/* RIGHT SIDE - SUMMARY */}
-        <div className="order-summary-card">
-          <div className="summary-title">Order Summary</div>
+        {/* //! RIGHT SIDE - SUMMARY */}
+        <aside className="order-summary-card" aria-label="Order summary">
+          <h3 className="summary-title">Order Summary</h3>
 
           <div className="summary-line">
             <span>Items</span>
@@ -98,13 +108,12 @@ function OrderDetailsPage() {
           </div>
 
           <div className="summary-total">
-            <span>Total</span>
+            <span>Total  </span>
             <span>{order.totalOrderPrice?.toLocaleString()} LE</span>
           </div>
-        </div>
-
+        </aside>
       </div>
-    </div>
+    </section>
   );
 }
 
