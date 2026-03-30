@@ -289,7 +289,7 @@ exports.getAll = (Model, populationOption) =>
 
     //! 5- Pagination
     const page = Math.max(req.query.page * 1 || 1, 1);
-    const limit = Math.min(req.query.limit * 1 || 10, 50);
+    const limit = Math.min(req.query.limit * 1 || 10, 5000);
     const skip = (page - 1) * limit;
 
     query = query.skip(skip).limit(limit);
