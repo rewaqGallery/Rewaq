@@ -1,5 +1,5 @@
-// const BASE_URL = "http://localhost:9001";
-const BASE_URL = "https://rewaq-server-production.up.railway.app";
+const BASE_URL = "http://localhost:9001";
+// const BASE_URL = "https://rewaq-server-production.up.railway.app";
 
 export const getToken = () => localStorage.getItem("token");
 
@@ -24,17 +24,16 @@ export async function apiRequest(path, options = {}) {
   } catch (err) {
     data = null;
   }
-if (!res.ok) {
-  console.log("Response Status:", res.status);
-  console.log("Response Body:", data);
-
-  throw {
-    status: res.status,
-    data: data,
-    message:
-      data?.message ||
-      (typeof data?.error === "string" ? data.error : null) ||
-      `Request failed: ${res.status}`,
-  };
-}  return data;
+  if (!res.ok) {
+    console.log("Response Body:", data);
+    throw {
+      status: res.status,
+      data: data,
+      message:
+        data?.message ||
+        (typeof data?.error === "string" ? data.error : null) ||
+        `Request failed: ${res.status}`,
+    };
+  }
+  return data;
 }
