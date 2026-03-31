@@ -1,54 +1,48 @@
-/* ========================= */
-/* Order Details Modern */
-/* ========================= */
-
 .order-details-page {
-  padding: 70px 0;
+  padding: 10px;
   background: #fff;
 }
 
-/* Page Title */
 .order-details-page h2 {
-  font-size: 2.4rem;
-  margin-bottom: 40px;
+  font-size: 2.2rem;
+  padding: 20px;
+  margin: 0;
   font-family: "Jersey 10", sans-serif;
   color: var(--mainColor);
 }
 
-/* Layout Grid */
 .order-layout {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 30px;
+  gap: 34px;
 }
 
-/* Card Base */
 .order-card-box {
   background: #fff;
-  border-radius: 18px;
-  padding: 30px;
+  border-radius: 16px;
+  padding: 24px;
   border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* Order Header */
 .order-header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
 }
 
 .order-number {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
-/* Status Badge */
 .status-badge {
-  padding: 6px 18px;
+  padding: 6px 14px;
   border-radius: 50px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
 }
 
@@ -62,28 +56,29 @@
   color: #b10000;
 }
 
-.status-delivered {
-  background: var(--secondaryColor);
-  color: #fff;
+.shipping-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* Shipping Box */
 .shipping-box p {
-  margin-bottom: 8px;
-  font-size: 1.05rem;
+  margin-bottom: 0px;
+  font-size: 1rem;
   color: var(--secondaryColor);
 }
 
-/* Items */
 .order-items {
-  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .order-item-row {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 18px 0;
+  gap: 16px;
+  padding: 14px 5px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -92,10 +87,10 @@
 }
 
 .order-item-row img {
-  width: 85px;
-  height: 85px;
+  width: 75px;
+  height: 75px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .item-info {
@@ -103,51 +98,130 @@
 }
 
 .item-info p {
-  margin-bottom: 5px;
-  font-size: 1.05rem;
+  margin: 0;
+  font-size: 1rem;
 }
 
 .item-price {
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--mainColor);
 }
 
-/* Summary Card */
+/* Summary */
 .order-summary-card {
   background: var(--whityColor);
-  border-radius: 18px;
-  padding: 30px;
+  border-radius: 16px;
+  padding: 24px;
   height: fit-content;
 }
 
 .summary-title {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+  font-size: 1.3rem;
+  margin-bottom: 16px;
 }
 
 .summary-line {
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
-  font-size: 1.1rem;
 }
 
 .summary-total {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: bold;
   border-top: 2px solid var(--warmyColor);
-  padding-top: 15px;
-  margin-top: 15px;
+  padding: 5px;
+  margin-top: 26px;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
+@media (max-width: 770px) {
+  .order-summary-card {
+    padding: 20px;
+  }
+
+
+  .order-number {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .status-badge {
+    padding: 4px 8px;
+    font-size: 0.9rem;
+  }
+
+  .summary-total {
+    font-size: 1.1rem;
+    padding: 5px;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 550px) {
+  .order-summary-card {
+    padding: 10px;
+  }
+
+  .order-layout {
+    gap: 15px;
+  }
+
+}
+
+
+@media (max-width: 450px) {
+  .order-details-page h2 {
+    font-size: 2rem;
+    padding: 10px;
+  }
+
   .order-layout {
     grid-template-columns: 1fr;
   }
 
-  .order-summary-card {
-    margin-top: 20px;
+  .order-card-box {
+    padding: 12px;
+    gap: 20px;
+  }
+
+  .order-number {
+    font-size: 1rem;
+  }
+
+  .status-badge {
+    padding: 3px 6px;
+    font-size: 0.8rem;
+  }
+
+  .shipping-box p {
+    font-size: 0.95rem;
+    color: var(--secondaryColor);
+  }
+
+
+  .order-item-row {
+    gap: 10px;
+    padding: 10px 3px;
+  }
+
+  .order-item-row img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .item-info p {
+    font-size: 0.9rem;
+  }
+
+  .item-price {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--mainColor);
+  }
+
+
+  .summary-title {
+    font-size: 1.4rem;
   }
 }

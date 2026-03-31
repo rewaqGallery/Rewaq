@@ -167,8 +167,12 @@
     width: 90px;
   }
 
+  img, svg {
+    font-size: 30px;
+  }
+
   .search_box input {
-    height: 32px;
+    height: 34px;
     padding: 0 16px;
     font-size: 15px;
   }
