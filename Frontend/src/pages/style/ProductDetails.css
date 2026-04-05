@@ -100,7 +100,7 @@
   gap: 10px;
 }
 
-.category {
+.product-info .product-header .category {
   font-size: 2.2rem;
   font-weight: 500;
   letter-spacing: 1.5px;
@@ -109,7 +109,7 @@
   white-space: nowrap;
 }
 
-.prices {
+.product-info .product-header .prices {
   padding: 0 50px;
   display: flex;
   align-items: center;
@@ -117,7 +117,7 @@
   gap: 20px;
 }
 
-.product-price {
+.product-info .product-header .prices .product-price {
   font-size: 1.4rem;
   font-weight: 600;
   letter-spacing: 2px;
@@ -127,7 +127,7 @@
   margin: 0;
 }
 
-.product-priceAfterDiscount {
+.product-info .product-header .prices .product-priceAfterDiscount {
   font-size: 1.8rem;
   font-weight: 600;
   letter-spacing: 2px;
@@ -136,7 +136,7 @@
   margin: 0;
 }
 
-.category-desc {
+.product-info .category-desc {
   font-size: 1.1rem;
   font-family: system-ui;
   color: var(--secondaryColor);
@@ -144,14 +144,14 @@
   line-height: 2.8;
 }
 
-.product-actions {
+.product-info .product-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 25px;
   margin-top: 20px;
 }
 
-.product-actions button {
+.product-info .product-actions button {
   flex: 1;
   padding: 8px;
   font-size: 1.5rem;
@@ -163,18 +163,18 @@
   font-weight: 500;
 }
 
-.fav-btn {
+.product-info .product-actions .fav-btn {
   background: var(--mainColor);
   color: white;
 }
 
-.cart-btn {
+.product-info .product-actions .cart-btn {
   background: #8b653c;
   color: var(--whityColor);
   color: white;
 }
 
-.product-actions button:hover {
+.product-info .product-actions button:hover {
   /* background: var(--secondaryColor); */
   color: var(--whityColor);
   transform: translateY(-2px);
@@ -204,25 +204,25 @@
     gap: 10px;
   }
 
-  .category {
-    font-size: 2rem;
-  }
-
   .product-header {
     gap: 10px;
     margin-top: 0px;
   }
 
-  .category-desc {
+  .product-info .product-header .category {
+    font-size: 2rem;
+  }
+
+  .product-info .category-desc {
     font-size: 1.2rem;
     line-height: 1.9;
   }
 
-  .product-actions {
+  .product-info .product-actions {
     margin-top: 10px;
   }
 
-  .product-actions button {
+  .product-info .product-actions button {
     padding: 7px;
     font-size: 1.4rem;
   }
@@ -253,12 +253,12 @@
     padding: 10px;
   }
 
-  .prices {
+  .product-info .product-header .prices {
     padding: 0 20px;
     gap: 15px;
   }
 
-  .product-actions {
+  .product-info .product-actions {
     flex-direction: column;
     margin-top: 10px;
     gap: 15px;
@@ -272,16 +272,16 @@
     letter-spacing: 2px;
   }
 
-  .category {
+  .product-info .product-header .category {
     font-size: 1.5rem;
   }
 
 
-  .product-price {
+  .product-info .product-header .prices .product-price {
     font-size: 1.3rem;
   }
 
-  .product-priceAfterDiscount {
+  .product-info .product-header .prices .product-priceAfterDiscount {
     font-size: 1.5rem;
   }
 }
