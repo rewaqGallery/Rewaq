@@ -5,6 +5,8 @@ const normalizeItem = (item) => ({
   quantity: item.quantity ?? 0,
 
   price: item.product?.price ?? item.price ?? 0,
+  priceAfterDiscount:
+    item.product?.priceAfterDiscount ?? item.priceAfterDiscount ?? 0,
   productId: item.product?._id ?? item.product ?? "",
   code: item.product?.code ?? "",
   description: item.product?.description ?? "",
