@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import { addToCartAsync, removeFromCartAsync } from "../store/cartSlice";
 import {
   addFavouriteAsync,
   removeFavouriteAsync,
 } from "../store/favouritesSlice";
 import { getProductById } from "../services/productService";
+
 import ErrorPage from "./ErrorPage";
-import "./style/ProductDetails.css";
 import Alert from "../components/Alert";
 import Loading from "../components/Loading";
+import "./style/ProductDetails.css";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -21,11 +23,12 @@ function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [alert, setAlert] = useState(null);
-  const [cartLoading, setCartLoading] = useState(false);
-  const [favLoading, setFavLoading] = useState(false);
+  const [loadingBtn, setLoadingBtn] = useState({
+    id: null,
+    type: null,
+  });
 
   const token = localStorage.getItem("token");
-
   const favouritesItems = useSelector((state) => state.favourites?.ids ?? []);
   const isFavourite =
     Array.isArray(favouritesItems) &&
@@ -65,7 +68,7 @@ function ProductDetails() {
       return;
     }
 
-    setFavLoading(true);
+    setLoadingBtn({ id: product._id, type: "favourite" });
 
     try {
       if (isFavourite) {
@@ -81,17 +84,17 @@ function ProductDetails() {
         text: err.message || "Failed to update favourites",
       });
     } finally {
-      setFavLoading(false);
+      setLoadingBtn({ id: null, type: null });
     }
   };
+
   const toggleCart = async () => {
     if (!token) {
       setAlert({ type: "error", text: "You must login" });
       return;
     }
 
-    setCartLoading(true);
-
+    setLoadingBtn({ id: product._id, type: "cart" });
     try {
       if (inCart) {
         await dispatch(removeFromCartAsync(product._id)).unwrap();
@@ -108,7 +111,7 @@ function ProductDetails() {
         text: err.message || "Failed to update cart",
       });
     } finally {
-      setCartLoading(false);
+      setLoadingBtn({ id: null, type: null });
     }
   };
 
@@ -144,6 +147,11 @@ function ProductDetails() {
       />
     );
   }
+  const favLoading =
+    loadingBtn.id === product?._id && loadingBtn.type === "favourite";
+
+  const cartLoading =
+    loadingBtn.id === product?._id && loadingBtn.type === "cart";
 
   return (
     <>
@@ -200,18 +208,29 @@ function ProductDetails() {
                 <p className="category">{product.category?.name}</p>
 
                 <div className="prices">
-                  <p
-                    className="product-price"
-                    aria-label={`Original price: ${product.price} Egyptian pounds`}
-                  >
-                    {product.price} LE
-                  </p>
-                  <p
-                    className="product-priceAfterDiscount"
-                    aria-label={`Price after discount: ${product.priceAfterDiscount} Egyptian pounds`}
-                  >
-                    {product.priceAfterDiscount} LE
-                  </p>
+                  {isNaN(product.priceAfterDiscount) ? (
+                    <p
+                      className="product-priceAfterDiscount"
+                      aria-label={`Price after discount: ${product.priceAfterDiscount} Egyptian pounds`}
+                    >
+                      {Number(product.price).toFixed(2)} LE
+                    </p>
+                  ) : (
+                    <>
+                      <p
+                        className="product-price"
+                        aria-label={`Original price: ${product.price} Egyptian pounds`}
+                      >
+                        {product.price} LE
+                      </p>
+                      <p
+                        className="product-priceAfterDiscount"
+                        aria-label={`Price after discount: ${product.priceAfterDiscount} Egyptian pounds`}
+                      >
+                        {product.priceAfterDiscount} LE
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
 
