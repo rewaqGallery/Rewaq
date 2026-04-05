@@ -6,7 +6,12 @@ const apiError = require("../utils/apiError");
 const calcTotalCartPrice = (cart) => {
   let totalPrice = 0;
   cart.cartItems.forEach((product) => {
-    totalPrice += product.price * product.quantity;
+    price =
+      product.priceAfterDiscount == "" ||
+      product.priceAfterDiscount == undefined
+        ? product.price
+        : product.priceAfterDiscount;
+    totalPrice += price * product.quantity;
   });
   cart.totalCartPrice = totalPrice;
   cart.totalPriceAfterDiscount = undefined;
@@ -16,7 +21,7 @@ const calcTotalCartPrice = (cart) => {
 const populateCart = (cartQuery) =>
   cartQuery.populate({
     path: "cartItems.product",
-    select: "imageCover code price quantity description _id",
+    select: "imageCover code price priceAfterDiscount quantity description _id",
   });
 
 exports.addProductToCart = asyncHandler(async (req, res, next) => {
@@ -43,7 +48,11 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
           product: productId,
           quantity: qty,
           description: product.description,
-          price: product.price,
+          price:
+            product.priceAfterDiscount != "" &&
+            product.priceAfterDiscount != undefined
+              ? product.priceAfterDiscount
+              : product.price,
           currentStock: product.quantity,
           msg,
         },
@@ -70,7 +79,11 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
       cart.cartItems.push({
         product: productId,
         quantity: qty,
-        price: product.price,
+        price:
+          product.priceAfterDiscount != "" &&
+          product.priceAfterDiscount != undefined
+            ? product.priceAfterDiscount
+            : product.price,
         description: product.description,
         currentStock: product.quantity,
         msg,
