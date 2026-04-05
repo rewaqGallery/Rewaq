@@ -12,7 +12,7 @@ function Navbar() {
     const fetchCategories = async () => {
       try {
         setLoading(true);
-        const res = await getCategories();
+        const res = await getCategories({ sort: "createdAt" });
         setCategories(res.data || []);
       } catch (err) {
         setError("Failed to load categories");
