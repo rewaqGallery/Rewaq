@@ -1,6 +1,6 @@
 .favourites-page {
-  min-height: 80vh;
-  padding: 40px 20px;
+  min-height: 550px;
+  padding: 20px 20px;
   background-color: var(--whityColor);
   display: flex;
   justify-content: center;
@@ -9,46 +9,44 @@
 .favourites-container {
   width: 100%;
   max-width: 1000px;
-  background-color: #fff;
+  background: #fff;
   border-radius: 15px;
-  padding: 30px;
+  padding: 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .favourites-title {
   font-size: 2rem;
   color: var(--mainColor);
-  margin-bottom: 30px;
   text-align: center;
   font-family: "Jersey 10", sans-serif;
 }
 
 .empty-favourites {
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   color: var(--secondaryColor);
-}
-
-.favourites-error {
-  color: #dc3545;
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 0.95rem;
+  font-family: "Jersey 10", sans-serif;
+  letter-spacing: 2px;
 }
 
 .favourites-items {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
+  padding-left: 0;
 }
 
 .favourite-item {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 15px 20px;
+  gap: 25px;
+  padding: 10px;
   border-radius: 12px;
-  background-color: var(--whityColor);
+  background: var(--whityColor);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -56,156 +54,141 @@
   width: 100px;
   height: 100px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .favourite-details {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
 .favourite-details h3 {
   font-size: 1.2rem;
+  letter-spacing: 2px;
   color: var(--mainColor);
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 
-.favourite-price {
-  font-size: 1rem;
-  font-weight: 600;
+.favourite-details .favourite-price {
+  font-size: 0.95rem;
+  font-weight: 500;
   color: var(--secondaryColor);
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
-.favourite-actions {
+.favourite-details .favourite-actions {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 3px;
 }
 
-.view-btn {
-  padding: 8px 20px;
-  background-color: var(--mainColor);
-  color: var(--whityColor);
-  border-radius: 25px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.view-btn:hover {
-  background-color: var(--secondaryColor);
-  transform: translateY(-2px);
-}
-
-.remove-btn {
-  padding: 8px 20px;
-  background-color: var(--secondaryColor);
-  color: var(--whityColor);
-  border-radius: 25px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.remove-btn:hover {
-  background-color: var(--maintGreen);
-  transform: translateY(-2px);
-}
-
+.favourite-details .favourite-actions .view-btn,
+.remove-btn,
 .cart-btn {
-  padding: 8px 20px;
-  background-color: var(--maintGreen);
-  color: var(--mainColor);
+  padding: 6px 16px;
   border-radius: 25px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  border: 2px solid var(--maintGreen);
+  transition: 0.3s ease;
   cursor: pointer;
-  transition: all 0.3s ease;
+  text-align: center;
+  border: none;
+  color: white;
 }
 
-.cart-btn:hover {
-  background-color: var(--mainColor);
+.favourite-details .favourite-actions .view-btn {
+  background: var(--mainColor);
+  text-decoration: none;
+}
+
+.favourite-details .favourite-actions .remove-btn {
+  background-color: #8b3c3c;
+}
+
+.favourite-details .favourite-actions .cart-btn {
+  background: #8b653c;
+}
+
+.favourite-details .favourite-actions .view-btn:hover,
+.favourite-details .favourite-actions .remove-btn:hover,
+.favourite-details .favourite-actions .cart-btn:hover {
+  transform: translateY(-2px);
+  color: var(--warmyColor);
+}
+
+.favourite-details .favourite-actions .view-btn:hover {
+  background: var(--secondaryColor);
+}
+
+.favourite-details .favourite-actions .remove-btn:hover {
+  background-color: #4a1919;
+}
+
+.favourite-details .favourite-actions .cart-btn:hover {
   color: var(--whityColor);
   border-color: var(--mainColor);
-  transform: translateY(-2px);
 }
 
-@media (max-width: 992px) {
-  .favourites-container {
-    padding: 25px 20px;
-  }
 
-  .favourites-title {
-    font-size: 2rem;
-
-    margin-bottom: 15px;
-  }
-
-  .favourite-image img {
-    width: 90px;
-    height: 90px;
-  }
-}
-
-@media (max-width: 768px) {
-  .favourites-page {
-    padding: 30px 15px;
-  }
-
-  .favourites-container {
-    padding: 20px;
-  }
-
+@media (max-width: 550px) {
   .favourite-item {
     flex-direction: column;
-    align-items: center;
     text-align: center;
-    gap: 15px;
+    padding: 15px;
+    gap: 20px;
   }
 
   .favourite-image img {
     width: 100%;
-    max-width: 250px;
+    max-width: 300px;
     height: auto;
   }
 
-  .favourite-details {
-    width: 100%;
+  .favourite-details h3 {
+    font-size: 1.6rem;
+    letter-spacing: 2px;
   }
 
   .favourite-actions {
-    width: 100%;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
   }
 
-  .view-btn,
-  .remove-btn,
-  .cart-btn {
-    flex: 1;
-    min-width: 110px;
+  .favourite-details .favourite-actions .view-btn,
+  .favourite-details .favourite-actions .remove-btn,
+  .favourite-details .favourite-actions .cart-btn {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
     text-align: center;
+    justify-content: center;
   }
 }
 
-@media (max-width: 480px) {
-  .favourites-title {
-    font-size: 2rem;
-
+@media (max-width: 430px) {
+  .favourites-page {
+    padding: 25px 10px;
   }
 
-  .favourite-item {
-    padding: 12px;
+  .favourites-container {
+    padding: 18px;
   }
 
-  .view-btn,
-  .remove-btn,
-  .cart-btn {
-    font-size: 0.85rem;
-    padding: 7px 14px;
+  .favourite-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .favourite-details .favourite-actions .view-btn,
+  .favourite-details .favourite-actions .remove-btn,
+  .favourite-details .favourite-actions .cart-btn {
+    padding: 7px 16px;
+    width: 100%;
   }
 }
