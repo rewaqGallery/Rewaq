@@ -9,7 +9,7 @@ const calcTotalCartPrice = (cart) => {
     const price =
       item.priceAfterDiscount != null &&
       item.priceAfterDiscount !== "" &&
-      item.priceAfterDiscount !== undefiend
+      item.priceAfterDiscount !== undefined
         ? item.priceAfterDiscount
         : item.price;
     totalPrice += price * product.quantity;
