@@ -3,13 +3,34 @@ import * as favouritesService from "../services/favouritesService";
 
 const initialState = {
   ids: [],
+  products: [],
   loading: false,
+  productsLoading: false,
   error: null,
 };
 
 export const fetchFavourites = createAsyncThunk(
   "favourites/fetchFavourites",
-  favouritesService.getFavourites,
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await favouritesService.getFavourites();
+      return res.ids || [];
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
+);
+
+export const fetchFavouriteProducts = createAsyncThunk(
+  "favourites/fetchFavouriteProducts",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const res = await favouritesService.getFavourites();
+      return res.products || [];
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
 );
 
 export const addFavouriteAsync = createAsyncThunk(
@@ -28,6 +49,7 @@ const favouritesSlice = createSlice({
   reducers: {
     clearFavourites(state) {
       state.ids = [];
+      state.products = [];
       state.error = null;
     },
     clearFavouritesError(state) {
@@ -48,10 +70,23 @@ const favouritesSlice = createSlice({
       .addCase(fetchFavourites.pending, pending)
       .addCase(fetchFavourites.fulfilled, (state, action) => {
         state.loading = false;
-        state.ids = action.payload.ids;
+        state.ids = action.payload;
         state.error = null;
       })
       .addCase(fetchFavourites.rejected, rejected);
+
+    builder
+      .addCase(fetchFavouriteProducts.pending, (state) => {
+        state.productsLoading = true;
+      })
+      .addCase(fetchFavouriteProducts.fulfilled, (state, action) => {
+        state.productsLoading = false;
+        state.products = action.payload;
+      })
+      .addCase(fetchFavouriteProducts.rejected, (state, action) => {
+        state.productsLoading = false;
+        state.error = action.payload || "Failed to fetch favourite products";
+      });
 
     builder
       .addCase(addFavouriteAsync.pending, pending)
@@ -72,6 +107,9 @@ const favouritesSlice = createSlice({
 
         const id = action.payload;
         state.ids = state.ids.filter((i) => i !== id);
+        state.products = state.products.filter(
+          (p) => String(p._id) !== String(id),
+        );
 
         state.error = null;
       })

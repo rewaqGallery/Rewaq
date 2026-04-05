@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const userModel = require("../models/userModel");
+
 exports.getLoggedUserFavourites = asyncHandler(async (req, res, next) => {
   function hundleSelectedFields(req) {
     if (req.query.fields) {
@@ -16,7 +17,7 @@ exports.getLoggedUserFavourites = asyncHandler(async (req, res, next) => {
     .select("favourites")
     .populate({
       path: "favourites",
-      select: fields || "code price imageCover",
+      select: fields || "code price category priceAfterDiscount description imageCover",
     });
 
   if (!user) {
