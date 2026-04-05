@@ -4,14 +4,16 @@ import { Link } from "react-router-dom";
 
 import {
   fetchFavourites,
+  fetchFavouriteProducts,
   removeFavouriteAsync,
   clearFavouritesError,
 } from "../store/favouritesSlice";
 
 import { addToCartAsync, removeFromCartAsync } from "../store/cartSlice";
-import * as favouritesService from "../services/favouritesService";
 
 import ErrorDisplay from "../components/ErrorDisplay";
+import Alert from "../components/Alert";
+import Loading from "../components/Loading";
 
 import "./style/Favourites.css";
 
@@ -19,120 +21,169 @@ function Favourites() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
-  const { ids, loading, error } = useSelector((state) => state.favourites);
+  const { products, loading, productsLoading, error } = useSelector(
+    (state) => state.favourites,
+  );
   const cartItems = useSelector((state) => state.cart.items);
 
-  const [products, setProducts] = useState([]);
-  const [pageLoading, setPageLoading] = useState(true);
+  const [alert, setAlert] = useState(null);
+  const [loadingBtn, setLoadingBtn] = useState({
+    id: null,
+    type: null,
+  });
 
   useEffect(() => {
-    const loadFavourites = async () => {
-      try {
-        const res = await favouritesService.getFavourites();
-        setProducts(res.products || []);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setPageLoading(false);
-      }
-    };
+    if (!token) return;
 
-    if (token) {
-      dispatch(fetchFavourites());
-      loadFavourites();
-    } else {
-      setPageLoading(false);
-    }
-  }, [dispatch, token]);
+    dispatch(fetchFavourites());
+    dispatch(fetchFavouriteProducts());
+  }, [token, dispatch]);
 
-  const isInCart = (productId) =>
-    cartItems.some(
-      (c) => String(c.product?._id ?? c.productId) === String(productId),
-    );
+  useEffect(() => {
+    if (!alert) return;
 
-  const handleToggleCart = (product) => {
+    const timer = setTimeout(() => {
+      setAlert(null);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [alert]);
+
+  const cartIds = new Set(
+    cartItems.map((c) => String(c.product?._id ?? c.productId)),
+  );
+  const isInCart = (id) => cartIds.has(String(id));
+
+  const handleToggleCart = async (product) => {
     if (!token) {
-      alert("You must login");
+      setAlert({ type: "warning", text: "You must login first" });
       return;
     }
 
-    if (isInCart(product._id)) {
-      dispatch(removeFromCartAsync(product._id));
-    } else {
-      dispatch(
-        addToCartAsync({
-          productId: product._id,
-          quantity: 1,
-        }),
-      );
+    setLoadingBtn({ id: product._id, type: "cart" });
+
+    try {
+      if (isInCart(product._id)) {
+        await dispatch(removeFromCartAsync(product._id)).unwrap();
+        setAlert({ type: "success", text: "Removed from cart" });
+      } else {
+        await dispatch(
+          addToCartAsync({
+            productId: product._id,
+            quantity: 1,
+          }),
+        ).unwrap();
+        setAlert({ type: "success", text: "Added to cart" });
+      }
+    } catch {
+      setAlert({ type: "error", text: "Something went wrong" });
+    } finally {
+      setLoadingBtn({ id: null, type: null });
     }
   };
 
-  const handleRemoveFavourite = (productId) => {
-    dispatch(removeFavouriteAsync(productId));
-    setProducts((prev) => prev.filter((p) => p._id !== productId));
+  const handleRemoveFavourite = async (productId) => {
+    setLoadingBtn({ id: productId, type: "remove" });
+
+    try {
+      await dispatch(removeFavouriteAsync(productId)).unwrap();
+      setAlert({ type: "success", text: "Removed from favourites" });
+    } catch {
+      setAlert({ type: "error", text: "Failed to remove item" });
+    } finally {
+      setLoadingBtn({ id: null, type: null });
+    }
   };
 
-  if (loading || pageLoading) {
-    return <p className="loading">Loading favourites...</p>;
+  if (loading || productsLoading) {
+    return <Loading text="Loading favourites..." />;
   }
 
   return (
-    <div className="favourites-page">
+    <section className="favourites-page">
       <div className="favourites-container">
         <h2 className="favourites-title">Your Favourites</h2>
 
+        <Alert message={alert} />
+
         <ErrorDisplay
           message={error}
-          onRetry={() => dispatch(fetchFavourites())}
+          onRetry={() => dispatch(fetchFavouriteProducts())}
           onDismiss={() => dispatch(clearFavouritesError())}
         />
 
         {products.length === 0 ? (
-          <p className="empty-favourites">No favourites yet.</p>
+          <p className="empty-favourites" role="status">
+            No favourites yet.
+          </p>
         ) : (
-          <div className="favourites-items">
-            {products.map((item) => (
-              <div key={item._id} className="favourite-item">
-                <div className="favourite-image">
-                  <img src={item.imageCover?.url ?? item.image} alt={item.description} />
-                </div>
+          <ul className="favourites-items">
+            {products.map((item) => {
+              const inCart = isInCart(item._id);
 
-                <div className="favourite-details">
-                  <h3>{item.description}</h3>
+              const isCartLoading =
+                loadingBtn.id === item._id && loadingBtn.type === "cart";
 
-                  <p className="favourite-price">
-                    ${Number(item.price).toFixed(2)}
-                  </p>
+              const isRemoveLoading =
+                loadingBtn.id === item._id && loadingBtn.type === "remove";
 
-                  <div className="favourite-actions">
-                    <Link to={`/product/${item._id}`} className="view-btn">
-                      View
-                    </Link>
-
-                    <button
-                      className="remove-btn"
-                      onClick={() => handleRemoveFavourite(item._id)}
-                    >
-                      Remove
-                    </button>
-
-                    <button
-                      className="cart-btn"
-                      onClick={() => handleToggleCart(item)}
-                    >
-                      {isInCart(item._id)
-                        ? "Remove from Cart"
-                        : "Add to Cart"}
-                    </button>
+              return (
+                <li key={item._id} className="favourite-item">
+                  <div className="favourite-image">
+                    <img
+                      src={item.imageCover?.url ?? item.image}
+                      alt={item.description || "Product image"}
+                      loading="lazy"
+                    />
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+
+                  <div className="favourite-details">
+                    <h3 className="product-title">{item.description}</h3>
+
+                    <p className="favourite-price">
+                      {isNaN(item.priceAfterDiscount)
+                        ? Number(item.price).toFixed(2)
+                        : Number(item.priceAfterDiscount).toFixed(2)}
+                    </p>
+
+                    <div className="favourite-actions">
+                      <Link to={`/product/${item._id}`} className="view-btn">
+                        View
+                      </Link>
+
+                      <button
+                        className="cart-btn"
+                        onClick={() => handleToggleCart(item)}
+                        type="button"
+                        disabled={isCartLoading}
+                      >
+                        {isCartLoading
+                          ? "Loading..."
+                          : inCart
+                            ? "Remove from Cart"
+                            : "Add to Cart"}
+                      </button>
+
+                      <button
+                        className="remove-btn"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleRemoveFavourite(item._id);
+                        }}
+                        disabled={isRemoveLoading}
+                        type="button"
+                      >
+                        {isRemoveLoading ? "Removing..." : "Remove"}
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         )}
       </div>
-    </div>
+    </section>
   );
 }
 
