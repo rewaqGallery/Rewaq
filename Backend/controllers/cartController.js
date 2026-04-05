@@ -6,11 +6,12 @@ const apiError = require("../utils/apiError");
 const calcTotalCartPrice = (cart) => {
   let totalPrice = 0;
   cart.cartItems.forEach((product) => {
-    price =
-      product.priceAfterDiscount == "" ||
-      product.priceAfterDiscount == undefined
-        ? product.price
-        : product.priceAfterDiscount;
+    const price =
+      item.priceAfterDiscount != null &&
+      item.priceAfterDiscount !== "" &&
+      item.priceAfterDiscount !== undefiend
+        ? item.priceAfterDiscount
+        : item.price;
     totalPrice += price * product.quantity;
   });
   cart.totalCartPrice = totalPrice;
@@ -35,6 +36,10 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
   }
 
   let cart = await cartModel.findOne({ user: req.user.id });
+  const getPrice = () =>
+    product.priceAfterDiscount != null && product.priceAfterDiscount !== ""
+      ? product.priceAfterDiscount
+      : product.price;
 
   if (!cart) {
     if (quantity > product.quantity) {
@@ -48,11 +53,7 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
           product: productId,
           quantity: qty,
           description: product.description,
-          price:
-            product.priceAfterDiscount != "" &&
-            product.priceAfterDiscount != undefined
-              ? product.priceAfterDiscount
-              : product.price,
+          price: getPrice(),
           currentStock: product.quantity,
           msg,
         },
@@ -71,6 +72,7 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
       }
 
       cart.cartItems[productIndex].quantity = newQty;
+      cart.cartItems[index].msg = msg;
     } else {
       if (qty > product.quantity) {
         msg = `Only ${product.quantity >= 0 ? product.quantity : 0} left in stock for "${product.description}". Extra quantity will be pre-ordered.`;
@@ -79,11 +81,7 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
       cart.cartItems.push({
         product: productId,
         quantity: qty,
-        price:
-          product.priceAfterDiscount != "" &&
-          product.priceAfterDiscount != undefined
-            ? product.priceAfterDiscount
-            : product.price,
+        price: getPrice(),
         description: product.description,
         currentStock: product.quantity,
         msg,
