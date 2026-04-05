@@ -7,11 +7,11 @@ const calcTotalCartPrice = (cart) => {
   let totalPrice = 0;
   cart.cartItems.forEach((product) => {
     const price =
-      item.priceAfterDiscount != null &&
-      item.priceAfterDiscount !== "" &&
-      item.priceAfterDiscount !== undefined
-        ? item.priceAfterDiscount
-        : item.price;
+      product.priceAfterDiscount != null &&
+      product.priceAfterDiscount !== "" &&
+      product.priceAfterDiscount !== undefined
+        ? product.priceAfterDiscount
+        : product.price;
     totalPrice += price * product.quantity;
   });
   cart.totalCartPrice = totalPrice;
@@ -37,7 +37,9 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
 
   let cart = await cartModel.findOne({ user: req.user.id });
   const getPrice = () =>
-    product.priceAfterDiscount != null && product.priceAfterDiscount !== ""
+    product.priceAfterDiscount != null &&
+    product.priceAfterDiscount !== "" &&
+    product.priceAfterDiscount !== undefined
       ? product.priceAfterDiscount
       : product.price;
 

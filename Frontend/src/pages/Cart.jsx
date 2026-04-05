@@ -131,14 +131,14 @@ function Cart() {
                         loading="lazy"
                       />
                     </div>
-
                     <div className="item-details">
                       <h3>{item.description}</h3>
 
                       <p className="item-price">
-                        {isNaN(item.priceAfterDiscount)
-                          ? Number(item.price).toFixed(2)
-                          : Number(item.priceAfterDiscount).toFixed(2)}
+                        {/* {isNaN(item.priceAfterDiscount) */}
+                        {/* ? */}
+                        {Number(item.price).toFixed(2)}
+                        {/* : Number(item.priceAfterDiscount).toFixed(2)} */}
                       </p>
 
                       <div className="item-quantity">

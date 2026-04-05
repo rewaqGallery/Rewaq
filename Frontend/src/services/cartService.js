@@ -3,10 +3,7 @@ import { apiRequest } from "./api";
 const normalizeItem = (item) => ({
   _id: item._id ?? "",
   quantity: item.quantity ?? 0,
-
-  price: item.product?.price ?? item.price ?? 0,
-  priceAfterDiscount:
-    item.product?.priceAfterDiscount ?? item.priceAfterDiscount ?? 0,
+  price: item.price ?? item.product?.price ?? 0,
   productId: item.product?._id ?? item.product ?? "",
   code: item.product?.code ?? "",
   description: item.product?.description ?? "",

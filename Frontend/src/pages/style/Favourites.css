@@ -6,7 +6,7 @@
   justify-content: center;
 }
 
-.favourites-container {
+.favourites-page .favourites-container {
   width: 100%;
   max-width: 1000px;
   background: #fff;
@@ -18,14 +18,14 @@
   gap: 15px;
 }
 
-.favourites-title {
+.favourites-page .favourites-title {
   font-size: 2rem;
   color: var(--mainColor);
   text-align: center;
   font-family: "Jersey 10", sans-serif;
 }
 
-.empty-favourites {
+.favourites-page .empty-favourites {
   text-align: center;
   font-size: 1.5rem;
   color: var(--secondaryColor);
@@ -33,14 +33,14 @@
   letter-spacing: 2px;
 }
 
-.favourites-items {
+.favourites-page .favourites-items {
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding-left: 0;
 }
 
-.favourite-item {
+.favourites-page .favourite-item {
   display: flex;
   align-items: center;
   gap: 25px;
@@ -89,7 +89,7 @@
 .favourite-details .favourite-actions .view-btn,
 .remove-btn,
 .cart-btn {
-  padding: 6px 16px;
+  padding: 7px 16px;
   border-radius: 25px;
   font-size: 0.8rem;
   font-weight: 600;
