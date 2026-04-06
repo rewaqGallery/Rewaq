@@ -5,6 +5,7 @@ const {
   getCategoryById,
   deleteCategory,
   updateCategory,
+  updateProductPrices,
 } = require("../controllers/categoryController");
 const {
   getCategoryByIdValidator,
@@ -26,7 +27,8 @@ router
     allowedTo("admin"),
     upload.single("image"),
     updateCategoryValidator,
-    updateCategory
+    updateProductPrices,
+    updateCategory,
   );
 router
   .route("/")
@@ -36,7 +38,7 @@ router
     allowedTo("admin"),
     upload.single("image"),
     createCategoryValidator,
-    createCategory
+    createCategory,
   );
 
 module.exports = router;
