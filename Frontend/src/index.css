@@ -7,8 +7,10 @@
 }
 
 body {
+  /* background-color: var(--whityColor); */
   background-color: #fff;
   color: var(--mainColor);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 img {
@@ -58,4 +60,12 @@ a {
   --whityColor: #ece5c8;
   --warmyColor: #cdc2ae;
   --maintGreen: #c2ded0;
+}
+
+body.dark-mode {
+  --mainColor: #d9e7f5;
+  --secondaryColor: #b4c4d6;
+  --whityColor: #121b26;
+  --warmyColor: #1d2b3a;
+  --maintGreen: #2d3f52;
 }

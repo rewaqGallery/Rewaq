@@ -1,4 +1,5 @@
 .error-display {
+  margin-top: 20px;
   display: flex;
   align-items: flex-start;
   gap: 12px;

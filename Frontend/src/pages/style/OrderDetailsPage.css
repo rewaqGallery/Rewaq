@@ -1,6 +1,7 @@
 .order-details-page {
   padding: 10px;
   background: #fff;
+  min-height: 550px;
 }
 
 .order-details-page h2 {
