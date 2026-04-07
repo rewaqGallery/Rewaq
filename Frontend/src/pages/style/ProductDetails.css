@@ -72,7 +72,7 @@
 }
 
 .product-info {
-  flex: 1 1 min(100%, 600px);
+  flex: 1 1 min(100%, 400px);
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -90,7 +90,8 @@
 .product-info h1 {
   font-size: 2.7rem;
   letter-spacing: 2px;
-  white-space: nowrap;
+  /* white-space: nowrap; */
+  white-space: wrap;
   margin: 0;
 }
 
@@ -245,17 +246,21 @@
     max-width: 500px;
   }
 
+  .product-info .product-header .prices {
+    padding: 0 20px;
+  }
 }
 
 @media (max-width:500px) {
   .product-details-page {
+    width: 97%;
     margin: 10px auto;
     padding: 10px;
   }
 
   .product-info .product-header .prices {
-    padding: 0 20px;
-    gap: 15px;
+    padding: 0 10px;
+    gap: 10px;
   }
 
   .product-info .product-actions {
@@ -264,9 +269,34 @@
     gap: 15px;
   }
 
+  .product-info h1 {
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+  }
+
+  .product-info .product-header .category {
+    font-size: 1.6rem;
+  }
+
+    .product-details-container {
+        gap: 25px;
+    }
+
+  .product-info .product-header .prices .product-price {
+    font-size: 1.4rem;
+  }
+
+  .product-info .product-header .prices .product-priceAfterDiscount {
+    font-size: 1.6rem;
+  }
+
 }
 
 @media (max-width:380px) {
+  .product-info {
+    padding: 16px 8px;
+  }
+
   .product-info h1 {
     font-size: 2.3rem;
     letter-spacing: 2px;
@@ -283,5 +313,56 @@
 
   .product-info .product-header .prices .product-priceAfterDiscount {
     font-size: 1.5rem;
+  }
+
+  .product-info .category-desc {
+    font-size: 1.1rem;
+    line-height: 1.9;
+  }
+
+  .product-header .row {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .product-info .product-header .prices {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+
+
+}
+
+@media (max-width:320px) {
+  .product-info {
+    padding: 12px 6px;
+  }
+
+  .product-info h1 {
+    font-size: 1.9rem;
+    letter-spacing: 1.6px;
+  }
+
+  .product-info .product-header .category {
+    font-size: 1.4rem;
+  }
+
+
+  .product-info .product-header .prices .product-price {
+    font-size: 1.3rem;
+  }
+
+  .product-info .product-header .prices {
+    padding: 0 10px;
+    gap: 10px;
+  }
+
+
+  .product-info .product-header .prices .product-priceAfterDiscount {
+    font-size: 1.4rem;
   }
 }

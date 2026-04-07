@@ -19,6 +19,7 @@
   color: var(--mainColor);
   margin: 0;
   white-space: nowrap;
+  padding: 10px 0px 20px 0px;
 }
 
 .view-all {
@@ -29,7 +30,7 @@
   color: var(--mainColor);
   text-decoration: none;
 
-  padding: 10px 30px;
+  padding: 10px 30px 20px 30px;
   border-radius: 25px;
   border: 2px solid transparent;
 
@@ -62,7 +63,7 @@
 
   .featured-title,
   .view-all {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     letter-spacing: 1.8px;
   }
 }
@@ -75,7 +76,28 @@
 
   .featured-title,
   .view-all {
-    font-size: 1rem;
+    font-size: 1.4rem;
     letter-spacing: 1.5px;
+  }
+
+  .view-all {
+    padding: 10px 10px 20px 10px;
+  }
+
+  .featured-title {
+    padding: 10px 0px 20px 0px;
+  }
+}
+
+@media (max-width: 340px) {
+  .section-header {
+    padding-left: 5px;
+    gap: 20px;
+  }
+
+  .featured-title,
+  .view-all {
+    font-size: 1.25rem;
+    letter-spacing: 1.4px;
   }
 }
