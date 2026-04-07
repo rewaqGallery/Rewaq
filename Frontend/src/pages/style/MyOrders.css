@@ -1,5 +1,6 @@
 .my-orders {
     padding: 10px 15px;
+    min-height: 550px;
 }
 
 .my-orders h2 {

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { getMyOrders } from "../services/orderService";
+import ErrorDisplay from "../components/ErrorDisplay";
 import "./style/MyOrders.css";
 
 function MyOrders() {
@@ -8,33 +9,53 @@ function MyOrders() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const data = await getMyOrders();
-        setOrders(data.data);
-      } catch (err) {
-        setError("Failed to load data");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchOrders = useCallback(async () => {
+    setLoading(true);
+    setError(null);
 
-    fetchOrders();
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("You are not authorized. Please login first.");
+      }
+
+      const data = await getMyOrders();
+      setOrders(data.data);
+    } catch (err) {
+      setError(
+        err?.response?.data?.message ||
+          err.message ||
+          "Failed to load orders"
+      );
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  if (loading)
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
+
+  if (loading) {
     return (
       <p className="loading" role="status">
         Loading...
       </p>
     );
-  if (error)
+  }
+
+  if (error) {
     return (
-      <p className="error" role="alert">
-        {error}
-      </p>
+      <ErrorDisplay
+        message={error}
+        onRetry={fetchOrders}
+        onDismiss={() => setError(null)}
+        className="container"
+      />
     );
+  }
+
   return (
     <section className="my-orders container" aria-labelledby="orders-title">
       <h2 id="orders-title">My Orders</h2>
@@ -58,7 +79,6 @@ function MyOrders() {
                       className={`order-status ${
                         order.isPaid ? "paid" : "unpaid"
                       }`}
-                      aria-label={order.isPaid ? "Paid" : "Unpaid"}
                     >
                       {order.isPaid ? "Paid" : "Unpaid"}
                     </span>
