@@ -90,10 +90,13 @@
   color: var(--mainColor);
   transition: 0.3s;
   margin: 0px;
+  display: none;
 }
 
 .theme-toggle svg {
   font-size: 22px;
+  display: none;
+
 }
 
 .theme-toggle:hover {
@@ -254,11 +257,15 @@
   }
 
   .header_icons.mobile .theme-toggle {
+    display: flex;
     width: 100%;
     justify-content: flex-start;
     padding: 10px;
     border-radius: 8px;
     text-align: left;
+  }
+  .theme-toggle svg {
+    display: block;
   }
 
   .header_icons.mobile .icon svg {
