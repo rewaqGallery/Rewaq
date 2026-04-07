@@ -4,5 +4,9 @@ import "./style/alert.css";
 export default function Alert({ message }) {
   if (!message) return null;
 
-  return <div className={`alert ${message.type}`}>{message.text}</div>;
+  return (
+    <div className={`alert ${message.type}`} role="alert" aria-live="assertive">
+      {message.text}
+    </div>
+  );
 }
