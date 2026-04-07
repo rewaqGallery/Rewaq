@@ -1,22 +1,23 @@
 .footer {
-  background: var(--mainColor);
+  background-color: var(--mainColor);
   color: var(--whityColor);
-  padding: 20px 0 10px 0px;
-  margin-top: 50px;
+  padding: 15px 0px 10px 0px;
 }
 
 .footer .container {
   width: 90%;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-
 
 .footer-content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 
 .footer-section {
@@ -25,10 +26,15 @@
   gap: 0px;
 }
 
+.contact-section {
+  justify-content: space-between;
+}
+
 .footer-logo {
   width: 140px;
   filter: brightness(0) invert(1);
-  transition: 0.3s ease;
+  transition: transform 0.3s ease;
+  margin: 0;
 }
 
 .footer-logo:hover {
@@ -38,29 +44,33 @@
 .footer-description {
   color: var(--warmyColor);
   font-size: 0.95rem;
-  line-height: 1.7;
+  line-height: 1.5;
   max-width: 320px;
+  margin: 0;
 }
-
 
 .footer-title {
   font-size: 1.3rem;
   font-family: "Jersey 10", sans-serif;
   font-weight: 400;
   color: white;
-
   letter-spacing: 1px;
-
+  margin: 0px;
 }
 
-.footer-links,
-.footer-contact {
+.quick-links .footer-title {
+  margin-bottom: 20px;
+}
+
+.quick-links .footer-links,
+.contact-section .footer-contact {
   list-style: none;
-  padding: 5px;
-  margin: 5px;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+  padding-left: 3px;
 }
 
 .footer-links a,
@@ -68,15 +78,13 @@
   color: var(--warmyColor);
   font-size: 0.85rem;
   transition: 0.3s ease;
-  padding: 2px;
 }
 
 .footer-links a:hover,
 .footer-contact a:hover {
   color: var(--whityColor);
-  padding-left: 6px;
+  padding-left: 8px;
 }
-
 
 .contact-label {
   font-size: 0.85rem;
@@ -93,81 +101,28 @@
 }
 
 .social-link {
-  width: 42px;
-  height: 42px;
+  width: 35px;
+  height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .social-link:hover {
-  background: var(--maintGreen);
   transform: translateY(-4px);
 }
 
-
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding-top: 12px;
+  padding-top: 5px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-
-.copyright {
-  margin: 0 0 20px 0;
-  padding: 0;
-  font-size: 0.85rem;
-  color: var(--warmyColor);
-
-}
-
-
-@media (max-width: 875px) {
-  .footer {
-    padding: 6px 10px;
-    margin-top: 5px;
-  }
-
-  .quick-links {
-    display: none;
-  }
-
-  .footer-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    gap: 30px;
-  }
-
-  .footer-contact {
-    padding: 0;
-    margin: 0;
-  }
-
-  .footer-section {
-    align-items: center;
-    text-align: center;
-    gap: 0px;
-  }
-
-  .footer-description {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  .social-links {
-    justify-content: center;
-  }
-
-  .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    padding-top: 10px;
-    text-align: center;
-  }
-}
-
 
 .developer {
   font-size: 0.85rem;
@@ -176,8 +131,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 4px;
-  text-align: center;
+  margin: 0;
 }
 
 .linkedin-link {
@@ -191,4 +145,52 @@
 .linkedin-link:hover {
   color: #0a66c2;
   transform: translateY(-2px);
+}
+
+.copyright {
+  font-size: 0.85rem;
+  color: var(--warmyColor);
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 875px) {
+  .footer {
+    padding: 0 0 10px 0;
+  }
+
+
+  .footer .container {
+    gap: 25px;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .footer-section {
+    align-items: center;
+  }
+
+  .footer-description {
+    max-width: 100%;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .footer-links a, .footer-contact a {
+    display: none;
+  }
+
+  .quick-links .footer-links, .contact-section .footer-contact {
+    display: none;
+  }
+
+  .quick-links {
+    display: none;
+  }
 }

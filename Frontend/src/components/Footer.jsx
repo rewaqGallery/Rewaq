@@ -1,19 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./style/footer.css";
+
 import Logo from "../img/Logo.png";
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-// import FacebookIcon from "../img/facebook.svg";
-// import InstagramIcon from "../img/instagram.svg";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaTiktok,
+  FaWhatsapp,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
+import "./style/footer.css";
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer" role="contentinfo">
       <div className="container">
         <div className="footer-content">
-          {/* Logo and Description */}
-          <div className="footer-section">
-            <Link to="/" className="footer-logo-link">
+          <section className="footer-section logo-section">
+            <Link
+              to="/"
+              className="footer-logo-link"
+              aria-label="Rewaq Gallery Home"
+            >
               <img
                 src={Logo}
                 alt="Rewaq Gallery Logo"
@@ -25,10 +35,10 @@ function Footer() {
               <br />
               Create unique designs that reflect your style.
             </p>
-          </div>
+          </section>
 
           {/* Quick Links */}
-          <div className="footer-section quick-links">
+          <nav className="footer-section quick-links" aria-label="Quick Links">
             <h4 className="footer-title">Quick Links</h4>
             <ul className="footer-links">
               <li>
@@ -50,44 +60,73 @@ function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </nav>
 
-          {/* Contact Info */}
-          <div className="footer-section">
+          <section
+            className="footer-section contact-section"
+            aria-label="Contact Information"
+          >
             <h4 className="footer-title">Contact Us</h4>
             <ul className="footer-contact">
               <li>
-                <span className="contact-label">Email:</span>
+                <span className="contact-label">Email:&nbsp;</span>
                 <a href="mailto:Rewaqgallery1@gmail.com">
                   Rewaqgallery1@gmail.com
                 </a>
               </li>
               <li>
-                <span className="contact-label">Phone:</span>
+                <span className="contact-label">Phone:&nbsp;</span>
                 <a href="tel:+20 10 61014924">+20 10 61014924</a>
               </li>
-              <div className="social-links">
-                <a
-                  href="https://web.facebook.com/RewaqG"
-                  className="social-link"
-                  aria-label="Facebook"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaFacebook size={20} color="#fff" />
-                </a>
-                <a
-                  href="https://www.instagram.com/rewaqgallery/"
-                  className="social-link"
-                  aria-label="Instagram"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram size={20} color="#fff" />
-                </a>
-              </div>
             </ul>
-          </div>
+            <div className="social-links">
+              <a
+                href="https://web.facebook.com/RewaqG"
+                className="social-link"
+                aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebook size={20} color="#fff" />
+              </a>
+              <a
+                href="https://www.instagram.com/rewaqgallery/"
+                className="social-link"
+                aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaInstagram size={20} color="#fff" />
+              </a>
+              <a
+                href="https://api.whatsapp.com/send/?phone=%2B201061014924&text&type=phone_number&app_absent=0"
+                className="social-link"
+                aria-label="WhatsApp"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaWhatsapp size={20} color="#fff" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@rewaqgallery"
+                className="social-link"
+                aria-label="TikTok"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTiktok size={20} color="#fff" />
+              </a>
+              <a
+                href="https://x.com/rewaqgalleryy"
+                className="social-link"
+                aria-label="Twitter"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaXTwitter size={20} color="#fff" />
+              </a>
+            </div>
+          </section>
         </div>
 
         <div className="footer-bottom">
@@ -98,6 +137,7 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="linkedin-link"
+              aria-label="Developer's LinkedIn Profile"
             >
               <FaLinkedin size={16} />
             </a>
