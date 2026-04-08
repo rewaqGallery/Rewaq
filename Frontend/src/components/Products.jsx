@@ -8,6 +8,7 @@ import { getProducts } from "../services/productService";
 import "./style/product.css";
 
 function Products({ featured = false, showFilters = true }) {
+  const SKELETON_ITEMS_COUNT = 8;
   const [searchParams] = useSearchParams();
 
   const keywordFromURL = searchParams.get("keyword") || "";
@@ -53,7 +54,6 @@ function Products({ featured = false, showFilters = true }) {
       .finally(() => setLoading(false));
   }, [filters, featured]);
 
-  if (loading && products.length === 0) return <p>Loading products...</p>;
   if (error) return <p>{error}</p>;
 
   return (
@@ -73,8 +73,20 @@ function Products({ featured = false, showFilters = true }) {
           </header>
         )}
 
-        <ul className="products-grid" aria-live="polite">
-          {products.length ? (
+        <ul className="products-grid" aria-live="polite" aria-busy={loading}>
+          {loading ? (
+            Array.from({ length: SKELETON_ITEMS_COUNT }).map((_, index) => (
+              <li key={`skeleton-${index}`} className="product-skeleton-card">
+                <div className="skeleton-line skeleton-image"></div>
+                <div className="skeleton-content">
+                  <div className="skeleton-line skeleton-category"></div>
+                  <div className="skeleton-line skeleton-name"></div>
+                  <div className="skeleton-line skeleton-price"></div>
+                </div>
+                <div className="skeleton-line skeleton-button"></div>
+              </li>
+            ))
+          ) : products.length ? (
             products.map((product) => (
               <li key={product._id}>
                 <ProductCard product={product} />
