@@ -8,6 +8,8 @@ const cors = require("cors");
 const compression = require("compression");
 const passport = require("passport");
 const helmet = require("helmet");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./docs/swagger");
 dotenv.config({ path: ".env" });
 require("./config/passport");
 
@@ -34,6 +36,11 @@ app.use(passport.initialize());
 
 // Routes
 mountRoutes(app);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get("/api-docs.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.send(swaggerSpec);
+});
 
 // Handle undefined routes
 app.use((req, res, next) => {
