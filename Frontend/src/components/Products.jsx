@@ -8,7 +8,7 @@ import { getProducts } from "../services/productService";
 import "./style/product.css";
 
 function Products({ featured = false, showFilters = true }) {
-  const SKELETON_ITEMS_COUNT = 8;
+  const SKELETON_ITEMS_COUNT = 20;
   const [searchParams] = useSearchParams();
 
   const keywordFromURL = searchParams.get("keyword") || "";
@@ -77,7 +77,9 @@ function Products({ featured = false, showFilters = true }) {
           {loading ? (
             Array.from({ length: SKELETON_ITEMS_COUNT }).map((_, index) => (
               <li key={`skeleton-${index}`} className="product-skeleton-card">
-                <div className="skeleton-line skeleton-image"></div>
+                <div className="skeleton-image-wrapper">
+                  <div className="skeleton-line skeleton-image"></div>
+                </div>
                 <div className="skeleton-content">
                   <div className="skeleton-line skeleton-category"></div>
                   <div className="skeleton-line skeleton-name"></div>
