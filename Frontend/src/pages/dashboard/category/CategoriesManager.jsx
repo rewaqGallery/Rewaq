@@ -90,8 +90,15 @@ export default function CategoriesManager() {
           ) : (
             <CategoriesTable
               categories={categories}
+              // onEdit={(cat) =>
+              //   navigate(`/dashboard/categories/update/${cat._id}`)
+              // }
               onEdit={(cat) =>
-                navigate(`/dashboard/categories/update/${cat._id}`)
+                window.open(
+                  `/dashboard/categories/update/${cat._id}`,
+                  "_blank",
+                  "noopener,noreferrer",
+                )
               }
               onDelete={handleDelete}
             />
