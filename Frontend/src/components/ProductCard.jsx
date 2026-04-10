@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFavouriteAsync,
   removeFavouriteAsync,
 } from "../store/favouritesSlice";
 import { addToCartAsync, removeFromCartAsync } from "../store/cartSlice";
+
+import { updateProduct } from "../services/productService";
 
 import Alert from "./Alert";
 import Loading from "./Loading";
@@ -17,19 +20,55 @@ function ProductCard({ product }) {
   const dispatch = useDispatch();
   const [message, setMessage] = useState(null);
   const [loadingCart, setLoadingCart] = useState(false);
+  const [loadingFeature, setLoadingFeature] = useState(false);
+  const navigate = useNavigate();
 
   const favourites = useSelector((state) => state.favourites.ids) || [];
   const cartItems = useSelector((state) => state.cart.items) || [];
+
   const token = localStorage.getItem("token");
+  let user = null;
+  try {
+    user = token ? JSON.parse(atob(token.split(".")[1])) : null;
+  } catch (e) {
+    user = null;
+  }
+  const isAdmin = user?.role === "admin";
+
+  const [isFeatured, setIsFeatured] = useState(product.featured);
 
   const productId = product?._id ?? product?.id;
   const productName = product?.description || "Product";
-
+  useEffect(() => {
+    setIsFeatured(product.featured);
+  }, [product.featured]);
   const isFavourite = favourites.some((f) => f === productId);
 
   const inCart = cartItems.some(
     (item) => String(item.product?._id ?? item.productId) === String(productId),
   );
+
+  const handleToggleFeature = async () => {
+    const newValue = !isFeatured;
+    setIsFeatured(newValue);
+    setLoadingFeature(true);
+    try {
+      const formData = new FormData();
+      formData.append("featured", newValue);
+
+      await updateProduct(productId, formData);
+
+      setMessage({ type: "success", text: "Feature updated" });
+    } catch {
+      setIsFeatured(!newValue);
+      setMessage({ type: "error", text: "Failed to update feature" });
+    } finally {
+      setLoadingFeature(false);
+    }
+  };
+  const handleEdit = () => {
+    navigate(`/dashboard/products/update/${productId}`);
+  };
 
   const handleFavourite = () => {
     if (!token) {
@@ -45,6 +84,7 @@ function ProductCard({ product }) {
       setMessage({ type: "success", text: "Added to favourites" });
     }
   };
+
   const handleCart = async () => {
     if (!token) {
       setMessage({ type: "error", text: "You must login first" });
@@ -67,28 +107,55 @@ function ProductCard({ product }) {
       setLoadingCart(false);
     }
   };
+
+  useEffect(() => {
+  if (!message) return;
+
+  const timer = setTimeout(() => {
+    setMessage(null);
+  }, 3000); 
+  
+  return () => clearTimeout(timer);
+}, [message]);
   return (
     <>
       <Alert message={message} />
       <article className="product-card">
         <button
-          className={`favorite-btn ${isFavourite ? "active" : ""}`}
-          onClick={handleFavourite}
+          className={`favorite-btn ${
+            isAdmin ? (isFeatured ? "active" : "") : isFavourite ? "active" : ""
+          }`}
+          onClick={isAdmin ? handleToggleFeature : handleFavourite}
+          disabled={isAdmin ? loadingFeature : false}
           aria-label={
-            isFavourite ? "Remove from favourites" : "Add to favourites"
+            isAdmin
+              ? isFeatured
+                ? "Remove from featured"
+                : "Add to featured"
+              : isFavourite
+                ? "Remove from favourites"
+                : "Add to favourites"
           }
-          aria-pressed={isFavourite}
         >
-          {isFavourite ? <FaHeart /> : <FaRegHeart />}
+          {isAdmin ? (
+            isFeatured ? (
+              <AiOutlineCheckCircle />
+            ) : (
+              <AiOutlineCheckCircle />
+            )
+          ) : isFavourite ? (
+            <FaHeart />
+          ) : (
+            <FaRegHeart />
+          )}
         </button>
-
         <Link
           to={`/product/${productId}`}
           className="product-link"
           aria-label={`View details for ${productName}`}
         >
           <div className="product-image-wrapper">
-            {product.quantity <= 0 && (
+            {product?.quantity <= 0 && (
               <div className="out-of-stock-badge">Out of Stock</div>
             )}
 
@@ -125,12 +192,15 @@ function ProductCard({ product }) {
         <div className="product-actions">
           <button
             type="button"
-            className={`product-btn add-to-cart ${inCart ? "in-cart" : ""}`}
-            onClick={handleCart}
-            disabled={loadingCart}
-            aria-label={inCart ? "Remove from cart" : "Add to cart"}
+            className={`product-btn ${
+              isAdmin ? "edit-product" : "add-to-cart"
+            } ${inCart ? "in-cart" : ""}`}
+            onClick={isAdmin ? handleEdit : handleCart}
+            disabled={loadingCart && !isAdmin}
           >
-            {loadingCart ? (
+            {isAdmin ? (
+              "Edit Product"
+            ) : loadingCart ? (
               <Loading text="" />
             ) : inCart ? (
               "In Cart"
