@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import {
   signup,
   login,
@@ -11,6 +12,9 @@ import {
 } from "../services/authService";
 import { fetchCart } from "../store/cartSlice";
 import { fetchFavourites } from "../store/favouritesSlice";
+
+import Alert from "../components/Alert";
+
 import "./style/LoginRegister.css";
 
 function LoginRegister({ onClose }) {
@@ -106,21 +110,34 @@ function LoginRegister({ onClose }) {
         setIsVerify(true);
       }
     } catch (err) {
-      setError(err.message);
+      setError(
+        err?.data?.errors[0]?.msg || err.message || "Something went wrong",
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-overlay" onClick={onClose}>
-      <div className="auth-container" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose}>
+    <div
+      className="auth-overlay"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="auth-title"
+    >
+      <div className="auth-container">
+        <button
+          className="close-btn"
+          onClick={onClose}
+          aria-label="Close authentication modal"
+        >
           ×
         </button>
-
         <div className="auth-header">
-          <h2>
+          <h2 id="auth-title">
             {isForgetPassword
               ? forgetStep === 1
                 ? "Reset Password"
@@ -137,124 +154,177 @@ function LoginRegister({ onClose }) {
           {!isVerify && !isForgetPassword && (
             <p>
               {isLogin ? "Don't have an account?" : "Already have one?"}
-              <span className="toggle-link" onClick={toggleForm}>
+              <button
+                type="button"
+                className="toggle-link"
+                onClick={toggleForm}
+              >
                 {isLogin ? " Register" : " Login"}
-              </span>
+              </button>
             </p>
           )}
         </div>
-
-        <form className="auth-form" onSubmit={handleSubmit}>
-          {!isLogin && !isVerify && !isForgetPassword && (
-            <input
-              className="auth-input"
-              name="name"
-              placeholder="Full Name"
-              onChange={handleChange}
-              required
-            />
-          )}
-
-          {!isVerify && forgetStep !== 3 && (
-            <input
-              className="auth-input"
-              name="email"
-              type="email"
-              placeholder="Email"
-              onChange={handleChange}
-              required
-            />
-          )}
-
-          {!isVerify && !isForgetPassword && (
-            <input
-              className="auth-input"
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={handleChange}
-              required
-            />
-          )}
-
-          {!isLogin && !isVerify && !isForgetPassword && (
-            <input
-              className="auth-input"
-              name="passwordConfirm"
-              type="password"
-              placeholder="Confirm Password"
-              onChange={handleChange}
-              required
-            />
-          )}
-
-          {(isVerify || forgetStep === 2) && (
-            <input
-              className="auth-input"
-              name="otp"
-              placeholder="Verification Code"
-              onChange={handleChange}
-              required
-            />
-          )}
-
-          {forgetStep === 3 && (
-            <>
-              <input
-                className="auth-input"
-                name="newPassword"
-                type="password"
-                placeholder="New Password"
-                onChange={handleChange}
-                required
-              />
-              <input
-                className="auth-input"
-                name="confirmNewPassword"
-                type="password"
-                placeholder="Confirm Password"
-                onChange={handleChange}
-                required
-              />
-            </>
-          )}
-
-          {error && <p className="auth-error">{error}</p>}
-
-          <button className="auth-btn" disabled={loading}>
-            {loading ? "Loading..." : "Continue"}
-          </button>
-
-          {isLogin && !isForgetPassword && (
-            <p
-              className="forget-link"
-              onClick={() => setIsForgetPassword(true)}
-            >
-              Forgot Password?
-            </p>
-          )}
-
-          {isLogin && !isForgetPassword && (
-            <>
-              <div className="divider">
-                <span>OR</span>
-              </div>
-
-              <a
-                className="google-btn"
-                href="https://rewaq-server-production.up.railway.app/auth/google"
-                // href="http://localhost:9001/auth/google"
-              >
-                <img
-                  src="https://developers.google.com/identity/images/g-logo.png"
-                  alt="Google"
+        <section aria-labelledby="auth-title">
+          <form
+            className="auth-form"
+            onSubmit={handleSubmit}
+            aria-describedby={error ? "auth-error" : undefined}
+          >
+            {!isLogin && !isVerify && !isForgetPassword && (
+              <>
+                <label htmlFor="name">Full Name</label>
+                <input
+                  id="name"
+                  className="auth-input"
+                  name="name"
+                  onChange={handleChange}
+                  required
+                  autoComplete="name"
+                  disabled={loading}
                 />
-                Continue with Google
-              </a>
-            </>
-          )}
-        </form>
+              </>
+            )}
 
+            {!isVerify && forgetStep !== 3 && (
+              <>
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  className="auth-input"
+                  name="email"
+                  type="email"
+                  onChange={handleChange}
+                  required
+                  autoComplete="email"
+                  disabled={loading}
+                  autoFocus={isLogin}
+                />
+              </>
+            )}
+
+            {!isVerify && !isForgetPassword && (
+              <>
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  className="auth-input"
+                  name="password"
+                  type="password"
+                  onChange={handleChange}
+                  required
+                  autoComplete="current-password"
+                  disabled={loading}
+                />
+              </>
+            )}
+
+            {!isLogin && !isVerify && !isForgetPassword && (
+              <>
+                <label htmlFor="passwordConfirm">Confirm Password</label>
+                <input
+                  id="passwordConfirm"
+                  className="auth-input"
+                  name="passwordConfirm"
+                  type="password"
+                  onChange={handleChange}
+                  required
+                  disabled={loading}
+                />
+              </>
+            )}
+
+            {(isVerify || forgetStep === 2) && (
+              <>
+                <p>
+                  Check your email for the verification code
+                  <br /> <span className="spam">&lt;also check spam&gt;</span>
+                </p>
+
+                <label htmlFor="otp">Verification Code</label>
+                <input
+                  id="otp"
+                  className="auth-input"
+                  name="otp"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  onChange={handleChange}
+                  required
+                  disabled={loading}
+                />
+              </>
+            )}
+
+            {forgetStep === 3 && (
+              <>
+                <label htmlFor="newPassword">New Password</label>
+                <input
+                  id="newPassword"
+                  className="auth-input"
+                  name="newPassword"
+                  type="password"
+                  onChange={handleChange}
+                  required
+                  disabled={loading}
+                />
+
+                <label htmlFor="confirmNewPassword">Confirm Password</label>
+                <input
+                  id="confirmNewPassword"
+                  className="auth-input"
+                  name="confirmNewPassword"
+                  type="password"
+                  onChange={handleChange}
+                  required
+                  disabled={loading}
+                />
+              </>
+            )}
+
+            <Alert message={error ? { type: "error", text: error } : null} />
+
+            <button className="auth-btn" disabled={loading} aria-busy={loading}>
+              {loading ? (
+                <>
+                  <span className="spinner-inline"></span>
+                  <span className="sr-only">Loading</span>
+                </>
+              ) : (
+                "Continue"
+              )}
+            </button>
+
+            {isLogin && !isForgetPassword && (
+              <button
+                type="button"
+                className="forget-link"
+                onClick={() => setIsForgetPassword(true)}
+              >
+                Forgot Password?
+              </button>
+            )}
+
+            {isLogin && !isForgetPassword && (
+              <>
+                <div className="divider">
+                  <span>OR</span>
+                </div>
+
+                <a
+                  className="google-btn"
+                  href="https://rewaq-server-production.up.railway.app/auth/google"
+                  aria-label="Continue with Google"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://developers.google.com/identity/images/g-logo.png"
+                    alt="Google logo"
+                  />
+                  Continue with Google
+                </a>
+              </>
+            )}
+          </form>
+        </section>
         {userRole === "admin" && (
           <div className="admin-link">
             <button onClick={() => navigate("/admin")}>Go to Dashboard</button>

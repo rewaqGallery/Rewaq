@@ -19,7 +19,8 @@ const pendingUserSchema = new mongoose.Schema(
     otp: String,
     otpExpiresIn: Date,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
+pendingUserSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 60 * 6 });
 module.exports = mongoose.model("PendingUser", pendingUserSchema);
