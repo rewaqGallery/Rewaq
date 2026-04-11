@@ -104,17 +104,16 @@
 }
 
 .product-card .product-category {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--secondaryColor);
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .product-card .product-name {
-  font-size: 15px;
-  text-transform: uppercase;
-  font-weight: 700;
+  font-size: 18px;
+  /* font-weight: 700; */
   color: var(--mainColor);
   line-height: 1.6;
   display: -webkit-box;

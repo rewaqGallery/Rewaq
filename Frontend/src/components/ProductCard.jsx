@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa6";
-import { AiOutlineCheckCircle } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   addFavouriteAsync,
   removeFavouriteAsync,
 } from "../store/favouritesSlice";
 import { addToCartAsync, removeFromCartAsync } from "../store/cartSlice";
-
 import { updateProduct } from "../services/productService";
 
 import Alert from "./Alert";
 import Loading from "./Loading";
 
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+
 import "./style/productCard.css";
 
 function ProductCard({ product }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [message, setMessage] = useState(null);
   const [loadingCart, setLoadingCart] = useState(false);
   const [loadingFeature, setLoadingFeature] = useState(false);
-  const navigate = useNavigate();
-
-  const favourites = useSelector((state) => state.favourites.ids) || [];
-  const cartItems = useSelector((state) => state.cart.items) || [];
+  const [isFeatured, setIsFeatured] = useState(product.featured);
 
   const token = localStorage.getItem("token");
   let user = null;
@@ -35,15 +35,17 @@ function ProductCard({ product }) {
   }
   const isAdmin = user?.role === "admin";
 
-  const [isFeatured, setIsFeatured] = useState(product.featured);
+  const favourites = useSelector((state) => state.favourites.ids) || [];
+  const cartItems = useSelector((state) => state.cart.items) || [];
 
   const productId = product?._id ?? product?.id;
   const productName = product?.description || "Product";
+
   useEffect(() => {
     setIsFeatured(product.featured);
   }, [product.featured]);
-  const isFavourite = favourites.some((f) => f === productId);
 
+  const isFavourite = favourites.some((f) => f === productId);
   const inCart = cartItems.some(
     (item) => String(item.product?._id ?? item.productId) === String(productId),
   );
@@ -66,6 +68,7 @@ function ProductCard({ product }) {
       setLoadingFeature(false);
     }
   };
+
   const handleEdit = () => {
     navigate(`/dashboard/products/update/${productId}`);
   };
@@ -109,14 +112,15 @@ function ProductCard({ product }) {
   };
 
   useEffect(() => {
-  if (!message) return;
+    if (!message) return;
 
-  const timer = setTimeout(() => {
-    setMessage(null);
-  }, 3000); 
-  
-  return () => clearTimeout(timer);
-}, [message]);
+    const timer = setTimeout(() => {
+      setMessage(null);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [message]);
+
   return (
     <>
       <Alert message={message} />

@@ -100,6 +100,24 @@ module.exports.createOrder = asyncHandler(async (req, res, next) => {
     await session.commitTransaction();
     session.endSession();
 
+    await sendEmail({
+      // email: "omarkhalid000333@gmail.com",
+      email: "mohamedelafandy16@gmail.com",
+      subject: "New Order Created",
+      message: `
+    New order has been created!
+
+    User ID: ${userId}
+    Order ID: ${order._id}
+    Total Price: ${order.totalOrderPrice} EGP
+    Payment Method: ${order.paymentMethod}
+
+    Shipping Address:
+    ${detailedAddress}, ${city}, ${governorate}
+
+    Phone: ${phone}`,
+    });
+
     res.status(201).json({
       status: "success",
       message: "Order created successfully",

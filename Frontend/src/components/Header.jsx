@@ -8,7 +8,7 @@ import LoginRegister from "../pages/LoginRegister";
 
 import Logo from "../img/logorewaq.png";
 import { IoCart, IoSearch, IoSunny } from "react-icons/io5";
-import { MdModeNight } from "react-icons/md";
+// import { MdModeNight } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { HiMenu } from "react-icons/hi";
@@ -22,9 +22,9 @@ function Header() {
   const [showAuth, setShowAuth] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(
-    () => localStorage.getItem("theme") === "dark",
-  );
+  // const [isDarkMode, setIsDarkMode] = useState(
+  //   () => localStorage.getItem("theme") === "dark",
+  // );
 
   const token = localStorage.getItem("token");
 
@@ -60,18 +60,18 @@ function Header() {
     setSearchTerm("");
   };
 
-  const toggleTheme = () => {
-    setIsDarkMode((prev) => {
-      const nextMode = !prev;
-      localStorage.setItem("theme", nextMode ? "dark" : "light");
-      document.body.classList.toggle("dark-mode", nextMode);
-      return nextMode;
-    });
-  };
+  // const toggleTheme = () => {
+  //   setIsDarkMode((prev) => {
+  //     const nextMode = !prev;
+  //     localStorage.setItem("theme", nextMode ? "dark" : "light");
+  //     document.body.classList.toggle("dark-mode", nextMode);
+  //     return nextMode;
+  //   });
+  // };
 
-  React.useEffect(() => {
-    document.body.classList.toggle("dark-mode", isDarkMode);
-  }, [isDarkMode]);
+  // React.useEffect(() => {
+  //   document.body.classList.toggle("dark-mode", isDarkMode);
+  // }, [isDarkMode]);
 
   return (
     <div className="Header">
@@ -144,7 +144,7 @@ function Header() {
             <CgProfile />
           </Link>
 
-          <button
+          {/* <button
             className="theme-toggle"
             type="button"
             onClick={toggleTheme}
@@ -154,7 +154,7 @@ function Header() {
             title={isDarkMode ? "Light mode" : "Night mode"}
           >
             {isDarkMode ? <IoSunny /> : <MdModeNight />}
-          </button>
+          </button> */}
 
           {user?.role === "admin" && (
             <Link
