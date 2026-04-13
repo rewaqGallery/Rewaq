@@ -192,6 +192,21 @@
 @media (max-width:400px) {
   .products-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fit, 157px);
+    gap: 5px;
+    justify-content: space-around;
+  }
+
+  .product-skeleton-card {
+    width: 157px;
+    height: 480px;
+  }
+
+}
+
+@media (max-width:358px) {
+  .products-grid {
+    display: grid;
     grid-template-columns: repeat(auto-fit, 250px);
   }
 
