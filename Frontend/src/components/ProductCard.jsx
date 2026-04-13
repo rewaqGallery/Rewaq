@@ -180,24 +180,24 @@ function ProductCard({ product }) {
           <div className="product-info">
             <span className="product-category">{product.category?.name}</span>
             <div className="product-name">{product.description}</div>
-            <div className="product-prices">
-              {isNaN(product.priceAfterDiscount) ? (
-                <span className="product-priceAfterDiscount">
-                  {Number(product.price).toFixed(2)} LE
-                </span>
-              ) : (
-                <>
-                  <span className="product-priceAfterDiscount">
-                    {Number(product.priceAfterDiscount).toFixed(2)} LE
-                  </span>
-                  <span className="product-price">
-                    {Number(product.price).toFixed(2)} LE
-                  </span>
-                </>
-              )}
-            </div>
           </div>
         </Link>
+        <div className="product-prices">
+          {isNaN(product.priceAfterDiscount) ? (
+            <span className="product-priceAfterDiscount">
+              {Number(product.price).toFixed(2)} LE
+            </span>
+          ) : (
+            <>
+              <span className="product-priceAfterDiscount">
+                {Number(product.priceAfterDiscount).toFixed(2)} LE
+              </span>
+              <span className="product-price">
+                {Number(product.price).toFixed(2)} LE
+              </span>
+            </>
+          )}
+        </div>
 
         <div className="product-actions">
           <button
