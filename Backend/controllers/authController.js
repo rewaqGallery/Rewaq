@@ -244,3 +244,16 @@ exports.googleCallBack = [
     );
   },
 ];
+
+exports.directSignup = asyncHandler(async (req, res, next) => {
+  let { name, email, password } = req.body;
+  let hashedPass = await bcryptjs.hash(password, 12);
+  let newUser = {
+    email: email,
+    password: hashedPass,
+    name: name,
+  };
+  let user = await userModel.create(newUser);
+  let token = createToken(user);
+  res.status(201).json({ message: "User Created Successfully", token });
+});

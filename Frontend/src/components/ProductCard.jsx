@@ -70,7 +70,13 @@ function ProductCard({ product }) {
   };
 
   const handleEdit = () => {
-    navigate(`/dashboard/products/update/${productId}`);
+    window.open(
+      `/dashboard/products/update/${productId}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+
+    // navigate(`/dashboard/products/update/${productId}`);
   };
 
   const handleFavourite = () => {

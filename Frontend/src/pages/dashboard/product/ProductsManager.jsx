@@ -154,13 +154,14 @@ export default function ProductsManager() {
           ) : (
             <ProductsTable
               products={products}
-
               // onEdit={(p) => navigate(`/dashboard/products/update/${p._id}`)}
-          onEdit={(p) =>      window.open(
-    `/dashboard/products/update/${p._id}`,
-    "_blank",
-    "noopener,noreferrer"
-  )}
+              onEdit={(p) =>
+                window.open(
+                  `/dashboard/products/update/${p._id}`,
+                  "_blank",
+                  "noopener,noreferrer",
+                )
+              }
               onDelete={handleDelete}
               toggleFeatures={toggleFeatures}
               updateQuantity={updateQuantity}

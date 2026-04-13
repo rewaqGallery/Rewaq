@@ -78,30 +78,6 @@
   gap: 10px;
 }
 
-/* .skeleton-category {
-  width: 40%;
-  height: 14px;
-  border-radius: 999px;
-}
-
-.skeleton-name {
-  width: 80%;
-  height: 18px;
-  border-radius: 8px;
-}
-
-.skeleton-price {
-  width: 52%;
-  height: 16px;
-  border-radius: 8px;
-}
- */
-/* .skeleton-button {
-  height: 40px;
-  margin: 0 18px;
-  border-radius: 25px;
-} */
-
 @keyframes skeleton-shimmer {
   100% {
     transform: translateX(100%);
@@ -135,11 +111,29 @@
 
 @media (max-width: 768px) {
   .products-grid {
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 235px);
+    gap: 25px;
+  }
+
+  .product-skeleton-card {
+    width: 235px;
+    height: 480px;
   }
 }
 
-@media (max-width: 575px) {
+@media (max-width: 580px) {
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 230px);
+    gap: 15px;
+  }
+
+  .product-skeleton-card {
+    width: 230px;
+    height: 480px;
+  }
+
   .results-count p {
     font-size: 1.3rem;
     letter-spacing: 1.3px;
@@ -147,7 +141,69 @@
   }
 }
 
-@media (max-width: 365px) {
+@media (max-width: 520px) {
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 210px);
+    gap: 10px;
+    justify-content: space-around
+  }
+
+  .skeleton-image-wrapper {
+    height: 220px;
+  }
+
+
+  .product-skeleton-card {
+    width: 210px;
+    height: 480px;
+  }
+}
+
+
+@media (max-width: 472px) {
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 190px);
+    gap: 5px;
+    justify-content: space-around;
+  }
+
+  .product-skeleton-card {
+    width: 190px;
+    height: 480px;
+  }
+}
+
+@media (max-width: 430px) {
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 175px);
+    gap: 5px;
+    justify-content: space-around;
+  }
+
+  .product-skeleton-card {
+    width: 175px;
+    height: 480px;
+  }
+}
+
+@media (max-width:400px) {
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+  }
+
+  .product-skeleton-card {
+    width: 250px;
+    height: 480px;
+  }
+
+  .skeleton-image-wrapper {
+    height: 244px;
+  }
+
   .results-count p {
     font-size: 1.1rem;
     letter-spacing: 1.2px;

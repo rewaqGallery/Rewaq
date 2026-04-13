@@ -127,6 +127,11 @@
   color: var(--mainColor);
 }
 
+.icon .label {
+  display: none;
+  font-size: 0.9rem;
+}
+
 .count {
   position: absolute;
   top: -3px;
@@ -256,6 +261,16 @@
     border-radius: 8px;
   }
 
+  .header_icons.mobile .icon {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .icon .label {
+    display: inline;
+  }
+
   .header_icons.mobile .theme-toggle {
     display: flex;
     width: 100%;
@@ -264,7 +279,7 @@
     border-radius: 8px;
     text-align: left;
   }
-  
+
   .theme-toggle svg {
     display: block;
   }

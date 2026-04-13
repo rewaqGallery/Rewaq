@@ -21,6 +21,7 @@ function Products({ featured = false, showFilters = true }) {
     keyword: keywordFromURL,
     page: 1,
     limit: 52,
+    sort: "-updatedAt"
   });
 
   const [products, setProducts] = useState([]);
@@ -41,7 +42,7 @@ function Products({ featured = false, showFilters = true }) {
     setLoading(true);
     setError(null);
     const requestFilters = featured
-      ? { ...filters, featured: true, page: 1, limit: 100000 }
+      ? { ...filters, featured: true, page: 1, limit: 100000, sort: "-updatedAt" }
       : filters;
     getProducts(requestFilters)
       .then((res) => {
