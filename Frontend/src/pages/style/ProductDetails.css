@@ -143,6 +143,7 @@
   color: var(--secondaryColor);
   margin: 0;
   line-height: 2.8;
+  white-space: pre-line; 
 }
 
 .product-info .product-actions {
@@ -316,7 +317,7 @@
   }
 
   .product-info .category-desc {
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.9;
   }
 
