@@ -180,7 +180,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, 175px);
     gap: 5px;
-    justify-content: space-around;
+    justify-content: center;
   }
 
   .product-skeleton-card {
@@ -192,13 +192,13 @@
 @media (max-width:400px) {
   .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 165px);
+    grid-template-columns: repeat(auto-fit, 168px);
     gap: 5px;
-    justify-content: space-around;
+    justify-content: center;
   }
 
   .product-skeleton-card {
-    width: 157px;
+    width: 168px;
     height: 480px;
   }
 
