@@ -9,10 +9,6 @@ exports.checkIdValidator = [
 
 exports.updateUserValidator = [
   check("name").optional().isString().withMessage("User name must be string"),
-  check("phone")
-    .optional()
-    .matches(/^[0-9]{11}$/)
-    .withMessage("Phone must be a valid Egyptian mobile number"),
-
+  check("phone").optional(),
   validatorMiddleware,
 ];
