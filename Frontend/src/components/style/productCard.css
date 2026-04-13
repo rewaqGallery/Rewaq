@@ -242,7 +242,14 @@
   }
 }
 
-@media (max-width:400px) {
+@media (max-width: 400px) {
+  .product-card {
+    width: 157px;
+    height: 480px;
+  }
+}
+
+@media (max-width:358px) {
   .product-card {
     width: 250px;
   }
