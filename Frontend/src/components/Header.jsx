@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -57,7 +57,7 @@ function Header() {
     e.preventDefault();
     if (!searchTerm.trim()) return;
     navigate(`/product?keyword=${searchTerm}`);
-    setSearchTerm("");
+    // setSearchTerm("");
   };
 
   // const toggleTheme = () => {
@@ -72,6 +72,18 @@ function Header() {
   // React.useEffect(() => {
   //   document.body.classList.toggle("dark-mode", isDarkMode);
   // }, [isDarkMode]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowMobileMenu((prev) => (prev ? false : prev));
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div className="Header">
@@ -122,6 +134,7 @@ function Header() {
             onClick={() => setShowMobileMenu(false)}
           >
             <FaRegHeart />
+            <span className="label">Favourites</span>
             <span className="count">{token ? favouritesCount : 0}</span>
           </Link>
 
@@ -132,6 +145,8 @@ function Header() {
             onClick={() => setShowMobileMenu(false)}
           >
             <IoCart />
+            <span className="label">Cart</span>
+
             <span className="count">{token ? cartCount : 0}</span>
           </Link>
 
@@ -142,6 +157,7 @@ function Header() {
             onClick={() => setShowMobileMenu(false)}
           >
             <CgProfile />
+            <span className="label">Profile</span>
           </Link>
 
           {/* <button
