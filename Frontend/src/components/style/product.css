@@ -192,7 +192,7 @@
 @media (max-width:400px) {
   .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 157px);
+    grid-template-columns: repeat(auto-fit, 165px);
     gap: 5px;
     justify-content: space-around;
   }
