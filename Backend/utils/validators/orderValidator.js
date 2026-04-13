@@ -8,6 +8,12 @@ exports.createOrderValidator = [
     .isString()
     .withMessage("Invalid detailedAddress Format"),
 
+  check("name")
+    .notEmpty()
+    .withMessage("Name Required")
+    .isString()
+    .withMessage("Invalid Name Format"),
+
   check("city")
     .notEmpty()
     .withMessage("City Required")
@@ -18,7 +24,7 @@ exports.createOrderValidator = [
     .notEmpty()
     .withMessage("Governorate Required")
     .isString()
-    .withMessage("Invalid City Format"),
+    .withMessage("Invalid Governorate Format"),
 
   check("phone")
     .notEmpty()

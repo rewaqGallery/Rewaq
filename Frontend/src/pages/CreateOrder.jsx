@@ -27,6 +27,7 @@ function CreateOrder() {
   const [shippingAddress, setShippingAddress] = useState({
     detailedAddress: "",
     phone: "",
+    name: "",
     city: "",
     governorate: "",
     postalCode: "",
@@ -94,6 +95,8 @@ function CreateOrder() {
       newErrors.phone = "Invalid Egyptian phone number";
     }
 
+    if (!shippingAddress.name.trim()) newErrors.name = "Name is required";
+
     if (
       shippingAddress.postalCode &&
       !/^[0-9]+$/.test(shippingAddress.postalCode)
@@ -138,6 +141,7 @@ function CreateOrder() {
         governorate: shippingAddress.governorate,
         city: shippingAddress.city,
         postalCode: shippingAddress.postalCode,
+        name: shippingAddress.name,
         shippingPrice,
         paymentMethod: "cash",
         idempotencyKey: generateIdempotencyKey(),
@@ -193,6 +197,47 @@ function CreateOrder() {
           <h3 className="form-title">Shipping Address</h3>
           <div className="form-row">
             <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={shippingAddress.name}
+                onChange={handleChange}
+                placeholder="your name"
+                disabled={submitting}
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? "name-error" : undefined}
+              />
+              {errors.name && (
+                <span id="name-error" className="error">
+                  {errors.name}
+                </span>
+              )}
+            </div>
+            <div className="form-group">
+              <label htmlFor="phone">Phone</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={shippingAddress.phone}
+                onChange={handleChange}
+                placeholder="01xxxxxxxxx"
+                disabled={submitting}
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? "phone-error" : undefined}
+              />
+              {errors.phone && (
+                <span id="phone-error" className="error">
+                  {errors.phone}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
               <label htmlFor="governorate">Governorate</label>
               <select
                 id="governorate"
@@ -238,28 +283,6 @@ function CreateOrder() {
                 </span>
               )}
             </div>
-
-            <div className="form-group">
-              <label htmlFor="postalCode">Postal Code (optional)</label>
-              <input
-                type="text"
-                id="postalCode"
-                name="postalCode"
-                value={shippingAddress.postalCode}
-                onChange={handleChange}
-                placeholder="12345"
-                disabled={submitting}
-                aria-invalid={!!errors.postalCode}
-                aria-describedby={
-                  errors.postalCode ? "postalCode-error" : undefined
-                }
-              />
-              {errors.postalCode && (
-                <span id="postalCode-error" className="error">
-                  {errors.postalCode}
-                </span>
-              )}
-            </div>
           </div>
 
           <div className="form-group">
@@ -279,26 +302,6 @@ function CreateOrder() {
             {errors.detailedAddress && (
               <span id="detailedAddress-error" className="error">
                 {errors.detailedAddress}
-              </span>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="phone">Phone</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={shippingAddress.phone}
-              onChange={handleChange}
-              placeholder="01xxxxxxxxx"
-              disabled={submitting}
-              aria-invalid={!!errors.phone}
-              aria-describedby={errors.phone ? "phone-error" : undefined}
-            />
-            {errors.phone && (
-              <span id="phone-error" className="error">
-                {errors.phone}
               </span>
             )}
           </div>
