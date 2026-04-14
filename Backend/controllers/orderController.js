@@ -104,22 +104,18 @@ module.exports.createOrder = asyncHandler(async (req, res, next) => {
     session.endSession();
 
     await sendEmail({
-      email: "omarkhalid000333@gmail.com",
-      // email: "mohamedelafandy16@gmail.com",
+      // email: "omarkhalid000333@gmail.com",
+      email: "mohamedelafandy16@gmail.com",
       subject: "New Order Created",
+      name: order.shippingAddress.name,
       message: `
     New order has been created!
-
-    User ID: ${userId}
-    Order ID: ${order._id}
-    User Name: ${order.shippingAddress.name}
-    Total Price: ${order.totalOrderPrice} EGP
-    Payment Method: ${order.paymentMethod}
-
-    Shipping Address:
-    ${detailedAddress}, ${city}, ${governorate}
-
-    Phone: ${phone}`,
+      User Name: ${order.shippingAddress.name}
+      Total Price: ${order.totalOrderPrice} EGP
+      Payment Method: ${order.paymentMethod}
+      Shipping Address:
+      ${detailedAddress}, ${city}, ${governorate}
+      Phone: ${phone}`,
     });
 
     res.status(201).json({
