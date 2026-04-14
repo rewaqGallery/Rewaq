@@ -4,6 +4,7 @@ const apiError = require("../utils/apiError");
 const orderModel = require("../models/orderModel");
 const cartModel = require("../models/cartModel");
 const productModel = require("../models/productModel");
+const sendEmail = require("../utils/resend");
 const { getAll, getOne, deleteOne } = require("./handlersFactory");
 
 module.exports.createOrder = asyncHandler(async (req, res, next) => {
@@ -106,18 +107,15 @@ module.exports.createOrder = asyncHandler(async (req, res, next) => {
       // email: "omarkhalid000333@gmail.com",
       email: "mohamedelafandy16@gmail.com",
       subject: "New Order Created",
+      name: order.shippingAddress.name,
       message: `
     New order has been created!
-
-    User ID: ${userId}
-    Order ID: ${order._id}
-    Total Price: ${order.totalOrderPrice} EGP
-    Payment Method: ${order.paymentMethod}
-
-    Shipping Address:
-    ${detailedAddress}, ${city}, ${governorate}
-
-    Phone: ${phone}`,
+      User Name: ${order.shippingAddress.name}
+      Total Price: ${order.totalOrderPrice} EGP
+      Payment Method: ${order.paymentMethod}
+      Shipping Address:
+      ${detailedAddress}, ${city}, ${governorate}
+      Phone: ${phone}`,
     });
 
     res.status(201).json({

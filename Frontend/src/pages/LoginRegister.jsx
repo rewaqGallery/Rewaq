@@ -9,6 +9,7 @@ import {
   forgetPassword,
   verifyResetCode,
   resetPassword,
+  directSignup,
 } from "../services/authService";
 import { fetchCart } from "../store/cartSlice";
 import { fetchFavourites } from "../store/favouritesSlice";
@@ -108,6 +109,9 @@ function LoginRegister({ onClose }) {
 
         await signup(formData);
         setIsVerify(true);
+
+        // const data = await directSignup(formData);
+        // afterAuthSuccess(data);
       }
     } catch (err) {
       setError(
@@ -235,10 +239,10 @@ function LoginRegister({ onClose }) {
 
             {(isVerify || forgetStep === 2) && (
               <>
-                <p>
+                {/* <p>
                   Check your email for the verification code
                   <br /> <span className="spam">&lt;also check spam&gt;</span>
-                </p>
+                </p> */}
 
                 <label htmlFor="otp">Verification Code</label>
                 <input
