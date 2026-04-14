@@ -11,29 +11,29 @@ const sendEmail = async (options) => {
       subject: options.subject,
 
       html: `
-        <div style="font-family: Arial, sans-serif; background-color:#f4f4f4; padding:20px;">
+        <div style="font-family: Arial, sans-serif; background-color:#cdc2ae; padding:20px;">
           <div style="max-width:600px; margin:auto; background:#ffffff; border-radius:10px; overflow:hidden;">
             
-            <div style="background:#000; padding:20px; text-align:center;">
-              <img src="https://your-domain.com/logo.png" alt="Rewaq" style="width:120px;" />
+            <div style="background:#274760; padding:20px; text-align:center;">
+              <img src="https://rewaqgallery.com/Logo.png" alt="Rewaq" style="width:120px;" />
             </div>
 
             <div style="padding:30px; color:#333;">
-              <h2 style="margin-bottom:20px;">Hello ${options.name || 'there'}!</h2>
+              <h2 style="margin-bottom:20px;">Hello ${options.name || "there"}!</h2>
               
-              <p style="font-size:16px; line-height:1.6;">
+              <p style="font-size:16px; line-height:1.6;   white-space: pre-line;">
                 ${options.message}
               </p>
 
               <div style="margin-top:30px; text-align:center;">
                 <a href="https://rewaqgallery.com" 
-                   style="background:#000; color:#fff; padding:12px 20px; text-decoration:none; border-radius:5px;">
+                   style="background:#274760; color:#fff; padding:12px 20px; text-decoration:none; border-radius:5px;">
                   Visit Website
                 </a>
               </div>
             </div>
 
-            <div style="background:#f0f0f0; padding:15px; text-align:center; font-size:12px; color:#777;">
+            <div style="background:#ece5c8; padding:15px; text-align:center; font-size:12px; color:#777;">
               © ${new Date().getFullYear()} Rewaq Gallery. All rights reserved.
             </div>
 
