@@ -32,6 +32,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
   });
 
   await sendEmail({
+    name,
     email,
     subject: "Use OTP To Verify Acc",
     message: `Hello ${name}, Your OTP is ${otp}`,
@@ -160,6 +161,7 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
   try {
     await sendEmail({
       email: user.email,
+      name: user.name,
       subject: "Your Password Reset Code(Valid For 2min)",
       message: `Hi ${user.name},\n
       We Received A Request To Reset Password On Account.\n
