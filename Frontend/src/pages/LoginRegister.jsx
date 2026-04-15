@@ -115,12 +115,20 @@ function LoginRegister({ onClose }) {
       }
     } catch (err) {
       setError(
-        err?.data?.errors[0]?.msg || err.message || "Something went wrong",
+        err?.response?.data?.message ||
+          err?.response?.data?.errors?.[0]?.msg ||
+          err?.data?.message ||
+          err.message ||
+          "Invalid email or password",
       );
     } finally {
       setLoading(false);
     }
   };
+
+  setTimeout(() => {
+    setError(null);
+  }, 3000);
 
   return (
     <div
