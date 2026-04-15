@@ -104,12 +104,12 @@ module.exports.createOrder = asyncHandler(async (req, res, next) => {
     session.endSession();
 
     await sendEmail({
-      // email: "omarkhalid000333@gmail.com",
-      email: "mohamedelafandy16@gmail.com",
+      email: "omarkhalid000333@gmail.com",
+      // email: "mohamedelafandy16@gmail.com",
       subject: "New Order Created",
       name: order.shippingAddress.name,
       message: `
-    New order has been created!
+      New order has been created!
       User Name: ${order.shippingAddress.name}
       Total Price: ${order.totalOrderPrice} EGP
       Payment Method: ${order.paymentMethod}
