@@ -55,7 +55,7 @@ function OrderDetailsPage() {
           {/* Shipping */}
           <section className="shipping-box" aria-label="Shipping details">
             <p>
-              <strong>Name:</strong> {order?.name || "N/A"}
+              <strong>Name:</strong> {order?.shippingAddress?.name || "N/A"}
             </p>
             <p>
               <strong>Address:</strong>{" "}
