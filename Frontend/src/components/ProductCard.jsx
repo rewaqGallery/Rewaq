@@ -185,15 +185,15 @@ function ProductCard({ product }) {
         <div className="product-prices">
           {isNaN(product.priceAfterDiscount) ? (
             <span className="product-priceAfterDiscount">
-              {Number(product.price).toFixed(2)} LE
+              {Number(product.price).toFixed(0)} LE
             </span>
           ) : (
             <>
               <span className="product-priceAfterDiscount">
-                {Number(product.priceAfterDiscount).toFixed(2)} LE
+                {Number(product.priceAfterDiscount).toFixed(0)} LE
               </span>
               <span className="product-price">
-                {Number(product.price).toFixed(2)} LE
+                {Number(product.price).toFixed(0)} LE
               </span>
             </>
           )}
