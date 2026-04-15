@@ -55,6 +55,9 @@ function OrderDetailsPage() {
           {/* Shipping */}
           <section className="shipping-box" aria-label="Shipping details">
             <p>
+              <strong>Name:</strong> {order?.name || "N/A"}
+            </p>
+            <p>
               <strong>Address:</strong>{" "}
               {order.shippingAddress?.detailedAddress || "N/A"}
             </p>
@@ -108,7 +111,7 @@ function OrderDetailsPage() {
           </div>
 
           <div className="summary-total">
-            <span>Total  </span>
+            <span>Total </span>
             <span>{order.totalOrderPrice?.toLocaleString()} LE</span>
           </div>
         </aside>
