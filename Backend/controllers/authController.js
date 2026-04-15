@@ -243,7 +243,8 @@ exports.googleCallBack = [
 
     // res.redirect(`http://localhost:5173/google-success?token=${token}`);
     res.redirect(
-      `https://rewaq-gallery.vercel.app/google-success?token=${token}`,
+      // `https://rewaq-gallery.vercel.app/google-success?token=${token}`,
+      `https://rewaqgallery.com/google-success?token=${token}`,
     );
   },
 ];
