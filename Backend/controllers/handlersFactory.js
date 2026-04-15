@@ -276,9 +276,9 @@ exports.getAll = (Model, populationOption) =>
     //! 3- Sorting
     if (req.query.sort) {
       const sortBy = req.query.sort.split(",").join(" ");
-      query = query.sort(sortBy);
+      query = query.sort(`${sortBy} -_id`);
     } else {
-      query = query.sort("-createdAt");
+      query = query.sort("-createdAt -_id");
     }
 
     //! 4- Field Limiting
