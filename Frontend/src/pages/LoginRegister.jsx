@@ -323,7 +323,8 @@ function LoginRegister({ onClose }) {
 
                 <a
                   className="google-btn"
-                  href="https://rewaq-server-production.up.railway.app/auth/google"
+                  // href="https://rewaq-server-production.up.railway.app/auth/google"
+                  href="https://rewaq-server.onrender.com/auth/google"
                   aria-label="Continue with Google"
                   rel="noopener noreferrer"
                 >
