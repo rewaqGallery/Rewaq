@@ -7,7 +7,8 @@ require("dotenv").config();
 
 const callbackURL =
   process.env.NODE_ENV === "production"
-    ? "https://rewaq-server-production.up.railway.app/auth/google/callback"
+    ? //"https://rewaq-server-production.up.railway.app/auth/google/callback"
+      "https://rewaq.onrender.com/auth/google/callback"
     : "http://localhost:9001/auth/google/callback";
 
 passport.use(
